@@ -21,8 +21,8 @@ public class Arme extends Card {
     private TypeArme typeOrg;
     private List<TypePerso> listUtilisateursOrg;
     
-    public int forceAttaque() {
-        throw new UnsupportedOperationException("Not implemented");
+    public int forceAttaque(TypeArme arme) {
+        return degat + this.type.calculModificateur(arme); 
     }
     
     public boolean peutUtiliserArme(TypePerso perso) {
@@ -30,6 +30,8 @@ public class Arme extends Card {
     }
     
     public Result ajouterEnchant(Enchant ench) {
+        listEnchant.add(ench);
+        
         throw new UnsupportedOperationException("Not implemented");
     }
     
@@ -40,6 +42,9 @@ public class Arme extends Card {
     }
     
     public String toJSon() {
+        // Fast Implementaton
+        // return "{typeArme:" + type.name() + ", degat:" + this.degat + "}";
+        
         throw new UnsupportedOperationException("Not implemented");
     }
     

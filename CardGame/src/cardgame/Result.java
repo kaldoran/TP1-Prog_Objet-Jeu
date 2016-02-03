@@ -10,6 +10,7 @@ package cardgame;
  * @author kaldoran
  */
 public interface Result {
+    
     public boolean coupAMarcher();
     public String getDescription();
     public int coupJouerPar();
