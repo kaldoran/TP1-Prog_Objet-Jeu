@@ -5,12 +5,11 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Result;
-
 /**
  *
  * @author kaldoran
  */
-public class DefausseResult implements Result {
+public class DefausseResult {
+
     
 }

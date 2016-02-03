@@ -5,12 +5,10 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Result;
-
 /**
  *
  * @author kaldoran
  */
-public class EnchantResult implements Result {
+public class EnchantResult {
     
 }

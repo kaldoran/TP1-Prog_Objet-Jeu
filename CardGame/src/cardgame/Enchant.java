@@ -13,9 +13,7 @@ package cardgame;
 public abstract class Enchant extends Card {
     private String description;
     
-    public abstract Result placerEnchant(Arme arme) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
+    public abstract Result placerEnchant(Arme arme);
     
     public String toJSon() {
         throw new UnsupportedOperationException("Not implemented");

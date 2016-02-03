@@ -5,7 +5,9 @@
  */
 package cardgame.EnchantUtils;
 
+import cardgame.Arme;
 import cardgame.Enchant;
+import cardgame.Result;
 
 /**
  *

@@ -5,6 +5,8 @@
  */
 package cardgame;
 
+import cardgame.ResultUtils.AttackResult;
+
 /**
  *
  * @author kaldoran
@@ -28,7 +30,7 @@ public class Perso extends Card {
         throw new UnsupportedOperationException("Not implemented");
     }
     
-    public Result ajouterEnchant(Echant ench) {
+    public Result ajouterEnchant(Enchant ench) {
         throw new UnsupportedOperationException("Not implemented");
     }
     

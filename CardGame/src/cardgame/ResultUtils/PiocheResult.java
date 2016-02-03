@@ -5,12 +5,10 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Result;
-
 /**
  *
  * @author kaldoran
  */
-public class PiocheResult implements Result {
+public class PiocheResult {
     
 }
