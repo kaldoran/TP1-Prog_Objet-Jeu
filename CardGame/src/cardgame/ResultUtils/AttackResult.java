@@ -3,18 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame;
+package cardgame.ResultUtils;
+
+import cardgame.Result;
 
 /**
  *
  * @author kaldoran
  */
-public abstract class Card {
-    static long SSID = 0;
-    long cardID;
+public class AttackResult implements Result {
     
-    public void creadID() {
-        cardID = SSID;
-        ++SSID;
-    }
 }

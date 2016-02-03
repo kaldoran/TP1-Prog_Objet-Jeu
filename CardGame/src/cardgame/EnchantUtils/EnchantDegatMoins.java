@@ -3,21 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame;
+package cardgame.EnchantUtils;
 
+import cardgame.Enchant;
 
 /**
  *
  * @author kaldoran
  */
-public abstract class Enchant extends Card {
-    private String description;
-    
-    public abstract Result placerEnchant(Arme arme) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-    
-    public String toJSon() {
+public class EnchantDegatMoins extends Enchant {
+    public Result placerEnchant(Arme arme) {
         throw new UnsupportedOperationException("Not implemented");
     }
 }
