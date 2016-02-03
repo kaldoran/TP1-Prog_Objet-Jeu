@@ -9,6 +9,6 @@ package cardgame;
  *
  * @author kaldoran
  */
-abstract class Enchant {
+abstract class Enchant extends Card {
     
 }
