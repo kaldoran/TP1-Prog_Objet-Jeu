@@ -10,5 +10,17 @@ package cardgame.ResultUtils;
  * @author kaldoran
  */
 public class AttackResult {
+    public int dommageRecu;
+    public int attaqueur;
+    public boolean attaqueJoueur;
+    public int idCarte;
+    public boolean attaqueATuer; 
     
+    public int getDmgEffectue() {
+        return dommageRecu;
+    }
+    
+    public boolean attaqueTue() {
+        return attaqueATuer;
+    }
 }

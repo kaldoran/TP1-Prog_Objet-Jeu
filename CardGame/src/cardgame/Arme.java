@@ -30,7 +30,8 @@ public class Arme extends Card {
     }
     
     public Result ajouterEnchant(Enchant ench) {
-        listEnchant.add(ench);
+        if ( !this.estStast )
+            listEnchant.add(ench);
         
         throw new UnsupportedOperationException("Not implemented");
     }

@@ -10,11 +10,15 @@ package cardgame;
  * @author kaldoran
  */
 public abstract class Card {
-    static long SSID = 0;
-    long cardID;
+    static int SSID = 0;
+    private int cardID;
     
     public void creadID() {
         cardID = SSID;
         ++SSID;
+    }
+    
+    public int getCardID() {
+        return cardID;
     }
 }

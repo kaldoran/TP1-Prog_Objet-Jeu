@@ -1,0 +1,3 @@
+Voici les problemes que j'ai eu pour le moment : 
+    - Result ne peut pas être instancié c'est une interface, et du coup ne peux contenir de variable
+    - SSID des cards en long, mais id des int (cf. Result )

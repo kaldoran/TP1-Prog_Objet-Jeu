@@ -15,6 +15,9 @@ import cardgame.Result;
  */
 public class EnchantDegatPlus extends Enchant {
     public Result placerEnchant(Arme arme) {
-        throw new UnsupportedOperationException("Not implemented");
+        // Result r = null;
+        arme.ajouterEnchant(this);
+        
+        // throw new UnsupportedOperationException("Not implemented");
     }
 }

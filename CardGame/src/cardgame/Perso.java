@@ -19,15 +19,24 @@ public class Perso extends Card {
     private TypePerso typeperso;
     
     public int forceAttaque() {
-        throw new UnsupportedOperationException("Not implemented");
+        return armePerso.forceAttaque(TypeArme.Neutre);
     }
     
     public int forceAttaque(Perso ennemi) {
-        throw new UnsupportedOperationException("Not implemented");
+        return forceAttaque() + armePerso.forceAttaque(ennemi.getTypeArme());
     }
     
     public AttackResult prendreDommage(int dommage) {
-        throw new UnsupportedOperationException("Not implemented");
+        AttackResult ar = new AttackResult(); 
+        
+        this.hp -= dommage;
+        
+        ar.attaqueATuer = estMort();
+        ar.attaqueJoueur = false;
+        ar.idCarte = this.getCardID();
+        ar.dommageRecu = dommage;
+            
+        return ar;
     }
     
     public Result ajouterEnchant(Enchant ench) {
@@ -35,10 +44,20 @@ public class Perso extends Card {
     }
     
     public void placerArme(Arme arme) {
-        throw new UnsupportedOperationException("Not implemented");
+        this.armePerso = arme;
     }
     
     public Result soigner(Perso allie) {
+        /*
+        Result r = null;
+        
+        if ( this.mp > 0 && !this.equals(allie) ) { /// tester que vie allie != Max ?
+            --this.mp;
+            allie.recevoirSoins();
+        }
+        
+        return r;
+        */
         throw new UnsupportedOperationException("Not implemented");
     }
     
@@ -47,11 +66,11 @@ public class Perso extends Card {
     }
     
     public boolean estMort() {
-        return this.hp == 0;
+        return this.hp <= 0;
     }
     
     public TypeArme getTypeArme() {
-        throw new UnsupportedOperationException("Not implemented");
+        return armePerso.type;
     }
     
     public String toJSon() {
