@@ -7,14 +7,14 @@ package cardgame.EnchantUtils;
 
 import cardgame.Arme;
 import cardgame.Enchant;
-import cardgame.Result;
 
 /**
  *
  * @author kaldoran
  */
 public class EnchantDegatMoins extends Enchant {
-    public Result placerEnchant(Arme arme) {
-        throw new UnsupportedOperationException("Not implemented");
+    @Override
+    public void placerEnchant(Arme arme) {
+        arme.setDegat(arme.getDegat() - 1);
     }
 }

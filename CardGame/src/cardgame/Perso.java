@@ -40,7 +40,7 @@ public class Perso extends Card {
     }
     
     public Result ajouterEnchant(Enchant ench) {
-        throw new UnsupportedOperationException("Not implemented");
+        return armePerso.ajouterEnchant(ench);
     }
     
     public void placerArme(Arme arme) {

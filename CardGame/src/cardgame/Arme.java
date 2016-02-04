@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Arme extends Card {
     protected TypeArme type;
-    protected boolean estStast;
+    protected boolean estStase;
     protected int degat; 
     protected List<Enchant> listEnchant;
     protected List<TypePerso> listUtilisateurs;
@@ -30,13 +30,15 @@ public class Arme extends Card {
     }
     
     public Result ajouterEnchant(Enchant ench) {
-        if ( !this.estStast )
+        if ( !this.estStase ) {
             listEnchant.add(ench);
-        
+            ench.placerEnchant(this);
+        }
         throw new UnsupportedOperationException("Not implemented");
     }
     
-    private void reset() {
+    public void reset() {
+        this.listEnchant = null;
         this.listUtilisateurs = this.listUtilisateursOrg;
         this.degat = this.degatOrg;
         this.type = this.typeOrg;
@@ -49,4 +51,23 @@ public class Arme extends Card {
         throw new UnsupportedOperationException("Not implemented");
     }
     
+    public int getDegat() {
+        return this.degat;
+    }
+    
+    public void setDegat(int degat) {
+        this.degat = degat;
+    }
+    
+    public void setType(TypeArme type) {
+        this.type = type;
+    }
+    
+    public void setStase(boolean stase) {
+        this.estStase = stase;
+    }
+    
+    public void setListUtilisateurs(List<TypePerso> listUtilisateurs) {
+        this.listUtilisateurs = listUtilisateurs;
+    }    
 }

@@ -1,3 +1,10 @@
 Voici les problemes que j'ai eu pour le moment : 
     - Result ne peut pas être instancié c'est une interface, et du coup ne peux contenir de variable
     - SSID des cards en long, mais id des int (cf. Result )
+    - Comme j'ai organisé le projet, j'ai plus acces au valeur de degat ( pas de notion de subpackage en Java),
+        Du coup j'ai crée un accesseur / setteur sur la valeur de degat.
+    - Le test de arme.stase est fait directement dans la classe arme, si elle est stase, elle ajoute pas la carte dans sa liste
+        D'enchant, du coup la fonction placerEnchant des enchants ( Ex: Neutre, DegatPlus etc ) ne fait que agr sur la carte
+        Ex : Modifier les degat, modifier le type etc
+        A voir si cette méthode te plait
+    - Reset de la classe Arme reinit également la liste des enchants.

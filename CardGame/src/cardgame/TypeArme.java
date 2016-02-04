@@ -27,7 +27,7 @@ public enum TypeArme {
     }
     
     public int calculModificateur(TypeArme armeEnnemi) {
-        if ( this.nom.equals(armeEnnemi.nom)) 
+        if ( this.force.equals(armeEnnemi.nom)) 
             return 1;
         else if ( this.faiblesse.equals(armeEnnemi.nom))
             return -1;
