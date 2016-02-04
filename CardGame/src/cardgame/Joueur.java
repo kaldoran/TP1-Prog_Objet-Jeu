@@ -18,6 +18,10 @@ public class Joueur {
     private Map<Integer, Card> carteEnJeu;
     private Map<Integer, Card> cimetiere;
     
+    public Deck getCarteDeck() {
+        return carteDeck;
+    }
+    
     public Map<Integer, Card> getMain() {
         return main;
     }
@@ -65,7 +69,7 @@ public class Joueur {
         throw new UnsupportedOperationException("Not implemented");
     }
     
-    public List<Result> (List<Map<Integer, Integer>> enchs, Joueur opposant) {
+    public int ajouterEnchants (List<? extends Map<Integer, Integer>> enchs, Joueur opposant) {
         throw new UnsupportedOperationException("Not implemented");
     }
     

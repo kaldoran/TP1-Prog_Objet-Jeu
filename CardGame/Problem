@@ -8,3 +8,5 @@ Voici les problemes que j'ai eu pour le moment :
         Ex : Modifier les degat, modifier le type etc
         A voir si cette méthode te plait
     - Reset de la classe Arme reinit également la liste des enchants.
+    - J'ai pas fini de completer le squelette de la classe Jeux.
+    - La plupart des fonctions sont implémentée, elles sont a tester. 
