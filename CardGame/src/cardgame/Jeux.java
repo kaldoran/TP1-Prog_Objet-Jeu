@@ -60,6 +60,23 @@ public class Jeux {
         throw new UnsupportedOperationException("Not implemented");   
     }
     
-    // Not finished   
+    public List<Result> ajouterEnchantements(int idJoueur, int carteTouche, List<Integer> enchant) {
+        throw new UnsupportedOperationException("Not implemented");   
+    }
     
+    public Result placerPerso(int idJoueur, int personnage, int arme) {
+        throw new UnsupportedOperationException("Not implemented");   
+    }
+    
+    public Result defausserCartes(int idJoueur, List<Integer> defausse) {
+        throw new UnsupportedOperationException("Not implemented");   
+    }
+    
+    public Result soignerPerso(int idJoueur, int soingeur, int soignee) {
+        throw new UnsupportedOperationException("Not implemented");   
+    }
+    
+    public void finPartie() {
+        
+    }    
 }
