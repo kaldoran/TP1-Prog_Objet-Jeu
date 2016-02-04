@@ -69,7 +69,7 @@ public class Joueur {
         throw new UnsupportedOperationException("Not implemented");
     }
     
-    public int ajouterEnchants (List<? extends Map<Integer, Integer>> enchs, Joueur opposant) {
+    public List<Result> ajouterEnchants (List<? extends Map<Integer, Integer>> enchs, Joueur opposant) {
         throw new UnsupportedOperationException("Not implemented");
     }
     
