@@ -19,7 +19,7 @@ public class EnchantStase extends Enchant {
     }
     @Override
     public void placerEnchant(Arme arme) {
-        arme.setStase(true);
+        arme.staserArme();
         arme.reset();
     }
 }

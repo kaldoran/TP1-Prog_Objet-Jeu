@@ -20,6 +20,6 @@ public class EnchantDegatMoins extends Enchant {
     
     @Override
     public void placerEnchant(Arme arme) {
-        arme.setDegat(arme.getDegat() - 1);
+            arme.setDegat(arme.getDegat() - 1);
     }
 }

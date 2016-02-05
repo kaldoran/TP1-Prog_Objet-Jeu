@@ -8,8 +8,7 @@ package cardgame.EnchantUtils;
 import cardgame.Arme;
 import cardgame.Enchant;
 import cardgame.TypeArme;
-import cardgame.TypePerso;
-import java.util.Arrays;
+
 
 /**
  *

@@ -6,6 +6,10 @@
 package cardgame;
 
 import cardgame.ResultUtils.AttackResult;
+import cardgame.ResultUtils.RefusedResult;
+import cardgame.ResultUtils.SoinsResult;
+import java.util.ArrayList;
+import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -36,7 +40,7 @@ public class Perso extends Card {
     }
     
     public int forceAttaque(Perso ennemi) {
-        return forceAttaque() + armePerso.forceAttaque(ennemi.getTypeArme());
+        return armePerso.forceAttaque(ennemi.getTypeArme());
     }
     
     public AttackResult prendreDommage(int dommage) {
@@ -52,26 +56,42 @@ public class Perso extends Card {
         return ar;
     }
     
+    public List<Card> libererCartes() {
+        List<Card> cartesMortes = new ArrayList<>();
+        cartesMortes.addAll(armePerso.listEnchant);
+        cartesMortes.addAll(armePerso.listEnchantStase);
+        cartesMortes.add(armePerso);
+        cartesMortes.add(this);
+        return cartesMortes;
+    }
+    
     public Result ajouterEnchant(Enchant ench) {
         return armePerso.ajouterEnchant(ench);
     }
     
-    public void placerArme(Arme arme) {
-        this.armePerso = arme;
+    public boolean placerArme(Arme arme) {
+        boolean armeLibre = false;
+        if  (this.armePerso == null){
+            this.armePerso = arme;
+            armeLibre = true;
+        }
+        return armeLibre;
     }
     
     public Result soigner(Perso allie) {
         
-        if ( this.mp > 0 && !this.equals(allie) ) { /// tester que vie allie != Max ?
+        Result resultat;
+        
+        if ( this.mp > 0 && !(this.getCardID() != allie.getCardID()) ) { /// tester que vie allie != Max ?
             --this.mp;
             allie.recevoirSoins();
-            
+            resultat = new SoinsResult();
             // return good Result
         }
-        
-        // return bad result
-        
-        throw new UnsupportedOperationException("Not implemented");
+        else {
+            resultat = new RefusedResult();
+        }
+        return resultat;
     }
     
     public void recevoirSoins() {
@@ -86,15 +106,29 @@ public class Perso extends Card {
         return armePerso.type;
     }
     
-
-
     @Override
     public JsonObject toJSON() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         obj.add("Id",this.cardID);
+        obj.add("Type Personnage", typeperso.toString());
         obj.add("hp",hp );
         obj.add("mp",mp);
+        if (armePerso != null)
+            obj.add("Arme personnage",armePerso.toJSON());
         
         return obj.build();    
     }
+    
+      @Override
+    public JsonObject toJSONTest() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();
+        obj.add("Type Personnage", typeperso.toString());
+        obj.add("hp",hp );
+        obj.add("mp",mp);
+        if (armePerso != null)
+            obj.add("Arme personnage",armePerso.toJSONTest());
+        
+        return obj.build();    
+    }
+    
 }

@@ -5,7 +5,8 @@
  */
 package cardgame;
 
-import java.math.BigDecimal;
+import cardgame.ResultUtils.EnchantResult;
+import cardgame.ResultUtils.RefusedResult;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Arme extends Card {
     protected boolean estStase;
     protected int degat; 
     protected List<Enchant> listEnchant;
+    protected List<Enchant> listEnchantStase;
     protected List<TypePerso> listUtilisateurs;
     private final int degatOrg;
     private final TypeArme typeOrg;
@@ -36,6 +38,7 @@ public class Arme extends Card {
         listUtilisateurs = new ArrayList<>(_type.getUtilisateurs());
         listUtilisateursOrg = new ArrayList<>(_type.getUtilisateurs());
         listEnchant = new ArrayList<>();
+        listEnchantStase = new ArrayList<>();
         estStase = false;
         
     }
@@ -48,14 +51,21 @@ public class Arme extends Card {
     }
     
     public Result ajouterEnchant(Enchant ench) {
+        Result res;
         if ( !this.estStase ) {
             listEnchant.add(ench);
             ench.placerEnchant(this);
+            res = new EnchantResult();
         }
-        throw new UnsupportedOperationException("Not implemented");
+        else
+        {
+            res = new RefusedResult();
+        }
+        return res;
     }
     
     public void reset() {
+        this.listEnchantStase = new ArrayList<>(this.listEnchant);
         this.listEnchant = null;
         this.listUtilisateurs = this.listUtilisateursOrg;
         this.degat = this.degatOrg;
@@ -65,8 +75,39 @@ public class Arme extends Card {
     public JsonObject toJSON() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         obj.add("Id",this.cardID);
-        obj.add("type", type.name() );
-        obj.add("degats",degat);
+        obj.add("Type d'arme", type.name());
+        obj.add("Degats",degat);
+        Iterator<Enchant> it = listEnchant.iterator();
+        int enchNum = 1;
+        while (it.hasNext()) {
+                obj.add("Enchantement actif #" + enchNum, it.next().toJSON());
+        }
+        enchNum  = 1;
+        it = listEnchantStase.iterator();
+        while (it.hasNext()) {
+                obj.add("Enchantement inactif #" + enchNum, it.next().toJSON());
+        }
+        
+        
+        return obj.build();
+    }
+    
+     @Override
+    public JsonObject toJSONTest() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();
+        obj.add("Type d'arme", type.name());
+        obj.add("Degats",degat);
+        Iterator<Enchant> it = listEnchant.iterator();
+        int enchNum = 1;
+        while (it.hasNext()) {
+                obj.add("Enchantement actif #" + enchNum, it.next().toJSONTest());
+        }
+        enchNum  = 1;
+        it = listEnchantStase.iterator();
+        while (it.hasNext()) {
+                obj.add("Enchantement inactif #" + enchNum, it.next().toJSONTest());
+        }
+        
         
         return obj.build();
     }
@@ -83,8 +124,13 @@ public class Arme extends Card {
         this.type = type;
     }
     
-    public void setStase(boolean stase) {
-        this.estStase = stase;
+    public void staserArme() {
+        this.estStase = true;
+    }
+    
+    
+    public boolean armeEstStase() {
+        return estStase;
     }
     
     public void setListUtilisateurs(List<TypePerso> listUtilisateurs) {

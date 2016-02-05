@@ -26,7 +26,16 @@ public abstract class Enchant extends Card {
     public JsonObject toJSON() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         obj.add("Id",this.cardID);
-        obj.add("Nom",this.getClass().getCanonicalName() );
+        obj.add("Nom",this.getClass().getCanonicalName());
+        obj.add("Description",description);
+        
+        return obj.build();    
+    }
+    
+    @Override
+    public JsonObject toJSONTest() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();
+        obj.add("Nom",this.getClass().getCanonicalName());
         obj.add("Description",description);
         
         return obj.build();    
@@ -34,7 +43,5 @@ public abstract class Enchant extends Card {
     
     public abstract void placerEnchant(Arme arme);
     
-    public String toJSon() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
+   
 }

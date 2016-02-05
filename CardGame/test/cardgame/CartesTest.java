@@ -6,8 +6,12 @@
 package cardgame;
 
 import cardgame.EnchantUtils.EnchantDegatPlus;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -51,12 +55,49 @@ public class CartesTest {
         deck.add(new Perso(5,0,TypePerso.Guerrier));
         deck.add(new Arme(TypeArme.Contondant, 2));
         deck.add(new EnchantDegatPlus());
-        assertEquals(true, true);
-        System.out.print(deck.get(0).toJSON().toString());
-        System.out.print(deck.get(1).toJSON().toString());
-        System.out.print(deck.get(2).toJSON().toString());
+        System.out.println(deck.get(0).toJSON().toString());
+        System.out.println(deck.get(1).toJSON().toString());
+        System.out.println(deck.get(2).toJSON().toString());  
+         JsonObjectBuilder verifPers = Json.createObjectBuilder();
+        JsonObjectBuilder verifArme = Json.createObjectBuilder();
+        JsonObjectBuilder verifEnchant = Json.createObjectBuilder();
 
-        
+        verifPers.add("Type Personnage", TypePerso.Guerrier.toString());
+        verifPers.add("hp", 5);
+        verifPers.add("mp", 0);
+        verifArme.add("Type d'arme", TypeArme.Contondant.toString());
+        verifArme.add("Degats", 2);
+        verifEnchant.add("Nom", EnchantDegatPlus.class.getCanonicalName());
+        verifEnchant.add("Description", "Cette carte augmente les degats de l'arme choisi par un.");
+        assertEquals(deck.get(0).toJSONTest(), verifPers.build());
+        assertEquals(deck.get(1).toJSONTest(), verifArme.build());
+        assertEquals(deck.get(2).toJSONTest(), verifEnchant.build());
+
+    }
+    
+    @Test
+    public void TestInitPerso() {
+        System.out.println("TestInitPerso");
+        Perso pers = new Perso(5,0,TypePerso.Guerrier);
+        Arme armePerso = new Arme(TypeArme.Contondant, 2);
+        Enchant ench = new EnchantDegatPlus();
+        pers.placerArme(armePerso);
+        pers.ajouterEnchant(ench);
+        System.out.println(pers.toJSON().toString());
+        JsonObjectBuilder verifPers = Json.createObjectBuilder();
+        JsonObjectBuilder verifArme = Json.createObjectBuilder();
+        JsonObjectBuilder verifEnchant = Json.createObjectBuilder();
+
+        verifPers.add("Type Personnage", TypePerso.Guerrier.toString());
+        verifPers.add("hp", 5);
+        verifPers.add("mp", 0);
+        verifArme.add("Type d'arme", TypeArme.Contondant.toString());
+        verifArme.add("Degats", 3);
+        verifEnchant.add("Nom", EnchantDegatPlus.class.getCanonicalName());
+        verifEnchant.add("Description", "Cette carte augmente les degats de l'arme choisi par un.");
+        verifArme.add("Enchantement actif #1", verifEnchant.build());
+        verifPers.add("Arme personnage", verifArme.build());
+        assertEquals(pers.toJSONTest(), verifPers.build());
     }
     
 }

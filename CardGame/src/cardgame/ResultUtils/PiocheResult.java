@@ -5,10 +5,26 @@
  */
 package cardgame.ResultUtils;
 
+import cardgame.Result;
+
 /**
  *
  * @author kaldoran
  */
-public class PiocheResult {
-    
+public class PiocheResult implements Result {
+
+    @Override
+    public boolean coupAMarcher() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getDescription() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int coupJouerPar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

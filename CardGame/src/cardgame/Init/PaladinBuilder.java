@@ -7,8 +7,8 @@ package cardgame.Init;
 
 /**
  *
- * @author kaldoran
+ * @author mathieu
  */
-public class PretreBuilder implements PersoBuilder {
+public class PaladinBuilder implements PersoBuilder {
     
 }

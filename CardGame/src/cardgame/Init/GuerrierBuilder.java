@@ -9,6 +9,6 @@ package cardgame.Init;
  *
  * @author kaldoran
  */
-public class GuerrierBuilder {
+public class GuerrierBuilder implements PersoBuilder {
     
 }

@@ -16,6 +16,7 @@ public abstract class Card {
     protected int cardID;
     
     public abstract JsonObject toJSON();
+    public abstract JsonObject toJSONTest();
     
     public Card() {
         cardID = SSID;

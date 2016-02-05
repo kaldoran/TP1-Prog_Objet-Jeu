@@ -5,6 +5,9 @@
  */
 package cardgame;
 
+import cardgame.Init.ArmeFactory;
+import cardgame.Init.EnchantFactory;
+import cardgame.Init.PersoBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +19,11 @@ public class Deck {
     private List<Card> cartespioches;
     
     private void initialiserDeck() {
-        throw new UnsupportedOperationException("Not implemented");
+        ArmeFactory createurArmes = new ArmeFactory();
+        EnchantFactory createurEnchants = new EnchantFactory();
+        List<PersoBuilder> createurPerso = new ArrayList<>();
+        
+        cartespioches = new ArrayList<>();
     }
     
     public List<Card> piocherCarte(int nbCartes) {
