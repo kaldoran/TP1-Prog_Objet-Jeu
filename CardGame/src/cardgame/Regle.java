@@ -9,18 +9,18 @@ package cardgame;
  *
  * @author kaldoran
  */
-public class Regle {
-    private static int GUERRIERHP = 5;
-    private static int GUERRIERMP = 0;
-    private static int PRETREHP = 3;
-    private static int PRETREMP = 3;
-    private static int PALADINHP = 4;
-    private static int PALADINMP = 1;
-    private static int CARTEGUERRIER = 4;
-    private static int CARTEPRETRE = 4;
-    private static int CARTEPALADIN = 2;
-    private static int CARTEARMEUN = 2;
-    private static int CARTEARMEDEUX = 2;
-    private static int CARTEENCHANTEMENT = 2;
-    private static int CARTEMAIN = 5;
+public interface Regle {
+    public static final int GUERRIERHP = 5;
+    public static final int GUERRIERMP = 0;
+    public static final int PRETREHP = 3;
+    public static final int PRETREMP = 3;
+    public static final int PALADINHP = 4;
+    public static final int PALADINMP = 1;
+    public static final int CARTEGUERRIER = 4;
+    public static final int CARTEPRETRE = 4;
+    public static final int CARTEPALADIN = 2;
+    public static final int CARTEARMEUN = 2;
+    public static final int CARTEARMEDEUX = 2;
+    public static final int CARTEENCHANTEMENT = 2;
+    public static final int CARTEMAIN = 5;
 }

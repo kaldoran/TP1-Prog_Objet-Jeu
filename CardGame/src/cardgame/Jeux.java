@@ -12,9 +12,9 @@ import java.util.List;
  * @author kaldoran
  */
 public class Jeux {
-    
-    private Joueur joueurA;
-    private Joueur joueurB;
+    private List<Joueur> joueurList;
+    // private Joueur joueurA;
+    // private Joueur joueurB;
     private int joueurTour;
     private boolean partieEnMarche;
     
@@ -41,18 +41,31 @@ public class Jeux {
     }
     
     public boolean partieFini() {
-        return joueurA.aPerdu() || joueurB.aPerdu();
+        int totalPerdu = 0;
+        for ( int i = 0; i < joueurList.size(); i++ )
+            if ( joueurList.get(i).aPerdu() )
+                ++totalPerdu;
+        
+        return totalPerdu == joueurList.size() - 1; // tout les joueurs ont perdu sauf 1
     }
     
     public int getJoueurGagnant() {
-        throw new UnsupportedOperationException("Not implemented");
+        for ( int i = 0; i < joueurList.size(); i++ )
+            if ( !joueurList.get(i).aPerdu() )
+                return i;
+        
+        return -1;
     }
     
     public List<Result> piocherCartes(int idJoueur) {
+        joueurList.get(idJoueur).piocher();
         throw new UnsupportedOperationException("Not implemented");
     }
     
     public Result attaquePerso(int idJoueur, int idAttaqueur, int idReceveur) {
+        // tester si la carte est morte, si oui modifier le Result recu de attaque Joueur
+        // et mettre aTuer à True.
+        
         throw new UnsupportedOperationException("Not implemented");
     }
     
@@ -77,6 +90,6 @@ public class Jeux {
     }
     
     public void finPartie() {
-        
+        throw new UnsupportedOperationException("Not implemented");
     }    
 }

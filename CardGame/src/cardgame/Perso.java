@@ -48,16 +48,16 @@ public class Perso extends Card {
     }
     
     public Result soigner(Perso allie) {
-        /*
-        Result r = null;
         
         if ( this.mp > 0 && !this.equals(allie) ) { /// tester que vie allie != Max ?
             --this.mp;
             allie.recevoirSoins();
+            
+            // return good Result
         }
         
-        return r;
-        */
+        // return bad result
+        
         throw new UnsupportedOperationException("Not implemented");
     }
     

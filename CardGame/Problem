@@ -10,3 +10,12 @@ Voici les problemes que j'ai eu pour le moment :
     - Reset de la classe Arme reinit également la liste des enchants.
     - J'ai pas fini de completer le squelette de la classe Jeux.
     - La plupart des fonctions sont implémentée, elles sont a tester. 
+    - Joueur A & B changé pour devenir une liste et ainsi avoir acces au joueur en utilisant la liste 
+        list.get(i) donne le joueur i ( exemple : get(0) donne le joueur A)
+    - Changement des maps pour des List
+        Si tu veux revenir en arriere : Commit cd0a855b31cf948a6e518ffd93653d7a8796ed39
+    - Incohérence entre les différentes méthodes de pioches.
+        Pioche de deck retourne une liste de carte
+        Pioche de joueur retourne un jeu result ( normal on pioche les N cartes d'un coup ) 
+        Pioche de jeux doit retourner un List<Result> d'apres la doc .. impossible vu que ca piochere
+            forcement le max de carte possible ( entre 0 et 5 [ suivant la pioche et la main])
