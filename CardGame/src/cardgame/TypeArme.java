@@ -5,25 +5,31 @@
  */
 package cardgame;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *
  * @author kaldoran
  */
 public enum TypeArme {
     
-    Contondant("Contondant","Perforant ","Tranchant"),
-    Perforant("Perforant ","Tranchant","Contondant"),
-    Tranchant("Tranchant ","Contondant","Perforant"),
-    Neutre("Neutre","","");
+    Contondant("Contondant","Perforant ","Tranchant",TypePerso.values()),
+    Perforant("Perforant ","Tranchant","Contondant",TypePerso.Guerrier,TypePerso.Paladin),
+    Tranchant("Tranchant ","Contondant","Perforant",TypePerso.Guerrier,TypePerso.Paladin),
+    Neutre("Neutre","","",TypePerso.values());
     
     private final String nom;
     private final String force;
     private final String faiblesse;
+    private final List<TypePerso> users;
     
-    TypeArme(String nom, String force, String faiblesse) {
+    TypeArme(String nom, String force, String faiblesse,TypePerso... t) {
         this.nom = nom;
         this.force = force;
         this.faiblesse = faiblesse;
+        users = Arrays.asList(t);
     }
     
     public int calculModificateur(TypeArme armeEnnemi) {
@@ -34,4 +40,9 @@ public enum TypeArme {
         
         return 0;
     }
+    
+    public List<TypePerso> getUtilisateurs(){
+        return users;
+    }
+    
 }

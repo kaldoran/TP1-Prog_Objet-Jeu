@@ -13,6 +13,10 @@ import cardgame.Enchant;
  * @author kaldoran
  */
 public class EnchantStase extends Enchant {
+
+    public EnchantStase() {
+        super("Cette carte applique un effet de Stase sur l'arme choisi.");
+    }
     @Override
     public void placerEnchant(Arme arme) {
         arme.setStase(true);

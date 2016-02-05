@@ -5,18 +5,23 @@
  */
 package cardgame;
 
+import javax.json.JsonObject;
+
 /**
  *
  * @author kaldoran
  */
 public abstract class Card {
     static int SSID = 0;
-    private int cardID;
+    protected int cardID;
     
-    public void creadID() {
+    public abstract JsonObject toJSON();
+    
+    public Card() {
         cardID = SSID;
-        ++SSID;
+        ++Card.SSID;
     }
+    
     
     public int getCardID() {
         return cardID;

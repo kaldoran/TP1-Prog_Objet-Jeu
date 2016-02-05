@@ -5,13 +5,32 @@
  */
 package cardgame;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+
 
 /**
  *
  * @author kaldoran
  */
 public abstract class Enchant extends Card {
-    private String description;
+    private final String description;
+    
+    public Enchant(String desc){
+        super();
+        description = desc;
+    }
+    
+    @Override
+    public JsonObject toJSON() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();
+        obj.add("Id",this.cardID);
+        obj.add("Nom",this.getClass().getCanonicalName() );
+        obj.add("Description",description);
+        
+        return obj.build();    
+    }
     
     public abstract void placerEnchant(Arme arme);
     

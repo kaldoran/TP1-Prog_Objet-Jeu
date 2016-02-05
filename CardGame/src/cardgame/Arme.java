@@ -5,8 +5,13 @@
  */
 package cardgame;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 /**
  *
  * @author kaldoran
@@ -17,10 +22,23 @@ public class Arme extends Card {
     protected int degat; 
     protected List<Enchant> listEnchant;
     protected List<TypePerso> listUtilisateurs;
-    private int degatOrg;
-    private TypeArme typeOrg;
-    private List<TypePerso> listUtilisateursOrg;
+    private final int degatOrg;
+    private final TypeArme typeOrg;
+    private final List<TypePerso> listUtilisateursOrg;
     
+    public Arme(TypeArme _type,int dmg)
+    {
+        super();
+        type = _type;
+        typeOrg = _type;
+        degat = dmg;
+        degatOrg = dmg;
+        listUtilisateurs = new ArrayList<>(_type.getUtilisateurs());
+        listUtilisateursOrg = new ArrayList<>(_type.getUtilisateurs());
+        listEnchant = new ArrayList<>();
+        estStase = false;
+        
+    }
     public int forceAttaque(TypeArme arme) {
         return degat + this.type.calculModificateur(arme); 
     }
@@ -43,12 +61,14 @@ public class Arme extends Card {
         this.degat = this.degatOrg;
         this.type = this.typeOrg;
     }
-    
-    public String toJSon() {
-        // Fast Implementaton
-        // return "{typeArme:" + type.name() + ", degat:" + this.degat + "}";
+    @Override
+    public JsonObject toJSON() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();
+        obj.add("Id",this.cardID);
+        obj.add("type", type.name() );
+        obj.add("degats",degat);
         
-        throw new UnsupportedOperationException("Not implemented");
+        return obj.build();
     }
     
     public int getDegat() {

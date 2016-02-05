@@ -7,6 +7,7 @@ package cardgame.EnchantUtils;
 
 import cardgame.Arme;
 import cardgame.Enchant;
+import cardgame.TypeArme;
 import cardgame.TypePerso;
 import java.util.Arrays;
 
@@ -15,9 +16,12 @@ import java.util.Arrays;
  * @author kaldoran
  */
 public class EnchantNeutre extends Enchant {
+
+    public EnchantNeutre() {
+        super("Cette carte rend cette arme neutre.");
+    }
     @Override
     public void placerEnchant(Arme arme) {
-        arme.setStase(true);
-        arme.setListUtilisateurs(Arrays.asList(TypePerso.values()));
+        arme.setType(TypeArme.Neutre);
     }
 }

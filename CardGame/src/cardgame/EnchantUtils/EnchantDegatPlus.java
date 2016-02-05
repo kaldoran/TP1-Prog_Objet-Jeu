@@ -13,6 +13,10 @@ import cardgame.Enchant;
  * @author kaldoran
  */
 public class EnchantDegatPlus extends Enchant {
+
+    public EnchantDegatPlus() {
+        super("Cette carte augmente les degats de l'arme choisi par un.");
+    }
     @Override
     public void placerEnchant(Arme arme) {
         arme.setDegat(arme.getDegat() + 1);

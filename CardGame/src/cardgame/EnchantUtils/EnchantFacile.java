@@ -7,19 +7,20 @@ package cardgame.EnchantUtils;
 
 import cardgame.Arme;
 import cardgame.Enchant;
+import cardgame.TypePerso;
+import java.util.Arrays;
 
 /**
  *
- * @author kaldoran
+ * @author mathieu
  */
-public class EnchantDegatMoins extends Enchant {
-    
-    public EnchantDegatMoins() {
-        super("Cette carte abaisse les dommages de l'arme choisi par 1.");
+public class EnchantFacile extends Enchant {
+
+    public EnchantFacile() {
+        super("Cette carte rend cette arme utilisable par tout le monde.");
     }
-    
     @Override
     public void placerEnchant(Arme arme) {
-        arme.setDegat(arme.getDegat() - 1);
+        arme.setListUtilisateurs(Arrays.asList(TypePerso.values()));
     }
 }

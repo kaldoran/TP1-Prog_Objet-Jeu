@@ -6,6 +6,9 @@
 package cardgame;
 
 import cardgame.ResultUtils.AttackResult;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 /**
  *
@@ -13,10 +16,20 @@ import cardgame.ResultUtils.AttackResult;
  */
 public class Perso extends Card {
     private int hp;
-    private int maxHp;
+    private final int maxHp;
     private int mp;
     private Arme armePerso;
-    private TypePerso typeperso;
+    private final TypePerso typeperso;
+    
+    public Perso(int _hp, int _mp, TypePerso type) {
+        super();
+        hp = _hp;
+        mp = _mp;
+        maxHp = hp;
+        typeperso = type;
+        armePerso = null;
+    }
+    
     
     public int forceAttaque() {
         return armePerso.forceAttaque(TypeArme.Neutre);
@@ -73,7 +86,15 @@ public class Perso extends Card {
         return armePerso.type;
     }
     
-    public String toJSon() {
-        throw new UnsupportedOperationException("Not implemented");
+
+
+    @Override
+    public JsonObject toJSON() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();
+        obj.add("Id",this.cardID);
+        obj.add("hp",hp );
+        obj.add("mp",mp);
+        
+        return obj.build();    
     }
 }
