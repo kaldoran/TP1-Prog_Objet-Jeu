@@ -43,12 +43,12 @@ public class Joueur {
     }
     
     public Result defausserCartes(List<Integer> defausse) {
-        /*
-        Result r = null;
+        // Should return list of Result (If card is in hand etc )
         for ( int i = 0; i < defausse.size(); i++)
-            cimetiere.put(cimetiere.size(), main.remove(defausse.get(i)));
-        return r;
-        */
+            cimetiere.add(main.remove((int) defausse.get(i)));
+        
+        // return good result
+        
         throw new UnsupportedOperationException("Not implemented");
     }
     
