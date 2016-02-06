@@ -36,11 +36,11 @@ public class Perso extends Card {
     
     
     public int forceAttaque() {
-        return armePerso.forceAttaque(TypeArme.Neutre);
+        return armePerso != null ? armePerso.forceAttaque(TypeArme.Neutre) : 0;
     }
     
     public int forceAttaque(Perso ennemi) {
-        return armePerso.forceAttaque(ennemi.getTypeArme());
+        return armePerso != null ? armePerso.forceAttaque(ennemi.getTypeArme()) : 0;
     }
     
     public AttackResult prendreDommage(int dommage) {
@@ -82,7 +82,7 @@ public class Perso extends Card {
         
         Result resultat;
         
-        if ( this.mp > 0 && !(this.getCardID() != allie.getCardID()) ) { /// tester que vie allie != Max ?
+        if ( this.mp > 0 && (this.getCardID() != allie.getCardID()) ) { /// tester que vie allie != Max ?
             --this.mp;
             allie.recevoirSoins();
             resultat = new SoinsResult();
@@ -94,7 +94,7 @@ public class Perso extends Card {
         return resultat;
     }
     
-    public void recevoirSoins() {
+    private void recevoirSoins() {
         this.hp = this.maxHp;
     }
     

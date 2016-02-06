@@ -14,9 +14,9 @@ import java.util.List;
  */
 public enum TypeArme {
     
-    Contondant("Contondant","Perforant ","Tranchant",TypePerso.values()),
-    Perforant("Perforant ","Tranchant","Contondant",TypePerso.Guerrier,TypePerso.Paladin),
-    Tranchant("Tranchant ","Contondant","Perforant",TypePerso.Guerrier,TypePerso.Paladin),
+    Contondant("Contondant","Perforant","Tranchant",TypePerso.values()),
+    Perforant("Perforant","Tranchant","Contondant",TypePerso.Guerrier,TypePerso.Paladin),
+    Tranchant("Tranchant","Contondant","Perforant",TypePerso.Guerrier,TypePerso.Paladin),
     Neutre("Neutre","","",TypePerso.values());
     
     private final String nom;
