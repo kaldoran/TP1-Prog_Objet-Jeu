@@ -5,25 +5,47 @@
  */
 package cardgame;
 
-import cardgame.Init.ArmeFactory;
-import cardgame.Init.EnchantFactory;
-import cardgame.Init.PersoBuilder;
+import cardgame.Init.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 /**
  *
  * @author kaldoran
  */
 public class Deck {
-    private List<Card> cartespioches;
+    private final List<Card> cartespioches;
+    
+    public Deck(){
+        cartespioches = new ArrayList<>();
+        initialiserDeck();
+    }
     
     private void initialiserDeck() {
         ArmeFactory createurArmes = new ArmeFactory();
         EnchantFactory createurEnchants = new EnchantFactory();
-        List<PersoBuilder> createurPerso = new ArrayList<>();
+        GuerrierBuilder carteGuerriers = new GuerrierBuilder();
+        PretreBuilder cartePretres = new PretreBuilder();
+        PaladinBuilder cartePaladins = new PaladinBuilder();
         
-        cartespioches = new ArrayList<>();
+        int persoCompteur;
+        for (persoCompteur = 0 ; persoCompteur < Regle.CARTEGUERRIER;persoCompteur++){
+            cartespioches.add(carteGuerriers.buildNewPerso());
+        }
+        for (persoCompteur = 0 ; persoCompteur < Regle.CARTEPRETRE;persoCompteur++){
+            cartespioches.add(cartePretres.buildNewPerso());
+        }
+        for (persoCompteur = 0 ; persoCompteur < Regle.CARTEPALADIN;persoCompteur++){
+            cartespioches.add(cartePaladins.buildNewPerso());
+        }
+        cartespioches.addAll(createurArmes.creerSetArmes(Regle.CARTEARMEUN, 1));
+        cartespioches.addAll(createurArmes.creerSetArmes(Regle.CARTEARMEDEUX, 2));
+        cartespioches.addAll(createurEnchants.creerSetEnchants(Regle.CARTEENCHANTEMENT));
+
+        
     }
     
     public List<Card> piocherCarte(int nbCartes) {
@@ -47,7 +69,9 @@ public class Deck {
         return cartespioches.size();
     }
     
-    public String toJSon() {
-        throw new UnsupportedOperationException("Not implemented");
+    public JsonObject toJSon() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();    
+        obj.add("Nombre de cartes restantes a piger", cartespioches.size());
+        return obj.build();
     }
 }
