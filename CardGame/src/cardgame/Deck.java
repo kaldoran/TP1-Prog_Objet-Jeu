@@ -7,7 +7,9 @@ package cardgame;
 
 import cardgame.Init.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -45,11 +47,12 @@ public class Deck {
         cartespioches.addAll(createurArmes.creerSetArmes(Regle.CARTEARMEDEUX, 2));
         cartespioches.addAll(createurEnchants.creerSetEnchants(Regle.CARTEENCHANTEMENT));
 
-        
+        Collections.shuffle(cartespioches, new Random(System.nanoTime()));
     }
     
     public List<Card> piocherCarte(int nbCartes) {
         int nbAPiocher = Math.min(nbCartes, this.carteRestantes());
+        nbAPiocher = Math.min(nbAPiocher, 5);
         
         List<Card> l = new ArrayList<>();
         
