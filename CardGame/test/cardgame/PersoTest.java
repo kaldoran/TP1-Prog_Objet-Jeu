@@ -6,6 +6,7 @@
 package cardgame;
 
 import cardgame.EnchantUtils.EnchantDegatPlus;
+import cardgame.EnchantUtils.EnchantFacile;
 import cardgame.EnchantUtils.EnchantNeutre;
 import cardgame.Init.ArmeFactory;
 import cardgame.Init.GuerrierBuilder;
@@ -54,22 +55,22 @@ public class PersoTest {
         System.out.println("forceAttaque");
         PaladinBuilder pal = new PaladinBuilder();
         PretreBuilder pre = new PretreBuilder();
-        Perso instance1 = pal.buildNewPerso();
-        Perso instance2 = pre.buildNewPerso();
+        Perso paladin = pal.buildNewPerso();
+        Perso pretre = pre.buildNewPerso();
         Arme arm1 = new Arme(TypeArme.Contondant,1);
-        Arme arm2 = new Arme(TypeArme.Tranchant,2);
+        Arme arm2 = new Arme(TypeArme.Contondant,2);
         Enchant ench = new EnchantDegatPlus();
-        instance1.placerArme(arm1);
-        instance2.placerArme(arm2);
+        paladin.placerArme(arm1);
+        pretre.placerArme(arm2);
         int expResult = 1;
-        int result = instance1.forceAttaque();
+        int result = paladin.forceAttaque();
         assertEquals(expResult, result);
         expResult = 2;
-        result = instance2.forceAttaque();
+        result = pretre.forceAttaque();
         assertEquals(expResult, result);
-        instance2.ajouterEnchant(ench);
+        pretre.ajouterEnchant(ench);
         expResult++;
-        result = instance2.forceAttaque();
+        result = pretre.forceAttaque();
         assertEquals(expResult, result);
 
         // TODO review the generated test code and remove the default call to fail.
@@ -95,27 +96,27 @@ public class PersoTest {
         Arme armT = new Arme(TypeArme.Tranchant,2);
         Arme armP = new Arme(TypeArme.Perforant,2);
         
-        paladin.placerArme(armC);
-        pretre.placerArme(armT);
+        paladin.placerArme(armT);
+        pretre.placerArme(armC);
         guerrier.placerArme(armP);
         
         int expResult = 0;
-        int result = paladin.forceAttaque(pretre);
+        int result = pretre.forceAttaque(paladin);
         assertEquals(expResult, result);
         expResult = 2;
-        result = paladin.forceAttaque(guerrier);
-        assertEquals(expResult, result);
-        expResult = 3;
-        result = pretre.forceAttaque(paladin);
-        assertEquals(expResult, result);
-        expResult = 1;
         result = pretre.forceAttaque(guerrier);
         assertEquals(expResult, result);
         expResult = 3;
-        result = guerrier.forceAttaque(pretre);
+        result = paladin.forceAttaque(pretre);
         assertEquals(expResult, result);
         expResult = 1;
+        result = paladin.forceAttaque(guerrier);
+        assertEquals(expResult, result);
+        expResult = 3;
         result = guerrier.forceAttaque(paladin);
+        assertEquals(expResult, result);
+        expResult = 1;
+        result = guerrier.forceAttaque(pretre);
         assertEquals(expResult, result);
 
         // TODO review the generated test code and remove the default call to fail.
@@ -129,31 +130,30 @@ public class PersoTest {
     public void testForceAttaque_Perso_Ench() {
         System.out.println("forceAttaque sur un/des ennemi avec enchantements de dégats et neutralité.");
         PaladinBuilder pal = new PaladinBuilder();
-        PretreBuilder pre = new PretreBuilder();
         GuerrierBuilder gue = new GuerrierBuilder();
         
         Perso paladin = pal.buildNewPerso();
-        Perso pretre = pre.buildNewPerso();
+        Perso guerrier = gue.buildNewPerso();
 
         
         Arme armC = new Arme(TypeArme.Contondant,1);
         Arme armT = new Arme(TypeArme.Tranchant,2);
         
         paladin.placerArme(armC);
-        pretre.placerArme(armT);
+        guerrier.placerArme(armT);
         
         int expResult = 0;
-        int result = paladin.forceAttaque(pretre);
+        int result = paladin.forceAttaque(guerrier);
         assertEquals(expResult, result);
         expResult = 1;
         Enchant enchDeg = new EnchantDegatPlus();
         Enchant enchNeut = new EnchantNeutre();
         paladin.ajouterEnchant(enchDeg);
-        result = paladin.forceAttaque(pretre);
+        result = paladin.forceAttaque(guerrier);
         assertEquals(expResult, result);
         expResult = 2;
-        pretre.ajouterEnchant(enchNeut);
-        result = paladin.forceAttaque(pretre);
+        guerrier.ajouterEnchant(enchNeut);
+        result = paladin.forceAttaque(guerrier);
         assertEquals(expResult, result);
         
 
@@ -174,11 +174,11 @@ public class PersoTest {
         Perso guerrier = gue.buildNewPerso();
 
         
-        Arme armT = new Arme(TypeArme.Tranchant,2);
-        Arme armP = new Arme(TypeArme.Perforant,1);
+        Arme armP = new Arme(TypeArme.Perforant,2);
+        Arme armC = new Arme(TypeArme.Contondant,1);
         
-        pretre.placerArme(armP);
-        guerrier.placerArme(armT);
+        pretre.placerArme(armC);
+        guerrier.placerArme(armP);
         
         guerrier.prendreDommage(pretre.forceAttaque(guerrier));
         assertEquals(guerrier.estMort(),false);
@@ -190,7 +190,35 @@ public class PersoTest {
         System.out.println("Le perso est mort seulement quand il devait mourir.");
     }
 
-   
+    @Test
+    public void PlacerArmesTest(){
+        System.out.println("Placer Armes");
+        PretreBuilder pre = new PretreBuilder();
+        GuerrierBuilder gue = new GuerrierBuilder();
+        
+        Perso pretre = pre.buildNewPerso();
+        Perso pretre2 = pre.buildNewPerso();
+        Perso guerrier = gue.buildNewPerso();
+
+        
+        Arme armT = new Arme(TypeArme.Tranchant,2);
+        Arme armP = new Arme(TypeArme.Perforant,1);
+        Arme armC = new Arme(TypeArme.Contondant,1);
+        
+        assertEquals(guerrier.placerArme(armT),true);
+        assertEquals(guerrier.getTypeArme(),TypeArme.Tranchant);
+        assertEquals(guerrier.placerArme(armP),false);
+        assertEquals(pretre.placerArme(armP),false);
+        assertEquals(pretre.getTypeArme(),null);
+        assertEquals(pretre.placerArme(armC),true);
+        assertEquals(pretre.getTypeArme(),TypeArme.Contondant);
+        Enchant ench = new EnchantFacile();
+        armP.ajouterEnchant(ench);
+         assertEquals(pretre2.placerArme(armP),true);
+        assertEquals(pretre2.getTypeArme(),TypeArme.Perforant);       
+        
+        System.out.println("Les personnages peuvent placer correctement leurs armes.");
+    }
 
     /**
      * Test of soigner method, of class Perso.

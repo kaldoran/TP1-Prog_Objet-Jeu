@@ -71,7 +71,7 @@ public class Perso extends Card {
     
     public boolean placerArme(Arme arme) {
         boolean armeLibre = false;
-        if  (this.armePerso == null){
+        if  (this.armePerso == null && arme.peutUtiliserArme(this.typeperso)){
             this.armePerso = arme;
             armeLibre = true;
         }
@@ -103,7 +103,7 @@ public class Perso extends Card {
     }
     
     public TypeArme getTypeArme() {
-        return armePerso.type;
+        return armePerso != null? armePerso.type: null;
     }
     
     @Override
