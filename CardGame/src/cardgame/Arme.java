@@ -55,11 +55,11 @@ public class Arme extends Card {
         if ( !this.estStase ) {
             listEnchant.add(ench);
             ench.placerEnchant(this);
-            res = new EnchantResult();
+            res = new EnchantResult(true,ench.cardID,this.cardID);
         }
         else
         {
-            res = new RefusedResult();
+            res = new RefusedResult("L'enchantement ne peut pas être appliqué.");
         }
         return res;
     }

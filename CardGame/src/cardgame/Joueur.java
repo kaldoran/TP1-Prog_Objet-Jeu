@@ -73,7 +73,7 @@ public class Joueur {
         }
         
         int degat = ((Perso) carteEnJeu.get(attaqueur)).forceAttaque((Perso) attaque);
-        ((Perso) attaque).prendreDommage(degat);
+        ((Perso) attaque).prendreDommage(degat,attaqueur);
         
         // return good result
         throw new UnsupportedOperationException("Not implemented");

@@ -5,7 +5,9 @@
  */
 package cardgame.ResultUtils;
 
+import cardgame.Card;
 import cardgame.Result;
+import java.util.List;
 
 /**
  *
@@ -13,19 +15,37 @@ import cardgame.Result;
  */
 public class DefausseResult implements Result {
 
+    List<Card> cartesDefausses;
+    private int joueurId;
+    private final String description;
+    private final boolean coupAFonctionne;
+    
+    
+    public DefausseResult(int idJoueur,boolean coupCorrect,List<Card> cartes ) {
+        cartesDefausses = cartes;
+        joueurId = idJoueur;
+        description = "Défaussage de cartes";
+        coupAFonctionne = coupCorrect;
+    }
+    
     @Override
     public boolean coupAMarcher() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return coupAFonctionne;
     }
 
     @Override
     public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return description;
     }
 
     @Override
     public int coupJouerPar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return joueurId;
+    }
+
+    @Override
+    public void setJoueur(int idJoueur) {
+        joueurId  = idJoueur;
     }
     
 }

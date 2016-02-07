@@ -14,4 +14,5 @@ public interface Result {
     public boolean coupAMarcher();
     public String getDescription();
     public int coupJouerPar();
+    public void setJoueur(int idJoueur);
 }

@@ -43,15 +43,11 @@ public class Perso extends Card {
         return armePerso != null ? armePerso.forceAttaque(ennemi.getTypeArme()) : 0;
     }
     
-    public AttackResult prendreDommage(int dommage) {
-        AttackResult ar = new AttackResult(); 
+    public AttackResult prendreDommage(int dommage,int attaqueur) {
         
         this.hp -= dommage;
         
-        ar.attaqueATuer = estMort();
-        ar.attaqueJoueur = false;
-        ar.idCarte = this.getCardID();
-        ar.dommageRecu = dommage;
+        AttackResult ar = new AttackResult(dommage,false,this.cardID,attaqueur,estMort()); 
             
         return ar;
     }
@@ -85,11 +81,11 @@ public class Perso extends Card {
         if ( this.mp > 0 && (this.getCardID() != allie.getCardID()) ) { /// tester que vie allie != Max ?
             --this.mp;
             allie.recevoirSoins();
-            resultat = new SoinsResult();
+            resultat = new SoinsResult(true,this.cardID,allie.cardID);
             // return good Result
         }
         else {
-            resultat = new RefusedResult();
+            resultat = new RefusedResult("Le soigneur n'a plus de magie.");
         }
         return resultat;
     }

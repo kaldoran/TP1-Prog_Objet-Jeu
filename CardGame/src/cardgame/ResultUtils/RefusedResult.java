@@ -13,19 +13,36 @@ import cardgame.Result;
  */
 public class RefusedResult implements Result {
 
-    @Override
+     private final String description;
+    private int joueurId;
+    
+    public RefusedResult(int idJoueur, String coupRefuse) {
+        description = coupRefuse;
+        joueurId = idJoueur;
+    }
+    
+    public RefusedResult(String coupRefuse) {
+        description = coupRefuse;
+    }
+    
+       @Override
     public boolean coupAMarcher() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
 
     @Override
     public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return description;
     }
 
     @Override
     public int coupJouerPar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return joueurId;
+    }
+
+    @Override
+    public void setJoueur(int idJoueur) {
+        joueurId  = idJoueur;
     }
     
 }

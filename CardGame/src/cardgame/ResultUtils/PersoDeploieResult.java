@@ -11,39 +11,32 @@ import cardgame.Result;
  *
  * @author kaldoran
  */
-public class EnchantResult implements Result {
+public class PersoDeploieResult implements Result {
 
     private final String description;
     private int joueurId;
     private final boolean coupAFonctionne;
-    private final int enchantId;
-    private final int carteEnchante;
+    private final int persoId;
+    private final int armeId;
     
-    public EnchantResult(boolean coupCorrect, int enchId,int carteId) {
-        coupAFonctionne = coupCorrect;
-        enchantId = enchId;
-        carteEnchante = carteId;
-        description = "Enchantement d'une carte";
-    }
-    
-    public EnchantResult(int jId, boolean coupCorrect, int enchId,int carteId) {
+    public PersoDeploieResult(int jId,boolean coupCorrect,int pId,int aId){
         joueurId = jId;
         coupAFonctionne = coupCorrect;
-        enchantId = enchId;
-        carteEnchante = carteId;
-        description = "Enchantement d'une carte";
+        persoId = pId;
+        armeId = aId;
+        description = "Le joueur " + jId + "vient de déployer les cartes " + pId + " + " + aId;
     }
     
-    public int getCarteEnchantement() {
-        return enchantId;
+    public int getPersoId() {
+        return joueurId;
     }
     
-    public int getCarteEnchante() {
-        return carteEnchante;
+    public int getArmeId() {
+        return armeId;
     }
     
     
-     @Override
+      @Override
     public boolean coupAMarcher() {
         return coupAFonctionne;
     }
@@ -62,5 +55,4 @@ public class EnchantResult implements Result {
     public void setJoueur(int idJoueur) {
         joueurId  = idJoueur;
     }
-    
 }

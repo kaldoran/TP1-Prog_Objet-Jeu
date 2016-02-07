@@ -13,18 +13,40 @@ import cardgame.Result;
  */
 public class FinDePartieResult implements Result {
 
-    @Override
+    private final String description;
+    private int joueurId;
+    private final boolean coupAFonctionne;
+    private final int joueurGagne;
+    
+    public FinDePartieResult(int jId, boolean coupCorrect, int idJoueurGagne) {
+        joueurId = jId;
+        coupAFonctionne = coupCorrect;
+        joueurGagne = idJoueurGagne;
+        description = "Le joueur" + idJoueurGagne + "vient de gagner la partie";
+    }
+    
+    
+       @Override
     public boolean coupAMarcher() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return coupAFonctionne;
     }
 
     @Override
     public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return description;
+    }
+    
+    public int getJoueurQuiAGagne() {
+        return joueurGagne;
     }
 
     @Override
     public int coupJouerPar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return joueurId;
+    }
+
+    @Override
+    public void setJoueur(int idJoueur) {
+        joueurId  = idJoueur;
     }
 }

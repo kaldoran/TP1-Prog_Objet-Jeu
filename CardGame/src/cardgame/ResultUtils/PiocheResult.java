@@ -5,7 +5,12 @@
  */
 package cardgame.ResultUtils;
 
+import cardgame.Card;
 import cardgame.Result;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.json.JsonObject;
 
 /**
  *
@@ -13,18 +18,52 @@ import cardgame.Result;
  */
 public class PiocheResult implements Result {
 
-    @Override
+    private final String description;
+    private int joueurId;
+    private final boolean coupAFonctionne;
+    private final List<Integer> cartesId;
+    private final List<JsonObject> cartesJSON;
+    
+    
+    public PiocheResult(int jId,boolean coupCorrect,List<Card> cartes) {
+        description = "Résultat de pioches";
+        joueurId = jId;
+        coupAFonctionne = coupCorrect;
+        cartesId = new ArrayList<>();
+        cartesJSON = new ArrayList<>();
+        for (Card cartePioche : cartes) {
+            cartesId.add(cartePioche.getCardID());
+            cartesJSON.add(cartePioche.toJSON());
+        }
+    }
+    
+    
+    public List<Integer> getCartesID(){
+        return cartesId;
+    }
+    
+    public List<JsonObject> getCartesJSON(){
+        return cartesJSON;
+    }
+    
+    
+       @Override
     public boolean coupAMarcher() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return coupAFonctionne;
     }
 
     @Override
     public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return description;
     }
 
     @Override
     public int coupJouerPar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return joueurId;
+    }
+
+    @Override
+    public void setJoueur(int idJoueur) {
+        joueurId  = idJoueur;
     }
 }
