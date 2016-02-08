@@ -205,8 +205,24 @@ public class Joueur {
      * @return une Liste de Result, chaqu'un étant soit un EnchantResult si tout c'est bien passé
      *         sinon un RefusedResult
      */
-    public List<Result> ajouterEnchants (List<Integer> enchs, Joueur opposant) {
-        throw new UnsupportedOperationException("Not implemented");
+    public List<Result> ajouterEnchants (List<Integer> enchs, int perso) {
+        List<Result> lr = new ArrayList<>();
+        Result res;
+        if ( carteEnJeu.get(perso) == null ) {
+            res = new RefusedResult("Impossible d'enchanter cette carte.");
+            lr.add(res);
+            return lr;
+        }
+        
+        for ( int i = 0; i < enchs.size(); i++)
+           lr.add(
+                    ((Perso)carteEnJeu.get(perso)).
+                                ajouterEnchant(
+                                        (Enchant) main.get(enchs.get(i))
+                                )
+           );
+        
+        return lr;
     }
     
     /**

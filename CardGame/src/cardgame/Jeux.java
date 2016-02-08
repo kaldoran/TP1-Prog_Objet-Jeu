@@ -8,15 +8,25 @@ package cardgame;
 import cardgame.ResultUtils.RefusedResult;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
  * @author kaldoran
  */
 public class Jeux {
-    private List<Joueur> joueurList = new ArrayList<>();
-    private int joueurTour;
+    private List<Joueur> joueurList;
     private boolean partieEnMarche;
+    private int joueurTour;
+    
+    public Jeux() { }
+    
+    /**
+     * Permet de passer au joueur suivant
+     */
+    public void prochainJoueur() {
+        joueurTour = (joueurTour + 1 >= joueurList.size() ) ? joueurTour + 1 : 0;
+    }
     
     /**
      * Permet de savoir à qui est le tour ( id du joueur )
@@ -31,9 +41,14 @@ public class Jeux {
      * @param nbJoueur nombre de joueur voulant jouer
      */
     public void demarrerPartie(int nbJoueur) {
+        Random r = new Random();
+        joueurTour = r.nextInt(nbJoueur);
+        
         if ( !partieEnMarche )
             for ( int i = 0; i < nbJoueur; i++)
                 joueurList.add(new Joueur());
+        
+        partieEnMarche = true;
     }
     
     /**
@@ -100,27 +115,26 @@ public class Jeux {
         throw new UnsupportedOperationException("Not implemented");
     }
     
-    public Result attaqueJoueur(int idJoueur, int idAttaqueur ) {
-        throw new UnsupportedOperationException("Not implemented");   
+    public Result attaqueJoueur(int idJoueur, int idAttaquer ) {
+        return joueurList.get(idJoueur).attaque(idJoueur, joueurList.get(idAttaquer));
     }
     
     public List<Result> ajouterEnchantements(int idJoueur, int carteTouche, List<Integer> enchant) {
-        throw new UnsupportedOperationException("Not implemented");   
+        return joueurList.get(idJoueur).ajouterEnchants(enchant, carteTouche);
     }
     
     public Result placerPerso(int idJoueur, int personnage, int arme) {
-        throw new UnsupportedOperationException("Not implemented");   
+        return joueurList.get(idJoueur).placerPerso(personnage, arme);
     }
     
     public Result defausserCartes(int idJoueur, List<Integer> defausse) {
-        throw new UnsupportedOperationException("Not implemented");   
+        return joueurList.get(idJoueur).defausserCartes(defausse);
     }
     
-    public Result soignerPerso(int idJoueur, int soingeur, int soignee) {
-        throw new UnsupportedOperationException("Not implemented");   
+    public Result soignerPerso(int idJoueur, int soigneur, int soignee) {
+        return joueurList.get(idJoueur).soignerPerso(soigneur, soignee);
     }
     
     public void finPartie() {
-        throw new UnsupportedOperationException("Not implemented");
     }    
 }
