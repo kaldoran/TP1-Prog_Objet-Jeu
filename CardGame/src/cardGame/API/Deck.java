@@ -17,11 +17,21 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
- *
- * @author kaldoran
+ * Classe représente le packet de cartes non-pigés d'un joueur.
+ * La classe permet d'initialiser le deck et de traiter la logique de pioche
+ * et de vie (puisque les points de vie sont == au nombre de cartes restantes.)
+ * sans donner accès à cette logique au joueur.
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class Deck {
-    private List<Carte> cartespioches;
+    
+    /**
+     * Structure représentant le deck lui-même.
+     */
+    private final List<Carte> cartespioches;
     
     public Deck(){
         cartespioches = new ArrayList<>();
@@ -29,25 +39,18 @@ public class Deck {
     }
     
     /**
-     * Permet de crée le deck et d'initialiser son contenu
+     * Permet de créer le deck et d'initialiser son contenu.
+     * La classe initialise le nombre de cartes nécessaire de chaque type
+     * selon les règles du jeu et ensuite mélange le deck.
      */
     private void initialiserDeck() {
         ArmeFactory createurArmes = new ArmeFactory();
         EnchantFactory createurEnchants = new EnchantFactory();
-        GuerrierBuilder carteGuerriers = new GuerrierBuilder();
-        PretreBuilder cartePretres = new PretreBuilder();
-        PaladinBuilder cartePaladins = new PaladinBuilder();
+        PersoFactory createurPersos = new PersoFactory();
         
-        int persoCompteur;
-        for (persoCompteur = 0 ; persoCompteur < Regle.CARTEGUERRIER;persoCompteur++){
-            cartespioches.add(carteGuerriers.buildNewPerso());
-        }
-        for (persoCompteur = 0 ; persoCompteur < Regle.CARTEPRETRE;persoCompteur++){
-            cartespioches.add(cartePretres.buildNewPerso());
-        }
-        for (persoCompteur = 0 ; persoCompteur < Regle.CARTEPALADIN;persoCompteur++){
-            cartespioches.add(cartePaladins.buildNewPerso());
-        }
+        cartespioches.addAll(createurPersos.creerSetGuerrier(Regle.CARTEGUERRIER));
+        cartespioches.addAll(createurPersos.creerSetGuerrier(Regle.CARTEPRETRE));
+        cartespioches.addAll(createurPersos.creerSetGuerrier(Regle.CARTEPALADIN));        
         cartespioches.addAll(createurArmes.creerSetArmes(Regle.CARTEARMEUN, 1));
         cartespioches.addAll(createurArmes.creerSetArmes(Regle.CARTEARMEDEUX, 2));
         cartespioches.addAll(createurEnchants.creerSetEnchants(Regle.CARTEENCHANTEMENT));
@@ -56,27 +59,30 @@ public class Deck {
     }
     
     /**
-     * Permet de piocher une liste de carte
+     * Permet de piocher une liste de carte.
      * @param nbCartes nombre de carte à piocher
      * @return Liste des cartes piochées
      */
     public List<Carte> piocherCarte(int nbCartes) {
-        int nbAPiocher = Math.min(nbCartes, this.carteRestantes());
-        nbAPiocher = Math.min(nbAPiocher, 5);
         
-        List<Carte> l = new ArrayList<>();
+        /*On s'assure de piocher le min entre le nombre de cartes restantes,
+        le nombre demandé ou le nombre maximal dans une main.*/
+        int nbAPiocher = Math.min(nbCartes, this.carteRestantes());
+        nbAPiocher = Math.min(nbAPiocher, Regle.CARTEMAIN);
+        
+        List<Carte> nouvCartes = new ArrayList<>();
         
         while ( nbAPiocher != 0) {
-            l.add(cartespioches.remove(0));
+            nouvCartes.add(cartespioches.remove(0));
             --nbAPiocher;
         }
     
-        return l;
+        return nouvCartes;
     }
     
     /**
-     * Permet d'appliquer les dégats recu par un joueur sur son Deck
-     * @param nbDegatCarte nombre de dégat pris
+     * Permet d'appliquer les dégats recu par un joueur sur son Deck.
+     * @param nbDegatCarte Le nombre de dégat pris
      * @return la Liste des cartes perdues
      */
     public List<Carte> dommageJoueur(int nbDegatCarte) {
@@ -84,16 +90,19 @@ public class Deck {
     }
     
     /**
-     * Permet de savoir le nombre de carte réstante dans la pioche
-     * @return le nombre de carte encore présente dans la pioche
+     * Permet de savoir le nombre de carte réstante dans la pioche.
+     * @return le nombre de cartes encore présentes dans la pioche.
      */
     public int carteRestantes() {
         return cartespioches.size();
     }
     
+
+    
+    
     /**
      * Pemet d'avoir la représentation en JSon du Deck
-     * A noter : Le contenu du deck n'est pas communiqué
+     * A noter : Le contenu du deck n'est pas communiqué pour éviter la triche.
      * @return la représentation du Deck en JSon
      */
     public JsonObject toJSon() {
