@@ -14,7 +14,7 @@ import javax.json.JsonObjectBuilder;
  *
  * @author kaldoran
  */
-public abstract class Enchant extends Card {
+public abstract class Enchant extends Carte {
     private final String description;
     
     public Enchant(String desc){

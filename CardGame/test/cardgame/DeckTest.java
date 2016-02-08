@@ -52,7 +52,7 @@ public class DeckTest {
         Deck instance = new Deck();
         
         // On essai de piocher des 5 Cartes
-        List<Card> result = instance.piocherCarte(nbCartes);
+        List<Carte> result = instance.piocherCarte(nbCartes);
         
         // Verification des méthodes de pioches
         assertEquals(5, result.size());
@@ -86,7 +86,7 @@ public class DeckTest {
         System.out.println("dommageJoueur");
         int nbCartes = 3;
         Deck instance = new Deck();
-        List<Card> result = instance.dommageJoueur(nbCartes);
+        List<Carte> result = instance.dommageJoueur(nbCartes);
         assertEquals(3, result.size());
         assertEquals(29, instance.carteRestantes());
         // TODO review the generated test code and remove the default call to fail.
@@ -113,10 +113,10 @@ public class DeckTest {
     public void testCartesPigees() {
          System.out.println("Test cartes pigées");
         Deck instance = new Deck();
-        List<Card> result = instance.piocherCarte(5);
+        List<Carte> result = instance.piocherCarte(5);
         int id = -1;
-        for (Iterator<Card> it = result.iterator(); it.hasNext();) {
-            Card cd = it.next();
+        for (Iterator<Carte> it = result.iterator(); it.hasNext();) {
+            Carte cd = it.next();
             assertNotSame(id, cd.getCardID());
             System.out.println(cd.toJSON());
             id = cd.getCardID();

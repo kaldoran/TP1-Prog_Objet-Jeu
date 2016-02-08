@@ -14,10 +14,10 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 /**
- *
- * @author kaldoran
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
  */
-public class Arme extends Card {
+public class Arme extends Carte {
     protected TypeArme type;
     protected boolean estStase;
     protected int degat; 

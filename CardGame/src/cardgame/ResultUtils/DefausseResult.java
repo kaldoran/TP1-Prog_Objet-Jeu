@@ -5,7 +5,7 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Card;
+import cardgame.Carte;
 import cardgame.Result;
 import java.util.List;
 
@@ -15,13 +15,13 @@ import java.util.List;
  */
 public class DefausseResult implements Result {
 
-    List<Card> cartesDefausses;
+    List<Carte> cartesDefausses;
     private int joueurId;
     private final String description;
     private final boolean coupAFonctionne;
     
     
-    public DefausseResult(int idJoueur,boolean coupCorrect,List<Card> cartes ) {
+    public DefausseResult(int idJoueur,boolean coupCorrect,List<Carte> cartes ) {
         cartesDefausses = cartes;
         joueurId = idJoueur;
         description = "Défaussage de cartes";

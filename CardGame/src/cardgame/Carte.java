@@ -11,7 +11,7 @@ import javax.json.JsonObject;
  *
  * @author kaldoran
  */
-public abstract class Card {
+public abstract class Carte {
     static int SSID = 0;
     protected int cardID;
     
@@ -27,9 +27,9 @@ public abstract class Card {
      */
     public abstract JsonObject toJSONTest();
     
-    public Card() {
+    public Carte() {
         cardID = SSID;
-        ++Card.SSID;
+        ++Carte.SSID;
     }
     
     /**

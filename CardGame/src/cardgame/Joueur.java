@@ -25,9 +25,9 @@ import javax.json.JsonObjectBuilder;
 public class Joueur {
     private int idJoueur;
     private Deck carteDeck;
-    private List<Card> main;
-    private List<Card> carteEnJeu;
-    private List<Card> cimetiere;
+    private List<Carte> main;
+    private List<Carte> carteEnJeu;
+    private List<Carte> cimetiere;
     
     public Joueur() { 
         carteDeck = new Deck();
@@ -56,7 +56,7 @@ public class Joueur {
      * Permet d'avoir la main du joueur
      * @return la liste de Carte contenu dans la main du joueur
      */
-    public List<Card> getMain() {
+    public List<Carte> getMain() {
         return main;
     }
     
@@ -64,7 +64,7 @@ public class Joueur {
      * Pemet d'avoir les cartes en jeu du joueur
      * @return la liste de carte présente sur le jeu, cartes associées au joueur
      */
-    public List<Card> getCarteEnJeu() {
+    public List<Carte> getCarteEnJeu() {
         return carteEnJeu;
     }
     
@@ -72,7 +72,7 @@ public class Joueur {
      * Permet d'avoir le cimetiere du joueur
      * @return la liste de carte présente dans le cimetiere du joueur
      */
-    public List<Card> getCimetiere() {
+    public List<Carte> getCimetiere() {
         return cimetiere;
     }
     
@@ -93,7 +93,7 @@ public class Joueur {
      */
     public Result defausserCartes(List<Integer> defausse) {
         Result res;
-        List<Card> lc = new ArrayList();
+        List<Carte> lc = new ArrayList();
         
         if ( defausse.isEmpty() ) {
             res = new RefusedResult("La Liste est vide.");
@@ -107,7 +107,7 @@ public class Joueur {
                 return res;
             }
             
-            Card tmp = main.remove(card);
+            Carte tmp = main.remove(card);
             
             lc.add(tmp);
             cimetiere.add(tmp);
@@ -125,7 +125,7 @@ public class Joueur {
     public Result piocher() {
         Result res;
         int nbAPiocher = Regle.CARTEMAIN - main.size();
-        List<Card> lc = carteDeck.piocherCarte(nbAPiocher);
+        List<Carte> lc = carteDeck.piocherCarte(nbAPiocher);
         
         if ( nbAPiocher == 0 ) {
             res = new RefusedResult("Votre main contient déjà le maximum de carte");
@@ -165,7 +165,7 @@ public class Joueur {
      * @return un AttackResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Result attaque(int attaqueur, Card attaque) {
+    public Result attaque(int attaqueur, Carte attaque) {
         Result res;
         if ( !carteEnJeu.contains(attaque) || !(attaque instanceof Perso) ) {
             res = new RefusedResult("Impossible d'attaquer cette carte, celle ci n'est pas un perso ou sur le terrain.");
@@ -233,8 +233,8 @@ public class Joueur {
      *         un Refusedresult sinon
      */
     public Result placerPerso(int personnage, int arme) {
-        Card perso = main.get(personnage);
-        Card arm = main.get(arme);
+        Carte perso = main.get(personnage);
+        Carte arm = main.get(arme);
         Result res;
         if ( !(perso instanceof Perso) || !(arm instanceof Arme) ) {
             res = new RefusedResult("L'une des 2 cartes est invalide (non perso ou non arme).");
@@ -270,7 +270,7 @@ public class Joueur {
         for ( i = 0; i < main.size(); i++)
             cimetiere.add(main.remove(i));
         
-        List<Card> allDeck = carteDeck.piocherCarte(carteDeck.carteRestantes());
+        List<Carte> allDeck = carteDeck.piocherCarte(carteDeck.carteRestantes());
         
         for ( i = 0; i < allDeck.size(); i++)
             cimetiere.add(allDeck.remove(i));
@@ -330,7 +330,7 @@ public class Joueur {
     public JsonObject mainToJSon() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         
-        Iterator<Card> cd = main.iterator();
+        Iterator<Carte> cd = main.iterator();
         int numCarte = 1;
         while ( cd.hasNext() ) {
             obj.add("carte #" + numCarte, cd.next().toJSON());
@@ -347,7 +347,7 @@ public class Joueur {
     public JsonObject cimetiereToJSton() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         
-        Iterator<Card> cd = cimetiere.iterator();
+        Iterator<Carte> cd = cimetiere.iterator();
         int numCarte = 1;
         while ( cd.hasNext() ) {
             obj.add("carte #" + numCarte, cd.next().toJSON());

@@ -51,7 +51,7 @@ public class CartesTest {
     @Test
     public void TestInitCartes() {
         System.out.println("TestInitCartes");
-        List<Card> deck = new ArrayList<>();
+        List<Carte> deck = new ArrayList<>();
         
         // Ajout de 3 cartes ( une Perso, une Arme, une Enchant)
         deck.add(new Perso(5,0,TypePerso.Guerrier));

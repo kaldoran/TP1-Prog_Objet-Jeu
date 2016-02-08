@@ -5,7 +5,7 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Card;
+import cardgame.Carte;
 import cardgame.Result;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,13 +25,13 @@ public class PiocheResult implements Result {
     private final List<JsonObject> cartesJSON;
     
     
-    public PiocheResult(int jId,boolean coupCorrect,List<Card> cartes) {
+    public PiocheResult(int jId,boolean coupCorrect,List<Carte> cartes) {
         description = "Résultat de pioches";
         joueurId = jId;
         coupAFonctionne = coupCorrect;
         cartesId = new ArrayList<>();
         cartesJSON = new ArrayList<>();
-        for (Card cartePioche : cartes) {
+        for (Carte cartePioche : cartes) {
             cartesId.add(cartePioche.getCardID());
             cartesJSON.add(cartePioche.toJSON());
         }

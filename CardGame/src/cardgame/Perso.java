@@ -18,7 +18,7 @@ import javax.json.JsonObjectBuilder;
  *
  * @author kaldoran
  */
-public class Perso extends Card {
+public class Perso extends Carte {
     private int hp;
     private final int maxHp;
     private int mp;
@@ -72,8 +72,8 @@ public class Perso extends Card {
      * Permet d'obtenir la liste des cartes qui était associée au personnage
      * @return Liste des cartes présente sur le perso
      */
-    public List<Card> libererCartes() {
-        List<Card> cartesMortes = new ArrayList<>();
+    public List<Carte> libererCartes() {
+        List<Carte> cartesMortes = new ArrayList<>();
         cartesMortes.addAll(armePerso.listEnchant);
         cartesMortes.addAll(armePerso.listEnchantStase);
         cartesMortes.add(armePerso);

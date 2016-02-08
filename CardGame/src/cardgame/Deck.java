@@ -19,7 +19,7 @@ import javax.json.JsonObjectBuilder;
  * @author kaldoran
  */
 public class Deck {
-    private List<Card> cartespioches;
+    private List<Carte> cartespioches;
     
     public Deck(){
         cartespioches = new ArrayList<>();
@@ -58,11 +58,11 @@ public class Deck {
      * @param nbCartes nombre de carte à piocher
      * @return Liste des cartes piochées
      */
-    public List<Card> piocherCarte(int nbCartes) {
+    public List<Carte> piocherCarte(int nbCartes) {
         int nbAPiocher = Math.min(nbCartes, this.carteRestantes());
         nbAPiocher = Math.min(nbAPiocher, 5);
         
-        List<Card> l = new ArrayList<>();
+        List<Carte> l = new ArrayList<>();
         
         while ( nbAPiocher != 0) {
             l.add(cartespioches.remove(0));
@@ -77,7 +77,7 @@ public class Deck {
      * @param nbDegatCarte nombre de dégat pris
      * @return la Liste des cartes perdues
      */
-    public List<Card> dommageJoueur(int nbDegatCarte) {
+    public List<Carte> dommageJoueur(int nbDegatCarte) {
         return piocherCarte(nbDegatCarte);
     }
     
