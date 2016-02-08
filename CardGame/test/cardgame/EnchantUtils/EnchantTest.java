@@ -5,13 +5,18 @@
  */
 package cardgame.EnchantUtils;
 
-import cardgame.Arme;
-import cardgame.Enchant;
+import cardgame.Cartes.EnchantDegatPlus;
+import cardgame.Cartes.EnchantFacile;
+import cardgame.Cartes.EnchantNeutre;
+import cardgame.Cartes.EnchantDegatMoins;
+import cardgame.Cartes.EnchantStase;
+import cardgame.Cartes.Arme;
+import cardgame.Cartes.Enchant;
 import cardgame.Init.GuerrierBuilder;
 import cardgame.Init.PretreBuilder;
-import cardgame.Perso;
-import cardgame.Resultat;
-import cardgame.TypeArme;
+import cardgame.Cartes.Perso;
+import cardGame.API.Resultat;
+import cardgame.Regles.TypeArme;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

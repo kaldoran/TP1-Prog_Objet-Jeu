@@ -5,7 +5,7 @@
  */
 package cardgame.Init;
 
-import cardgame.Perso;
+import cardgame.Cartes.Perso;
 
 /**
  *

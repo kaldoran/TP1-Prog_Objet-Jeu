@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame;
+package cardgame.Cartes;
 
+import cardGame.API.Resultat;
 import cardgame.ResultUtils.AttaqueResult;
 import cardgame.ResultUtils.RefuseResult;
 import cardgame.ResultUtils.SoinsResult;
+import cardgame.Regles.TypeArme;
+import cardgame.Regles.TypePerso;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;

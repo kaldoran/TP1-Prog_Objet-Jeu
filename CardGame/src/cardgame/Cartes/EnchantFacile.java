@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame.EnchantUtils;
+package cardgame.Cartes;
 
-import cardgame.Arme;
-import cardgame.Enchant;
-import cardgame.TypePerso;
+import cardgame.Cartes.Arme;
+import cardgame.Cartes.Enchant;
+import cardgame.Regles.TypePerso;
 import java.util.Arrays;
 
 /**
@@ -26,6 +26,7 @@ public class EnchantFacile extends Enchant {
      */
     @Override
     public void placerEnchant(Arme arme) {
-        arme.setListUtilisateurs(Arrays.asList(TypePerso.values()));
+        arme.listUtilisateurs.clear();
+        arme.listUtilisateurs = Arrays.asList(TypePerso.values());
     }
 }

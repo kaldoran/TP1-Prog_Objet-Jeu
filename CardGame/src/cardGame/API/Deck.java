@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame;
+package cardGame.API;
 
+import cardgame.Regles.Regle;
+import cardgame.Cartes.Carte;
 import cardgame.Init.*;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame;
+package cardGame.API;
 
+import cardgame.Cartes.Arme;
+import cardgame.Cartes.Carte;
+import cardgame.Cartes.Enchant;
+import cardgame.Cartes.Perso;
+import cardgame.Regles.Regle;
 import cardgame.ResultUtils.AttaqueResult;
 import cardgame.ResultUtils.DefausseResult;
 import cardgame.ResultUtils.FinDePartieResult;
@@ -304,7 +309,7 @@ public class Joueur {
      */
     public boolean detientCarte(int idCarte) {
         for ( int i = 0; i < main.size(); i++)
-            if ( main.get(i).cardID == idCarte ) 
+            if ( main.get(i).getCardID() == idCarte ) 
                 return true;
         
         return false;

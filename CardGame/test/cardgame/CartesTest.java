@@ -5,7 +5,13 @@
  */
 package cardgame;
 
-import cardgame.EnchantUtils.EnchantDegatPlus;
+import cardgame.Regles.TypePerso;
+import cardgame.Regles.TypeArme;
+import cardgame.Cartes.Enchant;
+import cardgame.Cartes.Arme;
+import cardgame.Cartes.Carte;
+import cardgame.Cartes.Perso;
+import cardgame.Cartes.EnchantDegatPlus;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

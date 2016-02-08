@@ -5,7 +5,7 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Resultat;
+import cardGame.API.Resultat;
 
 /**
  *

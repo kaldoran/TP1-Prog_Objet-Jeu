@@ -5,8 +5,8 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Carte;
-import cardgame.Resultat;
+import cardgame.Cartes.Carte;
+import cardGame.API.Resultat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

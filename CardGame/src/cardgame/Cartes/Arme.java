@@ -1,12 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package cardgame;
 
+package cardgame.Cartes;
+
+import cardGame.API.Resultat;
 import cardgame.ResultUtils.EnchantResult;
 import cardgame.ResultUtils.RefuseResult;
+import cardgame.Regles.TypeArme;
+import cardgame.Regles.TypePerso;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +13,12 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 /**
+ * Classe représentant chacunes des cartes d'armes du jeu.
+ * Initialisé par ArmeFactory (Afin d'attribuer les bons attributs
+ * pour chaque type d'armes), Arme permet de traiter la logique de :
+ *  - Force d'attaque
+ *  - Équipage d'enchantements
+ *  - Vérification de l'arme pour un déploiement.
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reymaud REYN23119308
  */
@@ -48,7 +53,7 @@ public class Arme extends Carte {
      * @return la force d'attaque de l'arme
      */
     public int forceAttaque(TypeArme arme) {
-        return this.getDegat() + this.type.calculModificateur(arme); 
+        return this.degat + this.type.calculModificateur(arme); 
     }
     
     /** 
@@ -88,9 +93,10 @@ public class Arme extends Carte {
         this.listEnchantStase = new ArrayList<>(this.listEnchant);
         this.listEnchant = null;
         
-        this.setListUtilisateurs(this.listUtilisateursOrg);
-        this.setDegat(this.degatOrg);
-        this.setType(this.typeOrg);
+        this.listUtilisateurs.clear();
+        this.listUtilisateurs.addAll(this.listUtilisateursOrg);
+        this.degat = this.degatOrg;
+        this.type = this.typeOrg;
     }
     
     /**
@@ -142,30 +148,8 @@ public class Arme extends Carte {
         
         return obj.build();
     }
-    
-    /**
-     * Permet d'avoir les degats de base d'une arme
-     * @return les degats de l'arme
-     */
-    public int getDegat() {
-        return this.degat;
-    }
-    
-    /**
-     * Permet de modifier la valeur de degat de l'arme
-     * @param degat nouveau degats de l'arme
-     */
-    public void setDegat(int degat) {
-        this.degat = degat;
-    }
-    
-    /**
-     * Permet de modifier le type de l'arme
-     * @param type 
-     */
-    public void setType(TypeArme type) {
-        this.type = type;
-    }
+   
+  
     
     /**
      * Permet de staser une Arme
@@ -183,11 +167,5 @@ public class Arme extends Carte {
         return estStase;
     }
     
-    /** 
-     * 
-     * @param listUtilisateurs 
-     */
-    public void setListUtilisateurs(List<TypePerso> listUtilisateurs) {
-        this.listUtilisateurs = listUtilisateurs;
-    }    
+   
 }

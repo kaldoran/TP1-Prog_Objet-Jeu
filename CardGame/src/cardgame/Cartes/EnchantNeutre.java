@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame.EnchantUtils;
+package cardgame.Cartes;
 
-import cardgame.Arme;
-import cardgame.Enchant;
-import cardgame.TypeArme;
+import cardgame.Cartes.Arme;
+import cardgame.Cartes.Enchant;
+import cardgame.Regles.TypeArme;
 
 
 /**
@@ -26,6 +26,6 @@ public class EnchantNeutre extends Enchant {
      */
     @Override
     public void placerEnchant(Arme arme) {
-        arme.setType(TypeArme.Neutre);
+        arme.type = TypeArme.Neutre;
     }
 }

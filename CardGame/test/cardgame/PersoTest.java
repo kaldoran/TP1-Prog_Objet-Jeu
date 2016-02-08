@@ -5,9 +5,13 @@
  */
 package cardgame;
 
-import cardgame.EnchantUtils.EnchantDegatPlus;
-import cardgame.EnchantUtils.EnchantFacile;
-import cardgame.EnchantUtils.EnchantNeutre;
+import cardgame.Regles.TypeArme;
+import cardgame.Cartes.Enchant;
+import cardgame.Cartes.Arme;
+import cardgame.Cartes.Perso;
+import cardgame.Cartes.EnchantDegatPlus;
+import cardgame.Cartes.EnchantFacile;
+import cardgame.Cartes.EnchantNeutre;
 import cardgame.Init.GuerrierBuilder;
 import cardgame.Init.PaladinBuilder;
 import cardgame.Init.PretreBuilder;
@@ -189,11 +193,11 @@ public class PersoTest {
         pretre.placerArme(armC);
         guerrier.placerArme(armP);
         
-        guerrier.prendreDommage(pretre.forceAttaque(guerrier),pretre.cardID);
+        guerrier.prendreDommage(pretre.forceAttaque(guerrier),pretre.getCardID());
         assertEquals(guerrier.estMort(),false);
-        guerrier.prendreDommage(pretre.forceAttaque(guerrier),pretre.cardID);
+        guerrier.prendreDommage(pretre.forceAttaque(guerrier),pretre.getCardID());
         assertEquals(guerrier.estMort(),false);
-        guerrier.prendreDommage(pretre.forceAttaque(guerrier),pretre.cardID);
+        guerrier.prendreDommage(pretre.forceAttaque(guerrier),pretre.getCardID());
         assertEquals(guerrier.estMort(),true);
         
         System.out.println("Le perso est mort seulement quand il devait mourir.");
@@ -249,20 +253,20 @@ public class PersoTest {
         paladin.placerArme(armP);
         guerrier.placerArme(armT);
         
-        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.cardID);
+        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.getCardID());
         assertEquals(guerrier.estMort(),false);
-        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.cardID);
+        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.getCardID());
         assertEquals(guerrier.estMort(),false);
         paladin.soigner(guerrier);
-        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.cardID);
+        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.getCardID());
         assertEquals(guerrier.estMort(),false);
         
         System.out.println("Le guerrier a survecu a une attaque qu'il l'aurait tué sans soins.");
-        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.cardID);
+        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.getCardID());
         assertEquals(guerrier.estMort(),false);
 
         paladin.soigner(guerrier);
-        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.cardID);
+        guerrier.prendreDommage(paladin.forceAttaque(guerrier),paladin.getCardID());
         assertEquals(guerrier.estMort(),true);
         System.out.println("Le paladin n'a pas réussi à soigner sans points de mana.");
         
