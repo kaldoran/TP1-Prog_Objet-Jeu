@@ -1,27 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame.Cartes;
 
-import cardgame.Cartes.Arme;
-import cardgame.Cartes.Enchant;
 import cardgame.Regles.TypePerso;
 import java.util.Arrays;
 
 /**
+ * Implémentation de la classe abstraite Enchant.
  *
- * @author mathieu
+ * EnchantFacile permet de changer les utilisateurs possibles de l'arme.
+ *
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ *
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class EnchantFacile extends Enchant {
 
     public EnchantFacile() {
         super("Cette carte rend cette arme utilisable par tout le monde.");
     }
-    
+
     /**
-     * Modifie les utilisateurs de l'arme
+     * Applique l'enchantement sur l'arme passé en paramètre.
+     *
      * @param arme arme qui pourra être équipée par tout le monde
      */
     @Override

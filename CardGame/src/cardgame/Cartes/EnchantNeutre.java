@@ -1,28 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame.Cartes;
 
-import cardgame.Cartes.Arme;
-import cardgame.Cartes.Enchant;
 import cardgame.Regles.TypeArme;
 
-
 /**
+ * Implémentation de la classe abstraite Enchant.
  *
- * @author kaldoran
+ * EnchantNeutre permet de changer le type de l'arme.
+ *
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ *
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class EnchantNeutre extends Enchant {
 
     public EnchantNeutre() {
         super("Cette carte rend cette arme neutre.");
     }
-    
+
     /**
-     * Modifie l'arme sur laquel le triangles des degats ne sera plus appliquer
-     * @param arme arme dont le triangle de degat va etre retiré
+     * Modifie l'arme sur lequel le triangle des dégats ne sera plus appliqué.
+     *
+     * @param arme arme dont le triangle de dégat va etre retiré
      */
     @Override
     public void placerEnchant(Arme arme) {

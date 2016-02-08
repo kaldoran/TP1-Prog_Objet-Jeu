@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardGame.API;
 
 import cardgame.ResultUtils.RefuseResult;
@@ -11,8 +6,18 @@ import java.util.List;
 import java.util.Random;
 
 /**
- *
- * @author kaldoran
+ * Classe API utilisé pour communiquer entre le modèle et le controlleur.
+ * Toutes les actions possibles par un joueur doit passer par une des fonctions de cette classe.
+ * Afin d'éviter toutes triches, chaque action demandé par le joueur est vérifié avant de s'effectuer.
+ * (Ex : Le joueur 2 essaie de jouer pour le joueur .
+ *       Le joueur 1 essaie de fair eune action impossible tel que déployer des cartes de l'adversaire.)
+ * )
+ * Si l'action est mauvaise, Jeux retourne un RefuseResult.
+ * Sinon, l'action est éffectué et Jeux retourne un Resultat décrivant les conséquences de l'acte.
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class Jeux {
     private List<Joueur> joueurList;

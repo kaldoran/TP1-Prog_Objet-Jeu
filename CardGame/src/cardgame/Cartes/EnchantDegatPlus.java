@@ -1,24 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame.Cartes;
 
-import cardgame.Cartes.Arme;
-import cardgame.Cartes.Enchant;
-
 /**
+ * Implémentation de la classe abstraite Enchant.
  *
- * @author kaldoran
+ * EnchantDegatPlus permet d'augmenter la force d'une arme.
+ *
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ *
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class EnchantDegatPlus extends Enchant {
 
     public EnchantDegatPlus() {
         super("Cette carte augmente les degats de l'arme choisi par un.");
     }
+
     /**
-     * Modifie les degats de l'arme passé en parametre.
+     * Applique l'enchantement sur l'arme passé en paramètre.
+     *
      * @param arme arme dont les degats vont etre augmenté
      */
     @Override

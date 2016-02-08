@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardGame.API;
 
 import cardgame.Regles.Regle;
@@ -17,14 +12,14 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
- * Classe représente le packet de cartes non-pigés d'un joueur.
- * La classe permet d'initialiser le deck et de traiter la logique de pioche
- * et de vie (puisque les points de vie sont == au nombre de cartes restantes.)
- * sans donner accès à cette logique au joueur.
+ * Classe représentant le paquet de cartes non-pigés d'un joueur. La classe
+ * permet d'initialiser le deck et de traiter la logique de pioche et de vie
+ * (puisque les points de vie sont == au nombre de cartes restantes.) sans
+ * donner accès à cette logique au joueur.
+ *
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reymaud REYN23119308
- * @version 1.0
- * 08-Fév-2016 : 1.0 - Version initiale.
+ * @version 1.0 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class Deck {
     

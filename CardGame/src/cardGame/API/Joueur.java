@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardGame.API;
 
 import cardgame.Cartes.Arme;
@@ -24,15 +19,20 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
- *
- * @author kaldoran
+ * Classe utilisé par l'API pour placé le coup du joueur reçu du controlleur.
+ * Comparé à Jeux qui sert de facade pour le controlleur, Joueur traite les appels
+ * des joueurs dans le modèle et retourne ces conséquences.
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class Joueur {
     private int idJoueur;
-    private Deck carteDeck;
-    private List<Carte> main;
-    private List<Carte> carteEnJeu;
-    private List<Carte> cimetiere;
+    private final Deck carteDeck;
+    private final List<Carte> main;
+    private final List<Carte> carteEnJeu;
+    private final List<Carte> cimetiere;
     
     public Joueur() { 
         carteDeck = new Deck();
@@ -192,7 +192,7 @@ public class Joueur {
      */
     public Resultat attaque(int attaqueur, Joueur attaque) {
         Resultat res;
-        if ( carteEnJeu.size() != 0) {
+        if ( !carteEnJeu.isEmpty()) {
             res = new RefuseResult("Impossible d'attaquer le joueur, il y a encore des cartes en jeux.");
             return res;
         }
@@ -206,7 +206,7 @@ public class Joueur {
     /**
      * Permet d'ajouter une liste d'enchant à un joueur
      * @param enchs liste des positions des enchants dans la main
-     * @param opposant Joueur à enchanter
+     * @param perso Joueur à enchanter
      * @return une Liste de Result, chaqu'un étant soit un EnchantResult si tout c'est bien passé
      *         sinon un RefusedResult
      */
