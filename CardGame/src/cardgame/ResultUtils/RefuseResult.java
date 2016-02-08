@@ -5,23 +5,23 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Result;
+import cardgame.Resultat;
 
 /**
  *
  * @author kaldoran
  */
-public class RefusedResult implements Result {
+public class RefuseResult implements Resultat {
 
      private final String description;
     private int joueurId;
     
-    public RefusedResult(int idJoueur, String coupRefuse) {
+    public RefuseResult(int idJoueur, String coupRefuse) {
         description = coupRefuse;
         joueurId = idJoueur;
     }
     
-    public RefusedResult(String coupRefuse) {
+    public RefuseResult(String coupRefuse) {
         description = coupRefuse;
     }
     

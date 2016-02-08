@@ -6,7 +6,7 @@
 package cardgame;
 
 import cardgame.ResultUtils.EnchantResult;
-import cardgame.ResultUtils.RefusedResult;
+import cardgame.ResultUtils.RefuseResult;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -67,8 +67,8 @@ public class Arme extends Carte {
      * @return un EnchantResult si tout c'est bien passé
      *         un Refused Result sinon
      */
-    public Result ajouterEnchant(Enchant ench) {
-        Result res;
+    public Resultat ajouterEnchant(Enchant ench) {
+        Resultat res;
         if ( !this.estStase ) {
             listEnchant.add(ench);
             ench.placerEnchant(this);
@@ -76,7 +76,7 @@ public class Arme extends Carte {
         }
         else
         {
-            res = new RefusedResult("L'enchantement ne peut pas être appliqué.");
+            res = new RefuseResult("L'enchantement ne peut pas être appliqué.");
         }
         return res;
     }

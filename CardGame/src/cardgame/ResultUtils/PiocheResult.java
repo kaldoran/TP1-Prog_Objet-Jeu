@@ -6,7 +6,7 @@
 package cardgame.ResultUtils;
 
 import cardgame.Carte;
-import cardgame.Result;
+import cardgame.Resultat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +16,7 @@ import javax.json.JsonObject;
  *
  * @author kaldoran
  */
-public class PiocheResult implements Result {
+public class PiocheResult implements Resultat {
 
     private final String description;
     private int joueurId;

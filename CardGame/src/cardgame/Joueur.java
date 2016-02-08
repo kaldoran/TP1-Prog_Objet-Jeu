@@ -5,12 +5,12 @@
  */
 package cardgame;
 
-import cardgame.ResultUtils.AttackResult;
+import cardgame.ResultUtils.AttaqueResult;
 import cardgame.ResultUtils.DefausseResult;
 import cardgame.ResultUtils.FinDePartieResult;
 import cardgame.ResultUtils.PersoDeploieResult;
 import cardgame.ResultUtils.PiocheResult;
-import cardgame.ResultUtils.RefusedResult;
+import cardgame.ResultUtils.RefuseResult;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -91,19 +91,19 @@ public class Joueur {
      * @return Un DefausseResult si la defausse s'est bien passé
      *         Un RefusedResult sinon
      */
-    public Result defausserCartes(List<Integer> defausse) {
-        Result res;
+    public Resultat defausserCartes(List<Integer> defausse) {
+        Resultat res;
         List<Carte> lc = new ArrayList();
         
         if ( defausse.isEmpty() ) {
-            res = new RefusedResult("La Liste est vide.");
+            res = new RefuseResult("La Liste est vide.");
             return res;
         }
         
         for ( int i = 0; i < defausse.size(); i++) {
             int card = defausse.get(i);
             if ( card < 0 || card > main.size() ) {
-                res = new RefusedResult("La carte " + i + " n'est pas présente dans votre main.");
+                res = new RefuseResult("La carte " + i + " n'est pas présente dans votre main.");
                 return res;
             }
             
@@ -122,13 +122,13 @@ public class Joueur {
      * @return un PiocheResult si tout s'est bien passé
      *         un RefusedResult sinon
      */
-    public Result piocher() {
-        Result res;
+    public Resultat piocher() {
+        Resultat res;
         int nbAPiocher = Regle.CARTEMAIN - main.size();
         List<Carte> lc = carteDeck.piocherCarte(nbAPiocher);
         
         if ( nbAPiocher == 0 ) {
-            res = new RefusedResult("Votre main contient déjà le maximum de carte");
+            res = new RefuseResult("Votre main contient déjà le maximum de carte");
             return res;
         }
         
@@ -144,17 +144,17 @@ public class Joueur {
      * @return un AttackResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Result recoitAttaque(int degat) {
-        Result res;
+    public Resultat recoitAttaque(int degat) {
+        Resultat res;
         
         if ( degat <= 0 ) { 
-            res = new RefusedResult("Un dégat ne peux être négatif.");
+            res = new RefuseResult("Un dégat ne peux être négatif.");
             return res;
         }
                
         cimetiere.addAll(carteDeck.dommageJoueur(degat));
         
-        res = new AttackResult(degat, true, 0, 0, this.aPerdu());
+        res = new AttaqueResult(degat, true, 0, 0, this.aPerdu());
         return res;
     }
     
@@ -165,10 +165,10 @@ public class Joueur {
      * @return un AttackResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Result attaque(int attaqueur, Carte attaque) {
-        Result res;
+    public Resultat attaque(int attaqueur, Carte attaque) {
+        Resultat res;
         if ( !carteEnJeu.contains(attaque) || !(attaque instanceof Perso) ) {
-            res = new RefusedResult("Impossible d'attaquer cette carte, celle ci n'est pas un perso ou sur le terrain.");
+            res = new RefuseResult("Impossible d'attaquer cette carte, celle ci n'est pas un perso ou sur le terrain.");
             return res;
         }
         
@@ -185,10 +185,10 @@ public class Joueur {
      * @return un AttackResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Result attaque(int attaqueur, Joueur attaque) {
-        Result res;
+    public Resultat attaque(int attaqueur, Joueur attaque) {
+        Resultat res;
         if ( carteEnJeu.size() != 0) {
-            res = new RefusedResult("Impossible d'attaquer le joueur, il y a encore des cartes en jeux.");
+            res = new RefuseResult("Impossible d'attaquer le joueur, il y a encore des cartes en jeux.");
             return res;
         }
         
@@ -205,11 +205,11 @@ public class Joueur {
      * @return une Liste de Result, chaqu'un étant soit un EnchantResult si tout c'est bien passé
      *         sinon un RefusedResult
      */
-    public List<Result> ajouterEnchants (List<Integer> enchs, int perso) {
-        List<Result> lr = new ArrayList<>();
-        Result res;
+    public List<Resultat> ajouterEnchants (List<Integer> enchs, int perso) {
+        List<Resultat> lr = new ArrayList<>();
+        Resultat res;
         if ( carteEnJeu.get(perso) == null ) {
-            res = new RefusedResult("Impossible d'enchanter cette carte.");
+            res = new RefuseResult("Impossible d'enchanter cette carte.");
             lr.add(res);
             return lr;
         }
@@ -232,17 +232,17 @@ public class Joueur {
      * @return un PersoDeploieResult si tout c'est bien passé
      *         un Refusedresult sinon
      */
-    public Result placerPerso(int personnage, int arme) {
+    public Resultat placerPerso(int personnage, int arme) {
         Carte perso = main.get(personnage);
         Carte arm = main.get(arme);
-        Result res;
+        Resultat res;
         if ( !(perso instanceof Perso) || !(arm instanceof Arme) ) {
-            res = new RefusedResult("L'une des 2 cartes est invalide (non perso ou non arme).");
+            res = new RefuseResult("L'une des 2 cartes est invalide (non perso ou non arme).");
             return res;
         }
         
         if ( !((Perso) main.get(personnage)).placerArme((Arme) main.get(arme)) ) {
-            res = new RefusedResult("Impossible d'équiper l'arme");
+            res = new RefuseResult("Impossible d'équiper l'arme");
             return res;
         }
         
@@ -258,12 +258,12 @@ public class Joueur {
      * @return RefusedResult si le joueur à déjà perdu
      *         FinDePartieResult si le joueur à déclarer forfait
      */
-    public Result declarerForfait() {
-        Result res;
+    public Resultat declarerForfait() {
+        Resultat res;
         int i;
         
         if ( this.aPerdu() ) {
-            res = new RefusedResult("Vous avez déjà perdu");
+            res = new RefuseResult("Vous avez déjà perdu");
             return res;
         }
         
@@ -289,7 +289,7 @@ public class Joueur {
      * @return RefusedResult si le joueur ne peux pas soigner le personnage soignee
      *         SoinsResult si le joueur peu être soigné
      */
-    public Result soignerPerso(int soigneur, int soignee) {
+    public Resultat soignerPerso(int soigneur, int soignee) {
         return ( (Perso) carteEnJeu.get(soigneur))
                         .soigner(
                                 (Perso) carteEnJeu.get(soignee)

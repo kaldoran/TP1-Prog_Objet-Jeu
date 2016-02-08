@@ -5,7 +5,7 @@
  */
 package cardgame;
 
-import cardgame.ResultUtils.RefusedResult;
+import cardgame.ResultUtils.RefuseResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -56,7 +56,7 @@ public class Jeux {
      * @param idJoueur id du joueur déclarant forfait
      * @return 
      */
-    public Result declarerForfait(int idJoueur) {
+    public Resultat declarerForfait(int idJoueur) {
         if ( joueurTour == idJoueur )
             return joueurList.get(idJoueur).declarerForfait();
         
@@ -97,10 +97,10 @@ public class Jeux {
      * @return une liste de Result, PiocheResult en cas de succes de la pioche
      *         un RefusedResult sinon
      */
-    public List<Result> piocherCartes(int idJoueur) {
-        List<Result> res = new ArrayList<>();
+    public List<Resultat> piocherCartes(int idJoueur) {
+        List<Resultat> res = new ArrayList<>();
         if ( idJoueur != aQuiLeTour() ) {
-            res.add(new RefusedResult("Ce n'est pas le tour de ce joueur."));
+            res.add(new RefuseResult("Ce n'est pas le tour de ce joueur."));
             return res;
         }
         
@@ -108,30 +108,30 @@ public class Jeux {
         throw new UnsupportedOperationException("Not implemented");
     }
     
-    public Result attaquePerso(int idJoueur, int idAttaqueur, int idReceveur) {
+    public Resultat attaquePerso(int idJoueur, int idAttaqueur, int idReceveur) {
         // tester si la carte est morte, si oui modifier le Result recu de attaque Joueur
         // et mettre aTuer à True.
         
         throw new UnsupportedOperationException("Not implemented");
     }
     
-    public Result attaqueJoueur(int idJoueur, int idAttaquer ) {
+    public Resultat attaqueJoueur(int idJoueur, int idAttaquer ) {
         return joueurList.get(idJoueur).attaque(idJoueur, joueurList.get(idAttaquer));
     }
     
-    public List<Result> ajouterEnchantements(int idJoueur, int carteTouche, List<Integer> enchant) {
+    public List<Resultat> ajouterEnchantements(int idJoueur, int carteTouche, List<Integer> enchant) {
         return joueurList.get(idJoueur).ajouterEnchants(enchant, carteTouche);
     }
     
-    public Result placerPerso(int idJoueur, int personnage, int arme) {
+    public Resultat placerPerso(int idJoueur, int personnage, int arme) {
         return joueurList.get(idJoueur).placerPerso(personnage, arme);
     }
     
-    public Result defausserCartes(int idJoueur, List<Integer> defausse) {
+    public Resultat defausserCartes(int idJoueur, List<Integer> defausse) {
         return joueurList.get(idJoueur).defausserCartes(defausse);
     }
     
-    public Result soignerPerso(int idJoueur, int soigneur, int soignee) {
+    public Resultat soignerPerso(int idJoueur, int soigneur, int soignee) {
         return joueurList.get(idJoueur).soignerPerso(soigneur, soignee);
     }
     

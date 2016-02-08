@@ -9,7 +9,7 @@ package cardgame;
  *
  * @author kaldoran
  */
-public interface Result {
+public interface Resultat {
     
     /**
      * Déclaration de coupAMarcher, Interface Result

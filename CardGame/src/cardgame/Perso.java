@@ -5,8 +5,8 @@
  */
 package cardgame;
 
-import cardgame.ResultUtils.AttackResult;
-import cardgame.ResultUtils.RefusedResult;
+import cardgame.ResultUtils.AttaqueResult;
+import cardgame.ResultUtils.RefuseResult;
 import cardgame.ResultUtils.SoinsResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +59,11 @@ public class Perso extends Carte {
      * @param attaqueur id de l'attaquant
      * @return un AttackResult
      */
-    public AttackResult prendreDommage(int dommage,int attaqueur) {
+    public AttaqueResult prendreDommage(int dommage,int attaqueur) {
         
         this.hp -= dommage;
         
-        AttackResult ar = new AttackResult(dommage,false,this.cardID,attaqueur,estMort()); 
+        AttaqueResult ar = new AttaqueResult(dommage,false,this.cardID,attaqueur,estMort()); 
             
         return ar;
     }
@@ -87,7 +87,7 @@ public class Perso extends Carte {
      * @return un EnchantResult si l'enchant fonctionne
      *         un RefusedResult sinon
      */
-    public Result ajouterEnchant(Enchant ench) {
+    public Resultat ajouterEnchant(Enchant ench) {
         return armePerso.ajouterEnchant(ench);
     }
     
@@ -112,9 +112,9 @@ public class Perso extends Carte {
      * @return un SoinsResult si le soin à été fait
      *         un RefusedResult sinon
      */
-    public Result soigner(Perso allie) {
+    public Resultat soigner(Perso allie) {
         
-        Result resultat;
+        Resultat resultat;
         
         if ( this.mp > 0 && (this.getCardID() != allie.getCardID()) ) { /// tester que vie allie != Max ?
             --this.mp;
@@ -123,7 +123,7 @@ public class Perso extends Carte {
             // return good Result
         }
         else {
-            resultat = new RefusedResult("Le soigneur n'a plus de magie.");
+            resultat = new RefuseResult("Le soigneur n'a plus de magie.");
         }
         return resultat;
     }

@@ -10,7 +10,7 @@ import cardgame.Enchant;
 import cardgame.Init.GuerrierBuilder;
 import cardgame.Init.PretreBuilder;
 import cardgame.Perso;
-import cardgame.Result;
+import cardgame.Resultat;
 import cardgame.TypeArme;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -144,22 +144,22 @@ public class EnchantTest {
         guerrier1.placerArme(armeC);
         guerrier2.placerArme(armeT);
         
-        Result resultat;
+        Resultat res;
         assertEquals(guerrier1.forceAttaque(guerrier2), 0);
-        resultat = guerrier1.ajouterEnchant(enchNeutre);
-        assertEquals(resultat.getClass().getName(),"cardgame.ResultUtils.EnchantResult");
+        res = guerrier1.ajouterEnchant(enchNeutre);
+        assertEquals(res.getClass().getName(),"cardgame.ResultUtils.EnchantResult");
         
         assertEquals(guerrier1.forceAttaque(guerrier2), 1);
-        resultat = guerrier1.ajouterEnchant(enchDeg);
-        assertEquals(resultat.getClass().getName(),"cardgame.ResultUtils.EnchantResult");  
+        res = guerrier1.ajouterEnchant(enchDeg);
+        assertEquals(res.getClass().getName(),"cardgame.ResultUtils.EnchantResult");  
         
         assertEquals(guerrier1.forceAttaque(guerrier2), 2);
-        resultat = guerrier1.ajouterEnchant(enchStase);
-        assertEquals(resultat.getClass().getName(),"cardgame.ResultUtils.EnchantResult");
+        res = guerrier1.ajouterEnchant(enchStase);
+        assertEquals(res.getClass().getName(),"cardgame.ResultUtils.EnchantResult");
         
         assertEquals(guerrier1.forceAttaque(guerrier2), 0);
-        resultat = guerrier1.ajouterEnchant(enchDegPlus);
-        assertEquals(resultat.getClass().getName(),"cardgame.ResultUtils.RefusedResult");
+        res = guerrier1.ajouterEnchant(enchDegPlus);
+        assertEquals(res.getClass().getName(),"cardgame.ResultUtils.RefuseResult");
         assertEquals(guerrier1.forceAttaque(guerrier2), 0);
 
         // TODO review the generated test code and remove the default call to fail.

@@ -5,13 +5,13 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Result;
+import cardgame.Resultat;
 
 /**
  *
  * @author kaldoran
  */
-public class PersoDeploieResult implements Result {
+public class PersoDeploieResult implements Resultat {
 
     private final String description;
     private int joueurId;

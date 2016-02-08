@@ -6,14 +6,14 @@
 package cardgame.ResultUtils;
 
 import cardgame.Carte;
-import cardgame.Result;
+import cardgame.Resultat;
 import java.util.List;
 
 /**
  *
  * @author kaldoran
  */
-public class DefausseResult implements Result {
+public class DefausseResult implements Resultat {
 
     List<Carte> cartesDefausses;
     private int joueurId;

@@ -5,13 +5,13 @@
  */
 package cardgame.ResultUtils;
 
-import cardgame.Result;
+import cardgame.Resultat;
 
 /**
  *
  * @author kaldoran
  */
-public class AttackResult implements Result {
+public class AttaqueResult implements Resultat {
     private final int dommageRecu;
     private int attaqueur;
     private final boolean attaqueJoueur;
@@ -20,7 +20,7 @@ public class AttackResult implements Result {
     private final boolean attaqueTuer; 
     private final String desc;
     
-    public AttackResult(int dmg, int joueurId,boolean joueurAttaque,int carteId,int persoCoupId,boolean attaqueTue){
+    public AttaqueResult(int dmg, int joueurId,boolean joueurAttaque,int carteId,int persoCoupId,boolean attaqueTue){
         dommageRecu = dmg;
         attaqueur = joueurId;
         attaqueJoueur = joueurAttaque;
@@ -30,7 +30,7 @@ public class AttackResult implements Result {
         desc = "Attaque d'un personnage";
     }
     
-        public AttackResult(int dmg,boolean joueurAttaque,int carteId,int persoCoupId,boolean attaqueTue){
+        public AttaqueResult(int dmg,boolean joueurAttaque,int carteId,int persoCoupId,boolean attaqueTue){
         dommageRecu = dmg;
         attaqueJoueur = joueurAttaque;
         idCarte = carteId;
