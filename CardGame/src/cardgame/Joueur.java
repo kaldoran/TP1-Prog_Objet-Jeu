@@ -5,6 +5,11 @@
  */
 package cardgame;
 
+import cardgame.ResultUtils.AttackResult;
+import cardgame.ResultUtils.DefausseResult;
+import cardgame.ResultUtils.FinDePartieResult;
+import cardgame.ResultUtils.PersoDeploieResult;
+import cardgame.ResultUtils.PiocheResult;
 import cardgame.ResultUtils.RefusedResult;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,6 +23,7 @@ import javax.json.JsonObjectBuilder;
  * @author kaldoran
  */
 public class Joueur {
+    private int idJoueur;
     private Deck carteDeck;
     private List<Card> main;
     private List<Card> carteEnJeu;
@@ -28,6 +34,14 @@ public class Joueur {
         main = new ArrayList<>();
         cimetiere = new ArrayList<>();
         carteEnJeu = new ArrayList<>();
+    }
+    
+    public int getIdjoueur() {
+        return idJoueur;
+    }
+    
+    public void setIdJoueur(int _idJoueur) {
+        idJoueur = _idJoueur;
     }
     
     /**
@@ -78,13 +92,29 @@ public class Joueur {
      *         Un RefusedResult sinon
      */
     public Result defausserCartes(List<Integer> defausse) {
+        Result res;
+        List<Card> lc = new ArrayList();
         
-        for ( int i = 0; i < defausse.size(); i++)
-            cimetiere.add(main.remove((int) defausse.get(i)));
+        if ( defausse.isEmpty() ) {
+            res = new RefusedResult("La Liste est vide.");
+            return res;
+        }
         
-        // return good result
+        for ( int i = 0; i < defausse.size(); i++) {
+            int card = defausse.get(i);
+            if ( card < 0 || card > main.size() ) {
+                res = new RefusedResult("La carte " + i + " n'est pas présente dans votre main.");
+                return res;
+            }
+            
+            Card tmp = main.remove(card);
+            
+            lc.add(tmp);
+            cimetiere.add(tmp);
+        }
         
-        throw new UnsupportedOperationException("Not implemented");
+        res = new DefausseResult(this.getIdjoueur(), true, lc);
+        return res;
     }
     
     /**
@@ -93,13 +123,19 @@ public class Joueur {
      *         un RefusedResult sinon
      */
     public Result piocher() {
+        Result res;
         int nbAPiocher = Regle.CARTEMAIN - main.size();
         List<Card> lc = carteDeck.piocherCarte(nbAPiocher);
         
-        for ( int i = 0; i < nbAPiocher; i++)
-            main.add(lc.get(i));
+        if ( nbAPiocher == 0 ) {
+            res = new RefusedResult("Votre main contient déjà le maximum de carte");
+            return res;
+        }
         
-        throw new UnsupportedOperationException("Not implemented");
+        main.addAll(lc);
+        
+        res = new PiocheResult(this.getIdjoueur(), true, lc);
+        return res;
     }
     
     /** 
@@ -109,8 +145,17 @@ public class Joueur {
      *         un RefusedResult sinon
      */
     public Result recoitAttaque(int degat) {
-        carteDeck.dommageJoueur(degat);
-        throw new UnsupportedOperationException("Not implemented");
+        Result res;
+        
+        if ( degat <= 0 ) { 
+            res = new RefusedResult("Un dégat ne peux être négatif.");
+            return res;
+        }
+               
+        cimetiere.addAll(carteDeck.dommageJoueur(degat));
+        
+        res = new AttackResult(degat, true, 0, 0, this.aPerdu());
+        return res;
     }
     
     /**
@@ -124,13 +169,13 @@ public class Joueur {
         Result res;
         if ( !carteEnJeu.contains(attaque) || !(attaque instanceof Perso) ) {
             res = new RefusedResult("Impossible d'attaquer cette carte, celle ci n'est pas un perso ou sur le terrain.");
+            return res;
         }
         
         int degat = ((Perso) carteEnJeu.get(attaqueur)).forceAttaque((Perso) attaque);
-        ((Perso) attaque).prendreDommage(degat,attaqueur);
+        res = ((Perso) attaque).prendreDommage(degat,attaqueur);
         
-        // return good result
-        throw new UnsupportedOperationException("Not implemented");
+        return res;
     }
     
     /**
@@ -144,14 +189,13 @@ public class Joueur {
         Result res;
         if ( carteEnJeu.size() != 0) {
             res = new RefusedResult("Impossible d'attaquer le joueur, il y a encore des cartes en jeux.");
+            return res;
         }
         
         int degat = ((Perso) carteEnJeu.get(attaqueur)).forceAttaque();
-        attaque.recoitAttaque(degat);
+        res = attaque.recoitAttaque(degat);
         
-        // return good result
-        
-        throw new UnsupportedOperationException("Not implemented");
+        return res;
     }
     
     /**
@@ -178,14 +222,18 @@ public class Joueur {
         Result res;
         if ( !(perso instanceof Perso) || !(arm instanceof Arme) ) {
             res = new RefusedResult("L'une des 2 cartes est invalide (non perso ou non arme).");
+            return res;
         }
         
-        ((Perso) main.get(personnage)).placerArme((Arme) arm);
+        if ( !((Perso) main.get(personnage)).placerArme((Arme) main.get(arme)) ) {
+            res = new RefusedResult("Impossible d'équiper l'arme");
+            return res;
+        }
+        
         carteEnJeu.add(main.remove(personnage));
         
-        // return good Result
-        
-        throw new UnsupportedOperationException("Not implemented");
+        res = new PersoDeploieResult(this.getIdjoueur(), true, personnage, arme);
+        return res;
     }
     
     /**
@@ -195,7 +243,14 @@ public class Joueur {
      *         FinDePartieResult si le joueur à déclarer forfait
      */
     public Result declarerForfait() {
+        Result res;
         int i;
+        
+        if ( this.aPerdu() ) {
+            res = new RefusedResult("Vous avez déjà perdu");
+            return res;
+        }
+        
         for ( i = 0; i < main.size(); i++)
             cimetiere.add(main.remove(i));
         
@@ -207,9 +262,8 @@ public class Joueur {
         for ( i = 0; i < carteEnJeu.size(); i++)
             cimetiere.add(carteEnJeu.remove(i));
         
-        // return Result good.
-        
-        throw new UnsupportedOperationException("Not implemented");
+        res = new FinDePartieResult(this.getIdjoueur(), true, -1);
+        return res;
     }
     
     /**

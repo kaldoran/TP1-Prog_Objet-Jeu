@@ -103,10 +103,12 @@ public class EnchantTest {
         Arme armeT = new Arme(TypeArme.Tranchant,1);
         Arme armeP = new Arme(TypeArme.Perforant,1);
         Arme armeC = new Arme(TypeArme.Contondant,1);
+        
         GuerrierBuilder gue = new GuerrierBuilder();
         Perso guerrier1 = gue.buildNewPerso();
         Perso guerrier2 = gue.buildNewPerso();
         Perso guerrier3 = gue.buildNewPerso();
+        
         Enchant ench = new EnchantNeutre();
         guerrier1.placerArme(armeT);
         guerrier2.placerArme(armeP);
@@ -129,9 +131,11 @@ public class EnchantTest {
          System.out.println("placerEnchant Stases de l'arme");
         Arme armeT = new Arme(TypeArme.Tranchant,1);
         Arme armeC = new Arme(TypeArme.Contondant,1);
+        
         GuerrierBuilder gue = new GuerrierBuilder();
         Perso guerrier1 = gue.buildNewPerso();
         Perso guerrier2 = gue.buildNewPerso();
+        
         Enchant enchNeutre = new EnchantNeutre();
         Enchant enchDeg = new EnchantDegatPlus();
         Enchant enchStase = new EnchantStase();
@@ -139,16 +143,20 @@ public class EnchantTest {
 
         guerrier1.placerArme(armeC);
         guerrier2.placerArme(armeT);
+        
         Result resultat;
         assertEquals(guerrier1.forceAttaque(guerrier2), 0);
         resultat = guerrier1.ajouterEnchant(enchNeutre);
         assertEquals(resultat.getClass().getName(),"cardgame.ResultUtils.EnchantResult");
+        
         assertEquals(guerrier1.forceAttaque(guerrier2), 1);
         resultat = guerrier1.ajouterEnchant(enchDeg);
-        assertEquals(resultat.getClass().getName(),"cardgame.ResultUtils.EnchantResult");        
+        assertEquals(resultat.getClass().getName(),"cardgame.ResultUtils.EnchantResult");  
+        
         assertEquals(guerrier1.forceAttaque(guerrier2), 2);
         resultat = guerrier1.ajouterEnchant(enchStase);
         assertEquals(resultat.getClass().getName(),"cardgame.ResultUtils.EnchantResult");
+        
         assertEquals(guerrier1.forceAttaque(guerrier2), 0);
         resultat = guerrier1.ajouterEnchant(enchDegPlus);
         assertEquals(resultat.getClass().getName(),"cardgame.ResultUtils.RefusedResult");

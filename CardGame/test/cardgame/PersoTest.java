@@ -8,13 +8,9 @@ package cardgame;
 import cardgame.EnchantUtils.EnchantDegatPlus;
 import cardgame.EnchantUtils.EnchantFacile;
 import cardgame.EnchantUtils.EnchantNeutre;
-import cardgame.Init.ArmeFactory;
 import cardgame.Init.GuerrierBuilder;
 import cardgame.Init.PaladinBuilder;
 import cardgame.Init.PretreBuilder;
-import cardgame.ResultUtils.AttackResult;
-import java.util.List;
-import javax.json.JsonObject;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -53,21 +49,29 @@ public class PersoTest {
     @Test
     public void testForceAttaque_0args() {
         System.out.println("forceAttaque");
+        
         PaladinBuilder pal = new PaladinBuilder();
         PretreBuilder pre = new PretreBuilder();
+        
         Perso paladin = pal.buildNewPerso();
         Perso pretre = pre.buildNewPerso();
+        
         Arme arm1 = new Arme(TypeArme.Contondant,1);
         Arme arm2 = new Arme(TypeArme.Contondant,2);
+        
         Enchant ench = new EnchantDegatPlus();
+        
         paladin.placerArme(arm1);
         pretre.placerArme(arm2);
+        
         int expResult = 1;
         int result = paladin.forceAttaque();
         assertEquals(expResult, result);
+        
         expResult = 2;
         result = pretre.forceAttaque();
         assertEquals(expResult, result);
+        
         pretre.ajouterEnchant(ench);
         expResult++;
         result = pretre.forceAttaque();
@@ -83,6 +87,7 @@ public class PersoTest {
     @Test
     public void testForceAttaque_Perso() {
         System.out.println("forceAttaque sur un/des ennemi");
+        
         PaladinBuilder pal = new PaladinBuilder();
         PretreBuilder pre = new PretreBuilder();
         GuerrierBuilder gue = new GuerrierBuilder();
@@ -91,7 +96,6 @@ public class PersoTest {
         Perso pretre = pre.buildNewPerso();
         Perso guerrier = gue.buildNewPerso();
 
-        
         Arme armC = new Arme(TypeArme.Contondant,1);
         Arme armT = new Arme(TypeArme.Tranchant,2);
         Arme armP = new Arme(TypeArme.Perforant,2);
@@ -103,18 +107,23 @@ public class PersoTest {
         int expResult = 0;
         int result = pretre.forceAttaque(paladin);
         assertEquals(expResult, result);
+        
         expResult = 2;
         result = pretre.forceAttaque(guerrier);
         assertEquals(expResult, result);
+        
         expResult = 3;
         result = paladin.forceAttaque(pretre);
         assertEquals(expResult, result);
+        
         expResult = 1;
         result = paladin.forceAttaque(guerrier);
         assertEquals(expResult, result);
+        
         expResult = 3;
         result = guerrier.forceAttaque(paladin);
         assertEquals(expResult, result);
+        
         expResult = 1;
         result = guerrier.forceAttaque(pretre);
         assertEquals(expResult, result);

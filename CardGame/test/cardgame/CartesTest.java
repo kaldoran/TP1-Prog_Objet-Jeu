@@ -52,13 +52,18 @@ public class CartesTest {
     public void TestInitCartes() {
         System.out.println("TestInitCartes");
         List<Card> deck = new ArrayList<>();
+        
+        // Ajout de 3 cartes ( une Perso, une Arme, une Enchant)
         deck.add(new Perso(5,0,TypePerso.Guerrier));
         deck.add(new Arme(TypeArme.Contondant, 2));
         deck.add(new EnchantDegatPlus());
+        
         System.out.println(deck.get(0).toJSON().toString());
         System.out.println(deck.get(1).toJSON().toString());
         System.out.println(deck.get(2).toJSON().toString());  
-         JsonObjectBuilder verifPers = Json.createObjectBuilder();
+        
+        // Test du JSon
+        JsonObjectBuilder verifPers = Json.createObjectBuilder();
         JsonObjectBuilder verifArme = Json.createObjectBuilder();
         JsonObjectBuilder verifEnchant = Json.createObjectBuilder();
 
@@ -69,6 +74,7 @@ public class CartesTest {
         verifArme.add("Degats", 2);
         verifEnchant.add("Nom", EnchantDegatPlus.class.getCanonicalName());
         verifEnchant.add("Description", "Cette carte augmente les degats de l'arme choisi par un.");
+        
         assertEquals(deck.get(0).toJSONTest(), verifPers.build());
         assertEquals(deck.get(1).toJSONTest(), verifArme.build());
         assertEquals(deck.get(2).toJSONTest(), verifEnchant.build());

@@ -47,21 +47,33 @@ public class DeckTest {
     public void testPiocherCarte() {
         System.out.println("piocherCarte");
         int nbCartes = 5;
+        
+        // Création d'un nouveau deck comme celui d'une partie Normale
         Deck instance = new Deck();
+        
+        // On essai de piocher des 5 Cartes
         List<Card> result = instance.piocherCarte(nbCartes);
+        
+        // Verification des méthodes de pioches
         assertEquals(5, result.size());
-        assertEquals(27, instance.carteRestantes());        
+        assertEquals(27, instance.carteRestantes());     
+        
+        // On essai de piocher 3 cartes
         result = instance.piocherCarte(3);
         assertEquals(3, result.size());
+        
+        // On verifie qu'il reste bien autant de carte qu'il devrait en avoir
         assertEquals(24, instance.carteRestantes());
         System.out.println("Les cartes sont correctement pigés.");
+        
+        // On pioche toutes les cartes réstante, en les piochants 5 par 5.
         result = instance.piocherCarte(nbCartes);
         result = instance.piocherCarte(nbCartes);
         result = instance.piocherCarte(nbCartes);
-        result = instance.piocherCarte(nbCartes);
-        result = instance.piocherCarte(nbCartes);
-        assertEquals(4, result.size());
-        assertEquals(0, instance.carteRestantes());
+        result = instance.piocherCarte(nbCartes); // 20 cartes piochées
+        result = instance.piocherCarte(nbCartes); // On Essai d'en piocher 5 ( il en reste que 4)
+        assertEquals(4, result.size()); // On en recoit bien que 4
+        assertEquals(0, instance.carteRestantes()); // La pioche est vide.
         System.out.println("On peut piocher des cartes jusqu'à la dernière possible.");
         
     }
