@@ -1,18 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame.Regles;
 
 /**
+ * Classe non instantiable, Regle sert de conteneur pour les valeurs
+ * paramétrisables du jeu.
  *
- * @author kaldoran
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ *
+ * Historique :
+ *
+ * -8 Fév-2016 : 1.0 Version initiale.
  */
-public interface Regle {
-    
+public class Regle {
+
+    private Regle() {
+    }
+
     /**
-     * Liste de toutes les regles de jeu.
+     * Liste de toutes les règles de jeu.
      */
     public static final int GUERRIERHP = 5;
     public static final int GUERRIERMP = 0;

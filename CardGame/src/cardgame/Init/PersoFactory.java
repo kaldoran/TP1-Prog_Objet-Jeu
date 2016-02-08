@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame.Init;
 
 import cardgame.Cartes.Perso;
@@ -11,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe basé sur le patron Factory utilisé pour instancier des cartes personnages.
- * La classe est écrite de telle manière que tout ajouts de nouveaus personnages dans le
- * jeu a seulement besoin d'être ajouté comme fonction dans cette classe ainsi que
- * d'inscrire ces règles dans la classe Règle.
- * 
+ * Classe basé sur le patron Factory utilisé pour instancier des cartes
+ * personnages. La classe est écrite de telle manière que tout ajout de nouveaux
+ * personnages dans le jeu nécessite seulement d'être ajouté comme fonction dans
+ * cette classe ainsi que d'inscrire ces règles dans la classe Règle.
+ *
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reymaud REYN23119308
  * @version 1.0
- * Historique :
- * 8 Fév-2016 : 1.0 Version initiale.
+ *
+ * Historique : 8 Fév-2016 : 1.0 Version initiale.
  */
 public class PersoFactory {
 
