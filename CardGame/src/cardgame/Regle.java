@@ -10,6 +10,10 @@ package cardgame;
  * @author kaldoran
  */
 public interface Regle {
+    
+    /**
+     * Liste de toutes les regles de jeu.
+     */
     public static final int GUERRIERHP = 5;
     public static final int GUERRIERMP = 0;
     public static final int PRETREHP = 3;

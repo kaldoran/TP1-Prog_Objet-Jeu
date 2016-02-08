@@ -16,8 +16,12 @@ import java.util.List;
  */
 public class EnchantFactory {
     
-    
-     public List<Enchant> creerSetEnchants(int nbCopies) {
+    /**
+     * Permet de crée un ensemble de même enchant
+     * @param nbCopies nombre de copie de l'enchant
+     * @return Une liste de nbCopie élement contenant tout les énchants.
+     */
+    public List<Enchant> creerSetEnchants(int nbCopies) {
         List<Enchant> enchantements = new ArrayList<>();
     
         for (int copieAct = 0; copieAct < nbCopies; copieAct++) {
@@ -26,8 +30,8 @@ public class EnchantFactory {
             enchantements.add(new EnchantDegatPlus());
             enchantements.add(new EnchantDegatMoins());
             enchantements.add(new EnchantFacile());
-
         }
+        
         return enchantements;
     }
 }

@@ -14,6 +14,9 @@ import java.util.List;
  */
 public enum TypeArme {
     
+    /**
+     * Déclaration de l'enum des types d'armes possibles dans le jeu
+     */
     Contondant("Contondant","Perforant","Tranchant",TypePerso.values()),
     Perforant("Perforant","Tranchant","Contondant",TypePerso.Guerrier,TypePerso.Paladin),
     Tranchant("Tranchant","Contondant","Perforant",TypePerso.Guerrier,TypePerso.Paladin),
@@ -31,6 +34,13 @@ public enum TypeArme {
         users = Arrays.asList(t);
     }
     
+    /**
+     * Définie le triangle de modification de dégat
+     * @param armeEnnemi Type d'arme de l'ennemi
+     * @return 1 si l'arme armeEnnemi est plus forte de l'arme actuelle
+     *        -1 si elle est moins forte
+     *         0 Sinon
+     */
     public int calculModificateur(TypeArme armeEnnemi) {
         if ( this.force.equals(armeEnnemi.nom)) 
             return 1;
@@ -40,6 +50,10 @@ public enum TypeArme {
         return 0;
     }
     
+    /**
+     * Liste des utilisateurs pouvant utiliser cette arme
+     * @return 
+     */
     public List<TypePerso> getUtilisateurs(){
         return users;
     }

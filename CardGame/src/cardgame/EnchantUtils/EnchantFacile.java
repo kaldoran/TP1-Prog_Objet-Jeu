@@ -19,6 +19,11 @@ public class EnchantFacile extends Enchant {
     public EnchantFacile() {
         super("Cette carte rend cette arme utilisable par tout le monde.");
     }
+    
+    /**
+     * Modifie les utilisateurs de l'arme
+     * @param arme arme qui pourra être équipée par tout le monde
+     */
     @Override
     public void placerEnchant(Arme arme) {
         arme.setListUtilisateurs(Arrays.asList(TypePerso.values()));

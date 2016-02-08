@@ -10,6 +10,10 @@ package cardgame;
  * @author kaldoran
  */
 public enum TypePerso {
+    
+    /**
+     * Définie la liste des personnages possible
+     */
     Guerrier,
     Paladin,
     Mage;

@@ -25,17 +25,29 @@ public class GuerrierBuilder implements PersoBuilder {
         tp = TypePerso.Guerrier;
     }
     
+    /**
+     * Permet d'instancier un nouveau perso Guerrier
+     * @return un nouveau personnage
+     */
     @Override
     public Perso buildNewPerso() {
         Perso personage = new Perso(hp,mp,tp);
         return personage;
     }
 
+    /** 
+     * Permet de modifier la vie du Guerrier
+     * @param vie nouveau point de vie
+     */
     @Override
     public void setHP(int vie) {
         hp = vie;
     }
 
+    /**
+     * Permet de modifier les points de magie du Guerrier
+     * @param magie nouveau point de magie
+     */
     @Override
     public void setMP(int magie) {
         mp = magie;

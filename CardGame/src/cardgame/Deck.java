@@ -19,13 +19,16 @@ import javax.json.JsonObjectBuilder;
  * @author kaldoran
  */
 public class Deck {
-    private final List<Card> cartespioches;
+    private List<Card> cartespioches;
     
     public Deck(){
         cartespioches = new ArrayList<>();
         initialiserDeck();
     }
     
+    /**
+     * Permet de crée le deck et d'initialiser son contenu
+     */
     private void initialiserDeck() {
         ArmeFactory createurArmes = new ArmeFactory();
         EnchantFactory createurEnchants = new EnchantFactory();
@@ -50,6 +53,11 @@ public class Deck {
         Collections.shuffle(cartespioches, new Random(System.nanoTime()));
     }
     
+    /**
+     * Permet de piocher une liste de carte
+     * @param nbCartes nombre de carte à piocher
+     * @return Liste des cartes piochées
+     */
     public List<Card> piocherCarte(int nbCartes) {
         int nbAPiocher = Math.min(nbCartes, this.carteRestantes());
         nbAPiocher = Math.min(nbAPiocher, 5);
@@ -64,14 +72,28 @@ public class Deck {
         return l;
     }
     
-    public List<Card> dommageJoueur(int nbCartes) {
-        return piocherCarte(nbCartes);
+    /**
+     * Permet d'appliquer les dégats recu par un joueur sur son Deck
+     * @param nbDegatCarte nombre de dégat pris
+     * @return la Liste des cartes perdues
+     */
+    public List<Card> dommageJoueur(int nbDegatCarte) {
+        return piocherCarte(nbDegatCarte);
     }
     
+    /**
+     * Permet de savoir le nombre de carte réstante dans la pioche
+     * @return le nombre de carte encore présente dans la pioche
+     */
     public int carteRestantes() {
         return cartespioches.size();
     }
     
+    /**
+     * Pemet d'avoir la représentation en JSon du Deck
+     * A noter : Le contenu du deck n'est pas communiqué
+     * @return la représentation du Deck en JSon
+     */
     public JsonObject toJSon() {
         JsonObjectBuilder obj = Json.createObjectBuilder();    
         obj.add("Nombre de cartes restantes a piger", cartespioches.size());

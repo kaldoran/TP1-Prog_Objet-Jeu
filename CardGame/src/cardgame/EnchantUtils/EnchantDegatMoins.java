@@ -18,6 +18,10 @@ public class EnchantDegatMoins extends Enchant {
         super("Cette carte abaisse les dommages de l'arme choisi par 1.");
     }
     
+    /**
+     * Modifie les degats de l'arme passé en parametre.
+     * @param arme arme dont les degats vont etre diminué
+     */
     @Override
     public void placerEnchant(Arme arme) {
             arme.setDegat(arme.getDegat() - 1);

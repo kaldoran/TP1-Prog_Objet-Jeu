@@ -22,6 +22,10 @@ public abstract class Enchant extends Card {
         description = desc;
     }
     
+    /**
+     * Permet d'avoir la représentation de la carte d'enchant
+     * @return le JSon représentant l'enchant de la carte
+     */
     @Override
     public JsonObject toJSON() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
@@ -32,6 +36,10 @@ public abstract class Enchant extends Card {
         return obj.build();    
     }
     
+    /**
+     * Permet d'avoir la représentation de la carte lors des tests
+     * @return le JSon représentant l'enchant lors des tests
+     */
     @Override
     public JsonObject toJSONTest() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
@@ -41,6 +49,10 @@ public abstract class Enchant extends Card {
         return obj.build();    
     }
     
+    /** 
+     * Déclaration de la fonction placerEnchant, celle ci n'a aucun effet
+     * @param arme Arme sur laquel placer enchant
+     */
     public abstract void placerEnchant(Arme arme);
     
    

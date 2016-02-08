@@ -17,6 +17,11 @@ public class EnchantStase extends Enchant {
     public EnchantStase() {
         super("Cette carte applique un effet de Stase sur l'arme choisi.");
     }
+    
+    /**
+     * Modifie l'arme est la met en stase
+     * @param arme arme qui va être mise sous stase.
+     */
     @Override
     public void placerEnchant(Arme arme) {
         arme.staserArme();

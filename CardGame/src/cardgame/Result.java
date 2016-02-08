@@ -11,8 +11,28 @@ package cardgame;
  */
 public interface Result {
     
+    /**
+     * Déclaration de coupAMarcher, Interface Result
+     * @return rien, non déclarée ici
+     */
     public boolean coupAMarcher();
+    
+    /**
+     * Déclaration de getDescription, Interface Result
+     * @return rien, non déclarée ici
+     */
     public String getDescription();
+    
+    /**
+     * Déclaration de coupJouerPar, Interface Result
+     * @return rien, non déclarée ici
+     */
     public int coupJouerPar();
+    
+    /**
+     * Déclaration de setJoueur, Interface Result
+     * @param idJoueur non définie ici
+     * @return rien, non déclarée ici
+     */
     public void setJoueur(int idJoueur);
 }

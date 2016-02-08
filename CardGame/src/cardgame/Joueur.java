@@ -5,8 +5,13 @@
  */
 package cardgame;
 
+import cardgame.ResultUtils.RefusedResult;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 /**
  *
@@ -14,36 +19,66 @@ import java.util.Map;
  */
 public class Joueur {
     private Deck carteDeck;
-    // private Map<Integer, Card> main;
-    // private Map<Integer, Card> carteEnJeu;
-    // private Map<Integer, Card> cimetiere;
     private List<Card> main;
     private List<Card> carteEnJeu;
     private List<Card> cimetiere;
     
+    public Joueur() { 
+        carteDeck = new Deck();
+        main = new ArrayList<>();
+        cimetiere = new ArrayList<>();
+        carteEnJeu = new ArrayList<>();
+    }
     
+    /**
+     * Permet d'obtenir le deck du joueur
+     * @return le deck du joueur
+     */
     public Deck getCarteDeck() {
         return carteDeck;
     }
     
+    /**
+     * Permet d'avoir la main du joueur
+     * @return la liste de Carte contenu dans la main du joueur
+     */
     public List<Card> getMain() {
         return main;
     }
     
+    /**
+     * Pemet d'avoir les cartes en jeu du joueur
+     * @return la liste de carte présente sur le jeu, cartes associées au joueur
+     */
     public List<Card> getCarteEnJeu() {
         return carteEnJeu;
     }
     
+    /**
+     * Permet d'avoir le cimetiere du joueur
+     * @return la liste de carte présente dans le cimetiere du joueur
+     */
     public List<Card> getCimetiere() {
         return cimetiere;
     }
     
+    /**
+     * Permet de savoir si le joueur à perdu
+     * @return true si le joueur à perdu (autrement dit si il n'a plus de carte null part ) [Cimetiere non compris]
+     *         false sinon
+     */
     public boolean aPerdu() {
         return main.size() > 0 && carteEnJeu.size() > 0 && carteDeck.carteRestantes() > 0;
     }
     
+    /**
+     * Permet au joueur de defausser une liste de Carte
+     * @param defausse liste des cartes à défausser
+     * @return Un DefausseResult si la defausse s'est bien passé
+     *         Un RefusedResult sinon
+     */
     public Result defausserCartes(List<Integer> defausse) {
-        // Should return list of Result (If card is in hand etc )
+        
         for ( int i = 0; i < defausse.size(); i++)
             cimetiere.add(main.remove((int) defausse.get(i)));
         
@@ -52,6 +87,11 @@ public class Joueur {
         throw new UnsupportedOperationException("Not implemented");
     }
     
+    /**
+     * Permet au joueur de piocher des cartes 
+     * @return un PiocheResult si tout s'est bien passé
+     *         un RefusedResult sinon
+     */
     public Result piocher() {
         int nbAPiocher = Regle.CARTEMAIN - main.size();
         List<Card> lc = carteDeck.piocherCarte(nbAPiocher);
@@ -62,14 +102,28 @@ public class Joueur {
         throw new UnsupportedOperationException("Not implemented");
     }
     
+    /** 
+     * Permet à un joueur de recevoir une attaque
+     * @param degat Quantité de dégats pris
+     * @return un AttackResult si tout c'est bien passé
+     *         un RefusedResult sinon
+     */
     public Result recoitAttaque(int degat) {
         carteDeck.dommageJoueur(degat);
         throw new UnsupportedOperationException("Not implemented");
     }
     
+    /**
+     * Permet à un joueur d'attaquer une carte à l'aide d'une autre carte
+     * @param attaqueur position de la carte attaquant sur le jeu
+     * @param attaque   Carte à attaquer
+     * @return un AttackResult si tout c'est bien passé
+     *         un RefusedResult sinon
+     */
     public Result attaque(int attaqueur, Card attaque) {
+        Result res;
         if ( !carteEnJeu.contains(attaque) || !(attaque instanceof Perso) ) {
-            // return Error result
+            res = new RefusedResult("Impossible d'attaquer cette carte, celle ci n'est pas un perso ou sur le terrain.");
         }
         
         int degat = ((Perso) carteEnJeu.get(attaqueur)).forceAttaque((Perso) attaque);
@@ -79,9 +133,17 @@ public class Joueur {
         throw new UnsupportedOperationException("Not implemented");
     }
     
+    /**
+     * Permet à un joueur d'attaquer un joueur à l'aide d'une de ses cartes
+     * @param attaqueur position de la carte attaquant sur le jeu
+     * @param attaque   Joueur à attaquer
+     * @return un AttackResult si tout c'est bien passé
+     *         un RefusedResult sinon
+     */
     public Result attaque(int attaqueur, Joueur attaque) {
+        Result res;
         if ( carteEnJeu.size() != 0) {
-            // return Error result
+            res = new RefusedResult("Impossible d'attaquer le joueur, il y a encore des cartes en jeux.");
         }
         
         int degat = ((Perso) carteEnJeu.get(attaqueur)).forceAttaque();
@@ -92,16 +154,30 @@ public class Joueur {
         throw new UnsupportedOperationException("Not implemented");
     }
     
-    public List<Result> ajouterEnchants (List<? extends Map<Integer, Integer>> enchs, Joueur opposant) {
+    /**
+     * Permet d'ajouter une liste d'enchant à un joueur
+     * @param enchs liste des positions des enchants dans la main
+     * @param opposant Joueur à enchanter
+     * @return une Liste de Result, chaqu'un étant soit un EnchantResult si tout c'est bien passé
+     *         sinon un RefusedResult
+     */
+    public List<Result> ajouterEnchants (List<Integer> enchs, Joueur opposant) {
         throw new UnsupportedOperationException("Not implemented");
     }
     
+    /**
+     * Permet au joueur de placer un personnage en jeu
+     * @param personnage position dans la main du personnage à jouer
+     * @param arme       position dans la main de l'arme à jouer sur le joueur
+     * @return un PersoDeploieResult si tout c'est bien passé
+     *         un Refusedresult sinon
+     */
     public Result placerPerso(int personnage, int arme) {
         Card perso = main.get(personnage);
         Card arm = main.get(arme);
-        
+        Result res;
         if ( !(perso instanceof Perso) || !(arm instanceof Arme) ) {
-            // return Error result
+            res = new RefusedResult("L'une des 2 cartes est invalide (non perso ou non arme).");
         }
         
         ((Perso) main.get(personnage)).placerArme((Arme) arm);
@@ -112,6 +188,12 @@ public class Joueur {
         throw new UnsupportedOperationException("Not implemented");
     }
     
+    /**
+     * Permet au joueur de declarerForfait
+     * Autrement dit, de passer toutes ces cartes dans le cimetiere.
+     * @return RefusedResult si le joueur à déjà perdu
+     *         FinDePartieResult si le joueur à déclarer forfait
+     */
     public Result declarerForfait() {
         int i;
         for ( i = 0; i < main.size(); i++)
@@ -130,6 +212,13 @@ public class Joueur {
         throw new UnsupportedOperationException("Not implemented");
     }
     
+    /**
+     * Permet d'effectué l'action de soin sur un personnage présent sur le jeu.
+     * @param soigneur Position dans la liste des carteEnJeu du soigneur
+     * @param soignee  Position dans la liste des carteEnJeu du soignee
+     * @return RefusedResult si le joueur ne peux pas soigner le personnage soignee
+     *         SoinsResult si le joueur peu être soigné
+     */
     public Result soignerPerso(int soigneur, int soignee) {
         return ( (Perso) carteEnJeu.get(soigneur))
                         .soigner(
@@ -137,11 +226,72 @@ public class Joueur {
                 );
     }
     
+    /**
+     * Permet de vérifier que le joueur detient la carte qu'il souhaite jouer
+     * @param idCarte id de la carte à verifier
+     * @return true si le joueur posede la carte ayant le carteID égale à idCarte
+     *         false sinon
+     */
     public boolean detientCarte(int idCarte) {
-        throw new UnsupportedOperationException("Not implemented");
+        for ( int i = 0; i < main.size(); i++)
+            if ( main.get(i).cardID == idCarte ) 
+                return true;
+        
+        return false;
     }
     
-    public String toJSon() {
-        throw new UnsupportedOperationException("Not implemented");
-    }  
+    /**
+     * Permet d'avoir le JSon associé à un joueur
+     * @return le JSon objet représentant le joueur
+     */
+    public JsonObject toJSon() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();
+        obj.add("main", this.mainToJSon());
+        obj.add("cimetiere", this.cimetiereToJSton());
+        obj.add("deck", this.deckToJSon());
+        
+        return obj.build();
+    }
+    
+    /**
+     * Permet d'avoir le JSon associé au contenu de la main du joueur
+     * @return le JSon associé à la main
+     */
+    public JsonObject mainToJSon() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();
+        
+        Iterator<Card> cd = main.iterator();
+        int numCarte = 1;
+        while ( cd.hasNext() ) {
+            obj.add("carte #" + numCarte, cd.next().toJSON());
+            ++numCarte;
+        }
+        
+        return obj.build();
+    } 
+    
+    /**
+     * Permet d'avoir le JSon associé au contenu du cimetiere du joueur
+     * @return le JSon associé au cimetiere du joueur
+     */
+    public JsonObject cimetiereToJSton() {
+        JsonObjectBuilder obj = Json.createObjectBuilder();
+        
+        Iterator<Card> cd = cimetiere.iterator();
+        int numCarte = 1;
+        while ( cd.hasNext() ) {
+            obj.add("carte #" + numCarte, cd.next().toJSON());
+            ++numCarte;
+        }
+        
+        return obj.build(); 
+    }
+    
+    /** 
+     * Permet d'avoir le contenu du Deck en format jSon
+     * @return le JSon associé au contenu du Deck du joueur
+     */
+    public JsonObject deckToJSon() {
+        return carteDeck.toJSon();
+    }
 }

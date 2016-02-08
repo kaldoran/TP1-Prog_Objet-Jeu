@@ -12,7 +12,7 @@ import cardgame.Perso;
  * @author kaldoran
  */
 public interface PersoBuilder {
-    
+
     public Perso buildNewPerso();
     
     public void setHP(int vie);

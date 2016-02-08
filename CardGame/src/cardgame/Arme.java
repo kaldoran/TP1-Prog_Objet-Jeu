@@ -40,16 +40,33 @@ public class Arme extends Card {
         listEnchant = new ArrayList<>();
         listEnchantStase = new ArrayList<>();
         estStase = false;
-        
-    }
-    public int forceAttaque(TypeArme arme) {
-        return degat + this.type.calculModificateur(arme); 
     }
     
+    /**
+     * Permet de savoir la force d'attaque de l'arme en appliquant le triangle des degats
+     * @param arme Type d'arme sur laquel faire le triangle de modificateur de dégats
+     * @return la force d'attaque de l'arme
+     */
+    public int forceAttaque(TypeArme arme) {
+        return this.getDegat() + this.type.calculModificateur(arme); 
+    }
+    
+    /** 
+     * Permet de savoir si un perso peut utiliser ou non une arme
+     * @param perso personnage à verifier
+     * @return true si le perso peut porter l'arme
+     *         false sinon
+     */
     public boolean peutUtiliserArme(TypePerso perso) {
         return listUtilisateurs.contains(perso);
     }
     
+    /**
+     * Permet d'ajouter un enchantement à l'arme courante
+     * @param ench Enchant à appliquer à l'arme
+     * @return un EnchantResult si tout c'est bien passé
+     *         un Refused Result sinon
+     */
     public Result ajouterEnchant(Enchant ench) {
         Result res;
         if ( !this.estStase ) {
@@ -64,13 +81,22 @@ public class Arme extends Card {
         return res;
     }
     
+    /**
+     * Permet de réinitalisé l'arme à sont état d'origine
+     */
     public void reset() {
         this.listEnchantStase = new ArrayList<>(this.listEnchant);
         this.listEnchant = null;
-        this.listUtilisateurs = this.listUtilisateursOrg;
-        this.degat = this.degatOrg;
-        this.type = this.typeOrg;
+        
+        this.setListUtilisateurs(this.listUtilisateursOrg);
+        this.setDegat(this.degatOrg);
+        this.setType(this.typeOrg);
     }
+    
+    /**
+     * Permet d'avoir le JSon d'une arme
+     * @return le jSon associé à une arme
+     */
     @Override
     public JsonObject toJSON() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
@@ -80,19 +106,24 @@ public class Arme extends Card {
         Iterator<Enchant> it = listEnchant.iterator();
         int enchNum = 1;
         while (it.hasNext()) {
-                obj.add("Enchantement actif #" + enchNum, it.next().toJSON());
+            obj.add("Enchantement actif #" + enchNum, it.next().toJSON());
+            ++enchNum;    
         }
         enchNum  = 1;
         it = listEnchantStase.iterator();
         while (it.hasNext()) {
-                obj.add("Enchantement inactif #" + enchNum, it.next().toJSON());
+            obj.add("Enchantement inactif #" + enchNum, it.next().toJSON());
+            ++enchNum;
         }
-        
-        
+                
         return obj.build();
     }
     
-     @Override
+    /**
+     * Permet de crée le JSon pour les tests
+     * @return retourne le JSon associé à une arme
+     */
+    @Override
     public JsonObject toJSONTest() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         obj.add("Type d'arme", type.name());
@@ -112,27 +143,50 @@ public class Arme extends Card {
         return obj.build();
     }
     
+    /**
+     * Permet d'avoir les degats de base d'une arme
+     * @return les degats de l'arme
+     */
     public int getDegat() {
         return this.degat;
     }
     
+    /**
+     * Permet de modifier la valeur de degat de l'arme
+     * @param degat nouveau degats de l'arme
+     */
     public void setDegat(int degat) {
         this.degat = degat;
     }
     
+    /**
+     * Permet de modifier le type de l'arme
+     * @param type 
+     */
     public void setType(TypeArme type) {
         this.type = type;
     }
     
+    /**
+     * Permet de staser une Arme
+     */
     public void staserArme() {
         this.estStase = true;
     }
     
-    
+    /** 
+     * Permet de savoir si une arme est Stase
+     * @return true si l'arme est stase
+     *         false sinon
+     */
     public boolean armeEstStase() {
         return estStase;
     }
     
+    /** 
+     * 
+     * @param listUtilisateurs 
+     */
     public void setListUtilisateurs(List<TypePerso> listUtilisateurs) {
         this.listUtilisateurs = listUtilisateurs;
     }    

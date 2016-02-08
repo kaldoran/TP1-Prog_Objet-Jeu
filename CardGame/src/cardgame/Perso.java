@@ -34,15 +34,31 @@ public class Perso extends Card {
         armePerso = null;
     }
     
-    
+    /**
+     * Permet d'avoir la force d'attaque de l'arme ( sans triangle de modificateur de degat)
+     * @return force de l'arme si présente
+     *         0 Sinon
+     */
     public int forceAttaque() {
         return armePerso != null ? armePerso.forceAttaque(TypeArme.Neutre) : 0;
     }
     
+    /** 
+     * Permet d'avoir le force d'attaque de l'arme portée en appliquant le triangle de modification de degat
+     * @param ennemi Perso ennemi contre qui l'arme sera utilisée
+     * @return la force de l'arme en ajoutant le modificateur de degat si le perso à une arme
+     *         0 sinon
+     */
     public int forceAttaque(Perso ennemi) {
         return armePerso != null ? armePerso.forceAttaque(ennemi.getTypeArme()) : 0;
     }
     
+    /**
+     * Permet d'appliquer les dégats au perso.
+     * @param dommage Quantitée de dégats pris
+     * @param attaqueur id de l'attaquant
+     * @return un AttackResult
+     */
     public AttackResult prendreDommage(int dommage,int attaqueur) {
         
         this.hp -= dommage;
@@ -52,6 +68,10 @@ public class Perso extends Card {
         return ar;
     }
     
+    /**
+     * Permet d'obtenir la liste des cartes qui était associée au personnage
+     * @return Liste des cartes présente sur le perso
+     */
     public List<Card> libererCartes() {
         List<Card> cartesMortes = new ArrayList<>();
         cartesMortes.addAll(armePerso.listEnchant);
@@ -61,10 +81,22 @@ public class Perso extends Card {
         return cartesMortes;
     }
     
+    /**
+     * Permet d'ajouter un enchant à l'arme du perso
+     * @param ench Enchantement à appliquer
+     * @return un EnchantResult si l'enchant fonctionne
+     *         un RefusedResult sinon
+     */
     public Result ajouterEnchant(Enchant ench) {
         return armePerso.ajouterEnchant(ench);
     }
     
+    /**
+     * Permet de placer une arme sur le perso
+     * @param arme arme à donner au perso
+     * @return true si l'arme est placée
+     *         false sinon
+     */
     public boolean placerArme(Arme arme) {
         boolean armeLibre = false;
         if  (this.armePerso == null && arme.peutUtiliserArme(this.typeperso)){
@@ -74,6 +106,12 @@ public class Perso extends Card {
         return armeLibre;
     }
     
+    /**
+     * Permet au perso de soigné un allié
+     * @param allie Personnage allié à soigner
+     * @return un SoinsResult si le soin à été fait
+     *         un RefusedResult sinon
+     */
     public Result soigner(Perso allie) {
         
         Result resultat;
@@ -90,18 +128,35 @@ public class Perso extends Card {
         return resultat;
     }
     
+    /**
+     * Permet au personnage de recevoir le soin (autrement dit réinit ses points de vie)
+     */
     private void recevoirSoins() {
         this.hp = this.maxHp;
     }
     
+    /**
+     * Permet de savoir si le personnage est mort
+     * @return true si le personnage est mort
+     *         false sinon
+     */
     public boolean estMort() {
         return this.hp <= 0;
     }
     
+    /**
+     * Permet d'obtenir le type d'arme utilisée par le perso
+     * @return le type de l'arme si une est équipée
+     *         null sinon
+     */
     public TypeArme getTypeArme() {
         return armePerso != null? armePerso.type: null;
     }
     
+    /**
+     * Permet d'obtenir le jSon associé au personnage
+     * @return le JSon représentant le perso
+     */
     @Override
     public JsonObject toJSON() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
@@ -115,7 +170,11 @@ public class Perso extends Card {
         return obj.build();    
     }
     
-      @Override
+    /** 
+     * Permet de crée un JSon de test
+     * @return le JSon représentant le perso lors de tests
+     */
+    @Override
     public JsonObject toJSONTest() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         obj.add("Type Personnage", typeperso.toString());
