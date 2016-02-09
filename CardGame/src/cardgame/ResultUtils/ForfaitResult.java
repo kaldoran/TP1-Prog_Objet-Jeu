@@ -3,8 +3,7 @@ package cardgame.ResultUtils;
 import cardGame.API.Resultat;
 
 /**
- * Implémentation de Resultat pour décrire la conséquence d'un déploiment d'un
- * perso et de son arme sur le jeu.
+ * Implémentation de Resultat pour décrire la conséquence d'un forfait.
  *
  *
  * @author Mathieu Gravel GRAM02099206
@@ -13,44 +12,27 @@ import cardGame.API.Resultat;
  *
  * 08-Fév-2016 : 1.0 - Version initiale.
  */
-public class PersoDeploieResult implements Resultat {
+public class ForfaitResult implements Resultat {
 
     private final String description;
     private int joueurId;
     private final boolean coupAFonctionne;
-    private final int persoId;
-    private final int armeId;
-
-    public PersoDeploieResult(int jId, boolean coupCorrect, int pId, int aId) {
+    private final int joueurPerdu;
+    
+    public ForfaitResult(int jId, boolean coupCorrect, int idJoueurPerdu) {
         joueurId = jId;
         coupAFonctionne = coupCorrect;
-        persoId = pId;
-        armeId = aId;
-        description = "Le joueur " + jId + "vient de déployer les cartes " + pId + " + " + aId;
+        joueurPerdu = idJoueurPerdu;
+        description = "Le joueur" + idJoueurPerdu + "vient de perdre la partie";
     }
-
-    /**
-     * Getter
-     * @return l'identifiant du perso déployé. 
-     */
-    public int getPersoId() {
-        return persoId;
-    }
-
-    /**
-     * Getter
-     * @return l'identifiant de l'arme déployé. 
-     */
-    public int getArmeId() {
-        return armeId;
-    }
-
+    
+    
     /**
      * @return True si l'action a fonctionné,false sinon.
      */
     @Override
     public boolean coupAMarcher() {
-        return coupAFonctionne;
+        return  coupAFonctionne;
     }
 
     /**
@@ -72,10 +54,18 @@ public class PersoDeploieResult implements Resultat {
     public int coupJouerPar() {
         return joueurId;
     }
+    
+    /**
+     * Getter
+     * @return l'identifiant du joueur  qui a gagné.
+     */
+    public int getJoueurQuiAPerdu() {
+        return joueurPerdu;
+    }
+
 
     /**
      * Setter
-     *
      * @param idJoueur l'identifiant du joueur qui a fait le coup.
      */
     @Override

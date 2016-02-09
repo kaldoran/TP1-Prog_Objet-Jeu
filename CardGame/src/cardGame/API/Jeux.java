@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package cardgame;
+package cardGame.API;
 
-import cardgame.ResultUtils.RefusedResult;
+import cardgame.ResultUtils.RefuseResult;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,8 +10,18 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
- *
- * @author kaldoran
+ * Classe API utilisé pour communiquer entre le modèle et le controlleur.
+ * Toutes les actions possibles par un joueur doit passer par une des fonctions de cette classe.
+ * Afin d'éviter toutes triches, chaque action demandé par le joueur est vérifié avant de s'effectuer.
+ * (Ex : Le joueur 2 essaie de jouer pour le joueur .
+ *       Le joueur 1 essaie de fair eune action impossible tel que déployer des cartes de l'adversaire.)
+ * )
+ * Si l'action est mauvaise, Jeux retourne un RefuseResult.
+ * Sinon, l'action est éffectué et Jeux retourne un Resultat décrivant les conséquences de l'acte.
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reynaud REYN23119308
+ * @version 1.0
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class Jeux {
     private List<Joueur> joueurList;
@@ -60,7 +65,7 @@ public class Jeux {
      * @param idJoueur id du joueur déclarant forfait
      * @return 
      */
-    public Result declarerForfait(int idJoueur) {
+    public Resultat declarerForfait(int idJoueur) {
         if ( joueurTour == idJoueur )
             return joueurList.get(idJoueur).declarerForfait();
         
@@ -115,10 +120,10 @@ public class Jeux {
      * @return une liste de Result, PiocheResult en cas de succes de la pioche
      *         un RefusedResult sinon
      */
-    public List<Result> piocherCartes(int idJoueur) {
-        List<Result> res = new ArrayList<>();
+    public List<Resultat> piocherCartes(int idJoueur) {
+        List<Resultat> res = new ArrayList<>();
         if ( idJoueur != aQuiLeTour() ) {
-            res.add(new RefusedResult("Ce n'est pas le tour de ce joueur."));
+            res.add(new RefuseResult("Ce n'est pas le tour de ce joueur."));
             return res;
         }
         
@@ -134,7 +139,7 @@ public class Jeux {
      * @return un AttackResult si tout c'est bien passé
      *         un refusedResult sinon
      */
-    public Result attaquePerso(int idJoueur, int idAttaqueur, int idReceveur) {
+    public Resultat attaquePerso(int idJoueur, int idAttaqueur, int idReceveur) {
         return joueurList.get(idJoueur).attaque(idAttaqueur, idReceveur);
     }
     
@@ -145,7 +150,7 @@ public class Jeux {
      * @return un attackResult si tout est ok
      *         un refusedResult sinon
      */
-    public Result attaqueJoueur(int idJoueur, int idAttaquer ) {
+    public Resultat attaqueJoueur(int idJoueur, int idAttaquer ) {
         return joueurList.get(idJoueur).attaque(idJoueur, joueurList.get(idAttaquer));
     }
     
@@ -157,7 +162,7 @@ public class Jeux {
      * @return un list Result, chaqu'un contenant un EnchantResult si l'enchant fonctionne
      *                         un refused Result sinon
      */
-    public List<Result> ajouterEnchantements(int idJoueur, int carteTouche, List<Integer> enchant) {
+    public List<Resultat> ajouterEnchantements(int idJoueur, int carteTouche, List<Integer> enchant) {
         return joueurList.get(idJoueur).ajouterEnchants(enchant, carteTouche);
     }
     
@@ -169,7 +174,7 @@ public class Jeux {
      * @return un PersoDeploieResult si tout ce passe bien
      *         un refusedResult sinon
      */
-    public Result placerPerso(int idJoueur, int personnage, int arme) {
+    public Resultat placerPerso(int idJoueur, int personnage, int arme) {
         return joueurList.get(idJoueur).placerPerso(personnage, arme);
     }
     
@@ -180,7 +185,7 @@ public class Jeux {
      * @return un defausseResult si tout ce passe bien
      *         un refusedResult en cas d'erreur
      */
-    public Result defausserCartes(int idJoueur, List<Integer> defausse) {
+    public Resultat defausserCartes(int idJoueur, List<Integer> defausse) {
         return joueurList.get(idJoueur).defausserCartes(defausse);
     }
     
@@ -192,7 +197,7 @@ public class Jeux {
      * @return un SoinsResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Result soignerPerso(int idJoueur, int soigneur, int soignee) {
+    public Resultat soignerPerso(int idJoueur, int soigneur, int soignee) {
         return joueurList.get(idJoueur).soignerPerso(soigneur, soignee);
     }
     
@@ -203,5 +208,5 @@ public class Jeux {
         joueurList.clear();
         joueurTour = 0;
         partieEnMarche = false;
-    }    
+    } 
 }

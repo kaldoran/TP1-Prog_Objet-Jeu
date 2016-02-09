@@ -1,16 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package cardgame;
+package cardGame.API;
 
-import cardgame.ResultUtils.AttackResult;
+import cardgame.Cartes.Arme;
+import cardgame.Cartes.Carte;
+import cardgame.Cartes.Enchant;
+import cardgame.Cartes.Perso;
+import cardgame.Regles.Regle;
+import cardgame.ResultUtils.AttaqueResult;
 import cardgame.ResultUtils.DefausseResult;
 import cardgame.ResultUtils.FinDePartieResult;
 import cardgame.ResultUtils.PersoDeploieResult;
 import cardgame.ResultUtils.PiocheResult;
-import cardgame.ResultUtils.RefusedResult;
+import cardgame.ResultUtils.RefuseResult;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,15 +19,20 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
- *
- * @author kaldoran
+ * Classe utilisé par l'API pour placé le coup du joueur reçu du controlleur.
+ * Comparé à Jeux qui sert de facade pour le controlleur, Joueur traite les appels
+ * des joueurs dans le modèle et retourne ces conséquences.
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reynaud REYN23119308
+ * @version 1.0
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class Joueur {
     private int idJoueur;
-    private Deck carteDeck;
-    private List<Card> main;
-    private List<Card> carteEnJeu;
-    private List<Card> cimetiere;
+    private final Deck carteDeck;
+    private final List<Carte> main;
+    private final List<Carte> carteEnJeu;
+    private final List<Carte> cimetiere;
     
     public Joueur(int i) { 
         idJoueur = i;
@@ -57,7 +62,7 @@ public class Joueur {
      * Permet d'avoir la main du joueur
      * @return la liste de Carte contenu dans la main du joueur
      */
-    public List<Card> getMain() {
+    public List<Carte> getMain() {
         return main;
     }
     
@@ -65,7 +70,7 @@ public class Joueur {
      * Pemet d'avoir les cartes en jeu du joueur
      * @return la liste de carte présente sur le jeu, cartes associées au joueur
      */
-    public List<Card> getCarteEnJeu() {
+    public List<Carte> getCarteEnJeu() {
         return carteEnJeu;
     }
     
@@ -73,7 +78,7 @@ public class Joueur {
      * Permet d'avoir le cimetiere du joueur
      * @return la liste de carte présente dans le cimetiere du joueur
      */
-    public List<Card> getCimetiere() {
+    public List<Carte> getCimetiere() {
         return cimetiere;
     }
     
@@ -92,23 +97,23 @@ public class Joueur {
      * @return Un DefausseResult si la defausse s'est bien passé
      *         Un RefusedResult sinon
      */
-    public Result defausserCartes(List<Integer> defausse) {
-        Result res;
-        List<Card> lc = new ArrayList();
+    public Resultat defausserCartes(List<Integer> defausse) {
+        Resultat res;
+        List<Carte> lc = new ArrayList();
         
         if ( defausse.isEmpty() ) {
-            res = new RefusedResult("La Liste est vide.");
+            res = new RefuseResult("La Liste est vide.");
             return res;
         }
         
         for ( int i = 0; i < defausse.size(); i++) {
             int card = defausse.get(i);
             if ( card < 0 || card > main.size() ) {
-                res = new RefusedResult("La carte " + i + " n'est pas présente dans votre main.");
+                res = new RefuseResult("La carte " + i + " n'est pas présente dans votre main.");
                 return res;
             }
             
-            Card tmp = main.remove(card);
+            Carte tmp = main.remove(card);
             
             lc.add(tmp);
             cimetiere.add(tmp);
@@ -123,13 +128,13 @@ public class Joueur {
      * @return un PiocheResult si tout s'est bien passé
      *         un RefusedResult sinon
      */
-    public Result piocher() {
-        Result res;
+    public Resultat piocher() {
+        Resultat res;
         int nbAPiocher = Regle.CARTEMAIN - main.size();
-        List<Card> lc = carteDeck.piocherCarte(nbAPiocher);
+        List<Carte> lc = carteDeck.piocherCarte(nbAPiocher);
         
         if ( nbAPiocher == 0 ) {
-            res = new RefusedResult("Votre main contient déjà le maximum de carte");
+            res = new RefuseResult("Votre main contient déjà le maximum de carte");
             return res;
         }
         
@@ -145,17 +150,17 @@ public class Joueur {
      * @return un AttackResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Result recoitAttaque(int degat) {
-        Result res;
+    public Resultat recoitAttaque(int degat) {
+        Resultat res;
         
         if ( degat <= 0 ) { 
-            res = new RefusedResult("Un dégat ne peux être négatif.");
+            res = new RefuseResult("Un dégat ne peux être négatif.");
             return res;
         }
                
         cimetiere.addAll(carteDeck.dommageJoueur(degat));
         
-        res = new AttackResult(degat, true, 0, 0, this.aPerdu());
+        res = new AttaqueResult(degat, true, 0, 0, this.aPerdu());
         return res;
     }
     
@@ -166,12 +171,12 @@ public class Joueur {
      * @return un AttackResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Result attaque(int attaqueur, int attaque) {
-        Result res;
+    public Resultat attaque(int attaqueur, int attaque) {
+        Resultat res;
         Perso attaquee = (Perso) carteEnJeu.get(attaque);
         
         if ( !carteEnJeu.contains(attaquee) || !(attaquee instanceof Perso) ) {
-            res = new RefusedResult("Impossible d'attaquer cette carte, celle ci n'est pas un perso ou sur le terrain.");
+            res = new RefuseResult("Impossible d'attaquer cette carte, celle ci n'est pas un perso ou sur le terrain.");
             return res;
         }
         
@@ -188,10 +193,10 @@ public class Joueur {
      * @return un AttackResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Result attaque(int attaqueur, Joueur attaque) {
-        Result res;
-        if ( !carteEnJeu.isEmpty() ) {
-            res = new RefusedResult("Impossible d'attaquer le joueur, il y a encore des cartes en jeux.");
+    public Resultat attaque(int attaqueur, Joueur attaque) {
+        Resultat res;
+        if ( !carteEnJeu.isEmpty()) {
+            res = new RefuseResult("Impossible d'attaquer le joueur, il y a encore des cartes en jeux.");
             return res;
         }
         
@@ -208,11 +213,11 @@ public class Joueur {
      * @return une Liste de Result, chaqu'un étant soit un EnchantResult si tout c'est bien passé
      *         sinon un RefusedResult
      */
-    public List<Result> ajouterEnchants (List<Integer> enchs, int perso) {
-        List<Result> lr = new ArrayList<>();
-        Result res;
+    public List<Resultat> ajouterEnchants (List<Integer> enchs, int perso) {
+        List<Resultat> lr = new ArrayList<>();
+        Resultat res;
         if ( carteEnJeu.get(perso) == null ) {
-            res = new RefusedResult("Impossible d'enchanter cette carte.");
+            res = new RefuseResult("Impossible d'enchanter cette carte.");
             lr.add(res);
             return lr;
         }
@@ -235,17 +240,17 @@ public class Joueur {
      * @return un PersoDeploieResult si tout c'est bien passé
      *         un Refusedresult sinon
      */
-    public Result placerPerso(int personnage, int arme) {
-        Card perso = main.get(personnage);
-        Card arm = main.get(arme);
-        Result res;
+    public Resultat placerPerso(int personnage, int arme) {
+        Carte perso = main.get(personnage);
+        Carte arm = main.get(arme);
+        Resultat res;
         if ( !(perso instanceof Perso) || !(arm instanceof Arme) ) {
-            res = new RefusedResult("L'une des 2 cartes est invalide (non perso ou non arme).");
+            res = new RefuseResult("L'une des 2 cartes est invalide (non perso ou non arme).");
             return res;
         }
         
         if ( !((Perso) main.get(personnage)).placerArme((Arme) main.get(arme)) ) {
-            res = new RefusedResult("Impossible d'équiper l'arme");
+            res = new RefuseResult("Impossible d'équiper l'arme");
             return res;
         }
         
@@ -261,19 +266,19 @@ public class Joueur {
      * @return RefusedResult si le joueur à déjà perdu
      *         FinDePartieResult si le joueur à déclarer forfait
      */
-    public Result declarerForfait() {
-        Result res;
+    public Resultat declarerForfait() {
+        Resultat res;
         int i;
         
         if ( this.aPerdu() ) {
-            res = new RefusedResult("Vous avez déjà perdu");
+            res = new RefuseResult("Vous avez déjà perdu");
             return res;
         }
         
         for ( i = 0; i < main.size(); i++)
             cimetiere.add(main.remove(i));
         
-        List<Card> allDeck = carteDeck.piocherCarte(carteDeck.carteRestantes());
+        List<Carte> allDeck = carteDeck.piocherCarte(carteDeck.carteRestantes());
         
         for ( i = 0; i < allDeck.size(); i++)
             cimetiere.add(allDeck.remove(i));
@@ -292,7 +297,7 @@ public class Joueur {
      * @return RefusedResult si le joueur ne peux pas soigner le personnage soignee
      *         SoinsResult si le joueur peu être soigné
      */
-    public Result soignerPerso(int soigneur, int soignee) {
+    public Resultat soignerPerso(int soigneur, int soignee) {
         return ( (Perso) carteEnJeu.get(soigneur))
                         .soigner(
                                 (Perso) carteEnJeu.get(soignee)
@@ -307,7 +312,7 @@ public class Joueur {
      */
     public boolean detientCarte(int idCarte) {
         for ( int i = 0; i < main.size(); i++)
-            if ( main.get(i).cardID == idCarte ) 
+            if ( main.get(i).getCardID() == idCarte ) 
                 return true;
         
         return false;
@@ -333,7 +338,7 @@ public class Joueur {
     public JsonObject mainToJSon() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         
-        Iterator<Card> cd = main.iterator();
+        Iterator<Carte> cd = main.iterator();
         int numCarte = 1;
         while ( cd.hasNext() ) {
             obj.add("carte #" + numCarte, cd.next().toJSON());
@@ -350,7 +355,7 @@ public class Joueur {
     public JsonObject cimetiereToJSton() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         
-        Iterator<Card> cd = cimetiere.iterator();
+        Iterator<Carte> cd = cimetiere.iterator();
         int numCarte = 1;
         while ( cd.hasNext() ) {
             obj.add("carte #" + numCarte, cd.next().toJSON());

@@ -5,9 +5,9 @@
  */
 package cardgame.Init;
 
-import cardgame.Perso;
-import cardgame.Regle;
-import cardgame.TypePerso;
+import cardgame.Cartes.Perso;
+import cardgame.Regles.Regle;
+import cardgame.Regles.TypePerso;
 
 /**
  *

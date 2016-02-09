@@ -3,8 +3,8 @@ package cardgame.ResultUtils;
 import cardGame.API.Resultat;
 
 /**
- * Implémentation de Resultat pour décrire la conséquence d'un déploiment d'un
- * perso et de son arme sur le jeu.
+ * Implémentation de Resultat pour décrire la conséquence d'un coup refusé
+ * puisqu'il était impossible.
  *
  *
  * @author Mathieu Gravel GRAM02099206
@@ -13,36 +13,18 @@ import cardGame.API.Resultat;
  *
  * 08-Fév-2016 : 1.0 - Version initiale.
  */
-public class PersoDeploieResult implements Resultat {
+public class RefuseResult implements Resultat {
 
     private final String description;
     private int joueurId;
-    private final boolean coupAFonctionne;
-    private final int persoId;
-    private final int armeId;
 
-    public PersoDeploieResult(int jId, boolean coupCorrect, int pId, int aId) {
-        joueurId = jId;
-        coupAFonctionne = coupCorrect;
-        persoId = pId;
-        armeId = aId;
-        description = "Le joueur " + jId + "vient de déployer les cartes " + pId + " + " + aId;
+    public RefuseResult(int idJoueur, String coupRefuse) {
+        description = coupRefuse;
+        joueurId = idJoueur;
     }
 
-    /**
-     * Getter
-     * @return l'identifiant du perso déployé. 
-     */
-    public int getPersoId() {
-        return persoId;
-    }
-
-    /**
-     * Getter
-     * @return l'identifiant de l'arme déployé. 
-     */
-    public int getArmeId() {
-        return armeId;
+    public RefuseResult(String coupRefuse) {
+        description = coupRefuse;
     }
 
     /**
@@ -50,7 +32,7 @@ public class PersoDeploieResult implements Resultat {
      */
     @Override
     public boolean coupAMarcher() {
-        return coupAFonctionne;
+        return false;
     }
 
     /**
@@ -82,4 +64,5 @@ public class PersoDeploieResult implements Resultat {
     public void setJoueur(int idJoueur) {
         this.joueurId = idJoueur;
     }
+
 }

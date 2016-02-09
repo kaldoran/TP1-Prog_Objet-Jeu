@@ -1,16 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame;
 
-import cardgame.EnchantUtils.EnchantDegatPlus;
-import java.math.BigDecimal;
+import cardgame.Regles.TypePerso;
+import cardgame.Regles.TypeArme;
+import cardgame.Cartes.Enchant;
+import cardgame.Cartes.Arme;
+import cardgame.Cartes.Carte;
+import cardgame.Cartes.Perso;
+import cardgame.Cartes.EnchantDegatPlus;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,8 +19,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Classes de tests Junit portant sur l'instantiation des cartes basiques.
  *
- * @author mathieu
+ *
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reynaud REYN23119308
+ * @version 1.0
+ *
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class CartesTest {
     
@@ -51,7 +56,7 @@ public class CartesTest {
     @Test
     public void TestInitCartes() {
         System.out.println("TestInitCartes");
-        List<Card> deck = new ArrayList<>();
+        List<Carte> deck = new ArrayList<>();
         
         // Ajout de 3 cartes ( une Perso, une Arme, une Enchant)
         deck.add(new Perso(5,0,TypePerso.Guerrier));
