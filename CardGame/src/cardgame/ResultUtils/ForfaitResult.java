@@ -3,8 +3,7 @@ package cardgame.ResultUtils;
 import cardGame.API.Resultat;
 
 /**
- * Implémentation de Resultat pour décrire la conséquence d'un coup refusé
- * puisqu'il était impossible.
+ * Implémentation de Resultat pour décrire la conséquence d'un forfait.
  *
  *
  * @author Mathieu Gravel GRAM02099206
@@ -13,26 +12,27 @@ import cardGame.API.Resultat;
  *
  * 08-Fév-2016 : 1.0 - Version initiale.
  */
-public class RefuseResult implements Resultat {
+public class ForfaitResult implements Resultat {
 
     private final String description;
     private int joueurId;
-
-    public RefuseResult(int idJoueur, String coupRefuse) {
-        description = coupRefuse;
-        joueurId = idJoueur;
+    private final boolean coupAFonctionne;
+    private final int joueurPerdu;
+    
+    public ForfaitResult(int jId, boolean coupCorrect, int idJoueurPerdu) {
+        joueurId = jId;
+        coupAFonctionne = coupCorrect;
+        joueurPerdu = idJoueurPerdu;
+        description = "Le joueur" + idJoueurPerdu + "vient de perdre la partie";
     }
-
-    public RefuseResult(String coupRefuse) {
-        description = coupRefuse;
-    }
-
+    
+    
     /**
      * @return True si l'action a fonctionné,false sinon.
      */
     @Override
     public boolean coupAMarcher() {
-        return false;
+        return  coupAFonctionne;
     }
 
     /**
@@ -54,15 +54,22 @@ public class RefuseResult implements Resultat {
     public int coupJouerPar() {
         return joueurId;
     }
+    
+    /**
+     * Getter
+     * @return l'identifiant du joueur  qui a gagné.
+     */
+    public int getJoueurQuiAPerdu() {
+        return joueurPerdu;
+    }
+
 
     /**
      * Setter
-     *
      * @param idJoueur l'identifiant du joueur qui a fait le coup.
      */
     @Override
     public void setJoueur(int idJoueur) {
         this.joueurId = idJoueur;
     }
-
 }

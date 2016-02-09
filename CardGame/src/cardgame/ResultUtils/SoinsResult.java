@@ -1,15 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame.ResultUtils;
 
 import cardGame.API.Resultat;
 
 /**
+ * Implémentation de Resultat pour décrire la conséquence d'un sortilège de
+ * soins.
  *
- * @author kaldoran
+ *
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ *
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class SoinsResult implements Resultat {
 
@@ -18,50 +20,74 @@ public class SoinsResult implements Resultat {
     private final boolean coupAFonctionne;
     private final int healerId;
     private final int persoSoigneeId;
-    
-    public SoinsResult(int jId,boolean coupCorrect, int hId, int cId) {
+
+    public SoinsResult(int jId, boolean coupCorrect, int hId, int cId) {
         description = "Coup de soins";
         joueurId = jId;
         coupAFonctionne = coupCorrect;
         healerId = hId;
         persoSoigneeId = cId;
     }
-    
-        public SoinsResult(boolean coupCorrect, int hId, int cId) {
+
+    public SoinsResult(boolean coupCorrect, int hId, int cId) {
         description = "Coup de soins";
         coupAFonctionne = coupCorrect;
         healerId = hId;
         persoSoigneeId = cId;
     }
-        
-        
-    public int getHealerId(){
+
+    /**
+     * Getter
+     * @return L'identifiant du perso qui a fait le sort de soins. 
+     */
+    public int getHealerId() {
         return healerId;
     }
-    
-    public int getCarteSoigneeId(){
+
+    /**
+     * Getter
+     * @return L'identifiant du perso soignée. 
+     */
+    public int getCarteSoigneeId() {
         return persoSoigneeId;
     }
-        
-    
-       @Override
+
+    /**
+     * @return True si l'action a fonctionné,false sinon.
+     */
+    @Override
     public boolean coupAMarcher() {
         return coupAFonctionne;
     }
 
+    /**
+     * Getter
+     *
+     * @return Description de ce type de coup.
+     */
     @Override
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Getter
+     *
+     * @return l'identifiant du joueur qui a joué de coup.
+     */
     @Override
     public int coupJouerPar() {
         return joueurId;
     }
 
+    /**
+     * Setter
+     *
+     * @param idJoueur l'identifiant du joueur qui a fait le coup.
+     */
     @Override
     public void setJoueur(int idJoueur) {
-        joueurId  = idJoueur;
+        this.joueurId = idJoueur;
     }
-    
+
 }

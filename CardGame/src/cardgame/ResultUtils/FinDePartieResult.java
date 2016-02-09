@@ -1,15 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame.ResultUtils;
 
 import cardGame.API.Resultat;
 
 /**
+ * Implémentation de Resultat pour décrire la fin d'une partie.
  *
- * @author kaldoran
+ *
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ *
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class FinDePartieResult implements Resultat {
 
@@ -26,27 +27,49 @@ public class FinDePartieResult implements Resultat {
     }
     
     
-       @Override
+    /**
+     * @return True si l'action a fonctionné,false sinon.
+     */
+    @Override
     public boolean coupAMarcher() {
-        return coupAFonctionne;
+        return  coupAFonctionne;
     }
 
+    /**
+     * Getter
+     *
+     * @return Description de ce type de coup.
+     */
     @Override
     public String getDescription() {
         return description;
     }
-    
-    public int getJoueurQuiAGagne() {
-        return joueurGagne;
-    }
 
+    /**
+     * Getter
+     *
+     * @return l'identifiant du joueur qui a joué de coup.
+     */
     @Override
     public int coupJouerPar() {
         return joueurId;
     }
+    
+    /**
+     * Getter
+     * @return l'identifiant du joueur  qui a gagné.
+     */
+    public int getJoueurQuiAGagne() {
+        return joueurGagne;
+    }
 
+
+    /**
+     * Setter
+     * @param idJoueur l'identifiant du joueur qui a fait le coup.
+     */
     @Override
     public void setJoueur(int idJoueur) {
-        joueurId  = idJoueur;
+        this.joueurId = idJoueur;
     }
 }

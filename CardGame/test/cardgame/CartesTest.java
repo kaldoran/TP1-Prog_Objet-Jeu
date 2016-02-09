@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame;
 
 import cardgame.Regles.TypePerso;
@@ -12,11 +7,9 @@ import cardgame.Cartes.Arme;
 import cardgame.Cartes.Carte;
 import cardgame.Cartes.Perso;
 import cardgame.Cartes.EnchantDegatPlus;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,8 +19,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Classes de tests Junit portant sur l'instantiation des cartes basiques.
  *
- * @author mathieu
+ *
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ *
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class CartesTest {
     

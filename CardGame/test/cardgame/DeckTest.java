@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame;
 
 import cardGame.API.Deck;
@@ -18,26 +13,33 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Classes de tests Junit portant sur l'instantiation d'un Deck et son
+ * utilisation.
  *
- * @author mathieu
+ *
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reymaud REYN23119308
+ * @version 1.0
+ *
+ * 08-Fév-2016 : 1.0 - Version initiale.
  */
 public class DeckTest {
-    
+
     public DeckTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -49,25 +51,25 @@ public class DeckTest {
     public void testPiocherCarte() {
         System.out.println("piocherCarte");
         int nbCartes = 5;
-        
+
         // Création d'un nouveau deck comme celui d'une partie Normale
         Deck instance = new Deck();
-        
+
         // On essai de piocher des 5 Cartes
         List<Carte> result = instance.piocherCarte(nbCartes);
-        
+
         // Verification des méthodes de pioches
         assertEquals(5, result.size());
-        assertEquals(27, instance.carteRestantes());     
-        
+        assertEquals(27, instance.carteRestantes());
+
         // On essai de piocher 3 cartes
         result = instance.piocherCarte(3);
         assertEquals(3, result.size());
-        
+
         // On verifie qu'il reste bien autant de carte qu'il devrait en avoir
         assertEquals(24, instance.carteRestantes());
         System.out.println("Les cartes sont correctement pigés.");
-        
+
         // On pioche toutes les cartes réstante, en les piochants 5 par 5.
         result = instance.piocherCarte(nbCartes);
         result = instance.piocherCarte(nbCartes);
@@ -77,7 +79,7 @@ public class DeckTest {
         assertEquals(4, result.size()); // On en recoit bien que 4
         assertEquals(0, instance.carteRestantes()); // La pioche est vide.
         System.out.println("On peut piocher des cartes jusqu'à la dernière possible.");
-        
+
     }
 
     /**
@@ -91,11 +93,8 @@ public class DeckTest {
         List<Carte> result = instance.dommageJoueur(nbCartes);
         assertEquals(3, result.size());
         assertEquals(29, instance.carteRestantes());
-        // TODO review the generated test code and remove the default call to fail.
         System.out.println("Le joueur prend correctement du dommage.");
     }
-
-   
 
     /**
      * Test of toJSon method, of class Deck.
@@ -107,13 +106,12 @@ public class DeckTest {
         JsonObject expResult = null;
         JsonObject result = instance.toJSon();
         assertEquals(32, result.getInt("Nombre de cartes restantes a piger"));
-        // TODO review the generated test code and remove the default call to fail.
         System.out.println("Le JSON est correct.");
     }
-    
+
     @Test
     public void testCartesPigees() {
-         System.out.println("Test cartes pigées");
+        System.out.println("Test cartes pigées");
         Deck instance = new Deck();
         List<Carte> result = instance.piocherCarte(5);
         int id = -1;
@@ -123,8 +121,7 @@ public class DeckTest {
             System.out.println(cd.toJSON());
             id = cd.getCardID();
         }
-        // TODO review the generated test code and remove the default call to fail.
         System.out.println("Toutes les cartes pigées sont uniques.");
     }
-    
+
 }
