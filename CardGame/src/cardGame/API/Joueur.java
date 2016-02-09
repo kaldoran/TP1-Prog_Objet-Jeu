@@ -23,7 +23,7 @@ import javax.json.JsonObjectBuilder;
  * Comparé à Jeux qui sert de facade pour le controlleur, Joueur traite les appels
  * des joueurs dans le modèle et retourne ces conséquences.
  * @author Mathieu Gravel GRAM02099206
- * @author Nicolas Reymaud REYN23119308
+ * @author Nicolas Reynaud REYN23119308
  * @version 1.0
  * 08-Fév-2016 : 1.0 - Version initiale.
  */

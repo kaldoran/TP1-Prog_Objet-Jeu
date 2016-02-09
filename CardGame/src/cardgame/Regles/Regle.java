@@ -5,7 +5,7 @@ package cardgame.Regles;
  * paramétrisables du jeu.
  *
  * @author Mathieu Gravel GRAM02099206
- * @author Nicolas Reymaud REYN23119308
+ * @author Nicolas Reynaud REYN23119308
  * @version 1.0
  *
  * Historique :

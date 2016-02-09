@@ -10,7 +10,7 @@ import java.util.List;
  * fonction de calcul du triangle d'attaque pour fins d'évolutions façiles.
  *
  * @author Mathieu Gravel GRAM02099206
- * @author Nicolas Reymaud REYN23119308
+ * @author Nicolas Reynaud REYN23119308
  * @version 1.0
  *
  * Historique :

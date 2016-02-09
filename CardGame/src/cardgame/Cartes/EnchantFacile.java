@@ -9,7 +9,7 @@ import java.util.Arrays;
  * EnchantFacile permet de changer les utilisateurs possibles de l'arme.
  *
  * @author Mathieu Gravel GRAM02099206
- * @author Nicolas Reymaud REYN23119308
+ * @author Nicolas Reynaud REYN23119308
  * @version 1.0
  *
  * 08-Fév-2016 : 1.0 - Version initiale.
