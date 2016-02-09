@@ -1,0 +1,16 @@
+1 - Pourquoi pas nit ?
+2 - Les problèmes de conceptions et les changements. ( JoueurList par exemple )
+. - Probleme de conceptions
+. - Parler de joueur (Pourquoi les tests sont ici)
+. -
+5 - Les regles du jeu. 
+    -> typeArme contient qui peu équipé l'arme
+6 - L'inialisation du Deck - Action sur les cartes
+7 - Regroupement de classe ( Tout est Deck ) 
+    -> Les regles des cartes TypeArme
+8 - Les results
+    -> Toutes les actions sont possible mais on peut t'envoyer chier
+    -> Conception libre
+        -> Refused Result, soit finir tour, soit dire juste "pas possible"
+9 - Présenter tes jUnit Test
+

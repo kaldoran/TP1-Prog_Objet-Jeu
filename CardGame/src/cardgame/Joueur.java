@@ -29,7 +29,8 @@ public class Joueur {
     private List<Card> carteEnJeu;
     private List<Card> cimetiere;
     
-    public Joueur() { 
+    public Joueur(int i) { 
+        idJoueur = i;
         carteDeck = new Deck();
         main = new ArrayList<>();
         cimetiere = new ArrayList<>();
@@ -161,19 +162,21 @@ public class Joueur {
     /**
      * Permet à un joueur d'attaquer une carte à l'aide d'une autre carte
      * @param attaqueur position de la carte attaquant sur le jeu
-     * @param attaque   Carte à attaquer
+     * @param attaque  position relative de la carte à attaquer sur le terrains
      * @return un AttackResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Result attaque(int attaqueur, Card attaque) {
+    public Result attaque(int attaqueur, int attaque) {
         Result res;
-        if ( !carteEnJeu.contains(attaque) || !(attaque instanceof Perso) ) {
+        Perso attaquee = (Perso) carteEnJeu.get(attaque);
+        
+        if ( !carteEnJeu.contains(attaquee) || !(attaquee instanceof Perso) ) {
             res = new RefusedResult("Impossible d'attaquer cette carte, celle ci n'est pas un perso ou sur le terrain.");
             return res;
         }
         
-        int degat = ((Perso) carteEnJeu.get(attaqueur)).forceAttaque((Perso) attaque);
-        res = ((Perso) attaque).prendreDommage(degat,attaqueur);
+        int degat = ((Perso) carteEnJeu.get(attaqueur)).forceAttaque(attaquee);
+        res = ((Perso) attaquee).prendreDommage(degat,attaqueur);
         
         return res;
     }
@@ -187,7 +190,7 @@ public class Joueur {
      */
     public Result attaque(int attaqueur, Joueur attaque) {
         Result res;
-        if ( carteEnJeu.size() != 0) {
+        if ( !carteEnJeu.isEmpty() ) {
             res = new RefusedResult("Impossible d'attaquer le joueur, il y a encore des cartes en jeux.");
             return res;
         }
@@ -201,7 +204,7 @@ public class Joueur {
     /**
      * Permet d'ajouter une liste d'enchant à un joueur
      * @param enchs liste des positions des enchants dans la main
-     * @param opposant Joueur à enchanter
+     * @param perso Joueur à enchanter
      * @return une Liste de Result, chaqu'un étant soit un EnchantResult si tout c'est bien passé
      *         sinon un RefusedResult
      */
@@ -314,7 +317,7 @@ public class Joueur {
      * Permet d'avoir le JSon associé à un joueur
      * @return le JSon objet représentant le joueur
      */
-    public JsonObject toJSon() {
+    public JsonObject toJSON() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
         obj.add("main", this.mainToJSon());
         obj.add("cimetiere", this.cimetiereToJSton());
