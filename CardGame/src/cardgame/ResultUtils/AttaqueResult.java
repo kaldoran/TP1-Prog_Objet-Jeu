@@ -1,6 +1,6 @@
 package cardgame.ResultUtils;
 
-import cardGame.API.Resultat;
+import cardgame.API.Resultat;
 
 /**
  * Implémentation de Resultat pour décrire les conséquences d'une attaque

@@ -10,7 +10,7 @@ import cardgame.Cartes.Enchant;
 import cardgame.Init.GuerrierBuilder;
 import cardgame.Init.PretreBuilder;
 import cardgame.Cartes.Perso;
-import cardGame.API.Resultat;
+import cardgame.API.Resultat;
 import cardgame.Regles.TypeArme;
 import org.junit.After;
 import org.junit.AfterClass;

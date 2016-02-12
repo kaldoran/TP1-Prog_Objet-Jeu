@@ -1,6 +1,6 @@
 package cardgame.ResultUtils;
 
-import cardGame.API.Resultat;
+import cardgame.API.Resultat;
 
 /**
  * Implémentation de Resultat pour décrire la conséquence d'un coup refusé

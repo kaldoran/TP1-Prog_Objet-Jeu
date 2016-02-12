@@ -1,6 +1,6 @@
 package cardgame.Cartes;
 
-import cardGame.API.Resultat;
+import cardgame.API.Resultat;
 import cardgame.ResultUtils.AttaqueResult;
 import cardgame.ResultUtils.RefuseResult;
 import cardgame.ResultUtils.SoinsResult;

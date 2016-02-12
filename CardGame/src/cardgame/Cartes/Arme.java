@@ -1,6 +1,6 @@
 package cardgame.Cartes;
 
-import cardGame.API.Resultat;
+import cardgame.API.Resultat;
 import cardgame.ResultUtils.EnchantResult;
 import cardgame.ResultUtils.RefuseResult;
 import cardgame.Regles.TypeArme;

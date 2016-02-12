@@ -1,7 +1,7 @@
 package cardgame.ResultUtils;
 
 import cardgame.Cartes.Carte;
-import cardGame.API.Resultat;
+import cardgame.API.Resultat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.JsonObject;

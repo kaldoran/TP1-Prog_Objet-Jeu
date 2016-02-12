@@ -1,6 +1,6 @@
 package cardgame;
 
-import cardGame.API.Deck;
+import cardgame.API.Deck;
 import cardgame.Cartes.Carte;
 import java.util.Iterator;
 import java.util.List;

@@ -1,4 +1,4 @@
-package cardGame.API;
+package cardgame.API;
 
 /**
  * Interface utilisé pour communiquer aux joueurs les conséquences des coups joués/refusés.

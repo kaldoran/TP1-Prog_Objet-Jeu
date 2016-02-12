@@ -1,4 +1,4 @@
-package cardGame.API;
+package cardgame.API;
 
 import cardgame.ResultUtils.RefuseResult;
 import java.util.ArrayList;

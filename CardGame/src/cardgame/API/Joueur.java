@@ -1,4 +1,4 @@
-package cardGame.API;
+package cardgame.API;
 
 import cardgame.Cartes.Arme;
 import cardgame.Cartes.Carte;
