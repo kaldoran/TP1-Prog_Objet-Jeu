@@ -168,7 +168,7 @@ public class Joueur implements Cible {
     /**
      * Permet d'ajouter une liste d'enchant à un joueur
      * @param enchs liste des positions des enchants dans la main
-     * @param perso Joueur à enchanter
+     * @param carteTouchee carte étant affectée par l'enchant
      * @return une Liste de Result, chaqu'un étant soit un EnchantResult si tout c'est bien passé
      *         sinon un RefusedResult
      */
@@ -197,7 +197,7 @@ public class Joueur implements Cible {
     /**
      * Permet au joueur de placer un personnage en jeu
      * @param personnage position dans la main du personnage à jouer
-     * @param arme       position dans la main de l'arme à jouer sur le joueur
+     * @param arm        carte arme à appliquer sur le perso
      * @return un PersoDeploieResult si tout c'est bien passé
      *         un Refusedresult sinon
      */
@@ -218,7 +218,8 @@ public class Joueur implements Cible {
     /**
      * Permet au joueur de placer un personnage en jeu
      * @param personnage position dans la main du personnage à jouer
-     * @param arme       position dans la main de l'arme à jouer sur le joueur
+     * @param arm        arme à équiper au perso
+     * @param ench       Liste des enchants à ajouter à l'arme
      * @return un PersoDeploieResult si tout c'est bien passé
      *         un Refusedresult sinon
      */
@@ -304,7 +305,7 @@ public class Joueur implements Cible {
     
     /**
      * Permet d'effectué l'action de soin sur un personnage présent sur le jeu.
-     * @param soigneur Position dans la liste des carteEnJeu du soigneur
+     * @param soins    Carte effectuant le soin
      * @param soignee  Position dans la liste des carteEnJeu du soignee
      * @return RefusedResult si le joueur ne peux pas soigner le personnage soignee
      *         SoinsResult si le joueur peu être soigné

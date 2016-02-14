@@ -19,5 +19,4 @@ public enum ActionType {
     Forfait,
     Faussement,
     Sloubi;
-    
 }

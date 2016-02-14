@@ -83,7 +83,7 @@ public class Jeux {
      * Permet au joueur idJoueur de déclarer forfait
      *
      * @param idJoueur id du joueur déclarant forfait
-     * @return
+     * @return 
      */
     public Resultat declarerForfait(int idJoueur) {
         if (joueurTour == idJoueur) {
@@ -168,10 +168,10 @@ public class Jeux {
      * Permet d'attaquer un perso présent sur le deck
      *
      * @param idJoueur id du joueur effectuant l'action
-     * @param idAttaqueur position relative sur le terrain de jeu de la carte
+     * @param idAdversaire position relative sur le terrain de jeu de la carte
      * attaquante
-     * @param idReceveur position relative sur le terrain de jeu de la carte
-     * recevant l'attaque
+     * @param attaqueur carte attaquant la seconde carte 
+     * @param receveur  carte recevant le coupŝ
      * @return un AttackResult si tout c'est bien passé un refusedResult sinon
      */
     public Resultat attaquePerso(int idJoueur,int idAdversaire, Carte attaqueur,Carte receveur) {
@@ -207,12 +207,9 @@ public class Jeux {
      * Permet d'attaquer un perso présent sur le deck
      *
      * @param idJoueur id du joueur effectuant l'action
-     * @param idAdversaire
-     * @param attaqueur
-     * @param idAttaqueur position relative sur le terrain de jeu de la carte
+     * @param idAdversaire position relative sur le terrain de jeu de la carte
      * attaquante
-     * @param idReceveur position relative sur le terrain de jeu de la carte
-     * recevant l'attaque
+     * @param attaqueur Carte effectuant l'attaque sur le joueur
      * @return un AttackResult si tout c'est bien passé un refusedResult sinon
      */
     public Resultat attaqueJoueur(int idJoueur,int idAdversaire, Carte attaqueur) {
@@ -309,6 +306,7 @@ public class Jeux {
      * @param idJoueur id relatif du joueur dans la liste Joueur List
      * @param personnage position relative dans la main du joueur à placer
      * @param arme position relative dans la main de l'arme a placer
+     * @param enchants liste des cartes d'enchants à placer sur le perso
      * @return un PersoDeploieResult si tout ce passe bien un refusedResult
      * sinon
      */
