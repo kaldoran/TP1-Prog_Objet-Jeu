@@ -1,6 +1,6 @@
 package cardgame.Init;
 
-import cardgame.Cartes.Arme;
+import cardgame.JeuxCartes.Arme;
 import cardgame.Regles.TypeArme;
 import java.util.ArrayList;
 import java.util.List;

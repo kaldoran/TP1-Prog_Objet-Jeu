@@ -1,7 +1,5 @@
 package cardgame.ResultUtils;
 
-import cardgame.API.Resultat;
-
 /**
  * Implémentation de Resultat pour décrire la conséquence d'un forfait.
  *

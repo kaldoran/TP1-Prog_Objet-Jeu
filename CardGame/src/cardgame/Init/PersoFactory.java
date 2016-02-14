@@ -1,6 +1,9 @@
 package cardgame.Init;
 
-import cardgame.Cartes.Perso;
+import cardgame.JeuxCartes.Guerrier;
+import cardgame.JeuxCartes.Paladin;
+import cardgame.JeuxCartes.Perso;
+import cardgame.JeuxCartes.Pretre;
 import cardgame.Regles.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,7 @@ public class PersoFactory {
         List<Perso> guerriers = new ArrayList<>();
 
         for (int copieAct = 0; copieAct < nbCopies; copieAct++) {
-            guerriers.add(new Perso(Regle.GUERRIERHP, Regle.GUERRIERMP, TypePerso.Guerrier));
+            guerriers.add(new Guerrier());
         }
 
         return guerriers;
@@ -45,7 +48,7 @@ public class PersoFactory {
         List<Perso> pretres = new ArrayList<>();
 
         for (int copieAct = 0; copieAct < nbCopies; copieAct++) {
-            pretres.add(new Perso(Regle.PRETREHP, Regle.PRETREHP, TypePerso.Mage));
+            pretres.add(new Pretre());
         }
 
         return pretres;
@@ -61,7 +64,7 @@ public class PersoFactory {
         List<Perso> paladins = new ArrayList<>();
 
         for (int copieAct = 0; copieAct < nbCopies; copieAct++) {
-            paladins.add(new Perso(Regle.PALADINHP, Regle.PALADINMP, TypePerso.Paladin));
+            paladins.add(new Paladin());
         }
 
         return paladins;

@@ -1,11 +1,11 @@
 package cardgame.Init;
 
-import cardgame.Cartes.EnchantNeutre;
-import cardgame.Cartes.EnchantFacile;
-import cardgame.Cartes.EnchantStase;
-import cardgame.Cartes.EnchantDegatMoins;
-import cardgame.Cartes.EnchantDegatPlus;
-import cardgame.Cartes.Enchant;
+import cardgame.JeuxCartes.EnchantNeutre;
+import cardgame.JeuxCartes.EnchantFacile;
+import cardgame.JeuxCartes.EnchantStase;
+import cardgame.JeuxCartes.EnchantDegatMoins;
+import cardgame.JeuxCartes.EnchantDegatPlus;
+import cardgame.JeuxCartes.Enchant;
 import java.util.ArrayList;
 import java.util.List;
 

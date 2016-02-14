@@ -1,7 +1,5 @@
 package cardgame.ResultUtils;
 
-import cardgame.API.Resultat;
-
 /**
  * Implémentation de Resultat pour décrire la fin d'une partie.
  *

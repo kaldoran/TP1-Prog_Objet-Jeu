@@ -1,7 +1,6 @@
 package cardgame.ResultUtils;
 
-import cardgame.Cartes.Carte;
-import cardgame.API.Resultat;
+import cardgame.JeuxCartes.Carte;
 import java.util.ArrayList;
 import java.util.List;
 import javax.json.JsonObject;
@@ -27,12 +26,14 @@ public class DefausseResult implements Resultat {
     public DefausseResult(int idJoueur, boolean coupCorrect, List<Carte> cartes) {
         cartesId = new ArrayList<>();
         cartesJSON = new ArrayList<>();
+        String cartesStr = "";
         for (Carte cartePioche : cartes) {
             cartesId.add(cartePioche.getCardID());
             cartesJSON.add(cartePioche.toJSON());
+            cartesStr = cartesStr + cartePioche.toJSON().toString() + "\n";
         }
         joueurId = idJoueur;
-        description = "Défaussage de cartes";
+        description = "Les cartes suivantes ont été défaussés :" + cartesStr;
         coupAFonctionne = coupCorrect;
     }
 

@@ -1,7 +1,5 @@
 package cardgame.ResultUtils;
 
-import cardgame.API.Resultat;
-
 /**
  * Implémentation de Resultat pour décrire la conséquence d'un déploiment d'un
  * perso et de son arme sur le jeu.

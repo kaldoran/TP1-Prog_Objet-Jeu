@@ -1,6 +1,9 @@
 package cardgame.ResultUtils;
 
-import cardgame.API.Resultat;
+import cardgame.JeuxCartes.Carte;
+import cardgame.JeuxCartes.Enchant;
+import java.util.List;
+import javax.json.JsonObject;
 
 /**
  * Implémentation de Resultat pour décrire les conséquences d'une action
@@ -18,40 +21,36 @@ public class EnchantResult implements Resultat {
     private final String description;
     private int joueurId;
     private final boolean coupAFonctionne;
-    private final int enchantId;
-    private final int carteEnchante;
+    private final Carte carteEnchant;
+    private final List<Enchant> enchant;
 
-    public EnchantResult(boolean coupCorrect, int enchId, int carteId) {
+    public EnchantResult(boolean coupCorrect, Carte carteEnch,List<Enchant> enchants) {
         coupAFonctionne = coupCorrect;
-        enchantId = enchId;
-        carteEnchante = carteId;
-        description = "Enchantement d'une carte";
+        carteEnchant = carteEnch;
+        enchant = enchants;
+        String enchStr = "";
+        for (Enchant ench : enchants) 
+            enchStr = enchStr + ench.toJSON().toString();
+        description = "La carte " + carteEnch.toJSON().toString() + "a recu les enchantements suivants :" + enchStr;
     }
 
-    public EnchantResult(int jId, boolean coupCorrect, int enchId, int carteId) {
+    public EnchantResult(int jId, boolean coupCorrect, Carte carteEnch,List<Enchant> enchants) {
         joueurId = jId;
         coupAFonctionne = coupCorrect;
-        enchantId = enchId;
-        carteEnchante = carteId;
+        carteEnchant = carteEnch;
+        enchant = enchants;
         description = "Enchantement d'une carte";
     }
 
-    /**
-     * Getter
-     *
-     * @return l'identifiant de la carte d'enchantement utilisé.
-     */
-    public int getCarteEnchantement() {
-        return enchantId;
-    }
+
 
     /**
      * Getter
      *
      * @return identifiant de la carte enchanté.
      */
-    public int getCarteEnchante() {
-        return carteEnchante;
+    public JsonObject getCarteEnchante() {
+        return carteEnchant.toJSON();
     }
 
     /**
