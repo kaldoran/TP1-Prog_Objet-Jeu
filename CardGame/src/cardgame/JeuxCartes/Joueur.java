@@ -41,6 +41,10 @@ public class Joueur implements Cible {
         main = new HashMap<>();
         cimetiere = new ArrayList<>();
         carteEnJeu = new HashMap<>();
+        List<Carte> mainDeb = carteDeck.piocherCarte(Regle.CARTEMAIN);
+        for (Carte c : mainDeb) {
+            main.put(c.getCardID(), c);
+        }
     }
     
     public int getIdjoueur() {

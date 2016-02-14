@@ -21,6 +21,6 @@ public class SloubiCommande implements Commande {
 
     @Override
     public Resultat placerCoup() {
-        return new RefuseResult("Nice try.");
+        return new RefuseResult("Bel essai.");
     }
 }

@@ -29,7 +29,7 @@ public class EnchantFacile extends Enchant {
      * @param arme arme qui pourra être équipée par tout le monde
      */
     @Override
-    public void placerEnchant(Arme arme) {
+    protected void placerEnchant(Arme arme) {
         if (!arme.armeEstDeploye()) {
             arme.estFacile = true;
         }

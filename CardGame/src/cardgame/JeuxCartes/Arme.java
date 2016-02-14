@@ -150,6 +150,11 @@ public class Arme extends Carte {
         return obj.build();
     }
 
+    public TypeArme getTypeArme(){
+        return type;
+    }
+    
+    
     /**
      * Permet de staser une Arme
      */

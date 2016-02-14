@@ -23,7 +23,7 @@ public class EnchantDegatPlus extends Enchant {
      * @param arme arme dont les degats vont etre augmenté
      */
     @Override
-    public void placerEnchant(Arme arme) {
+    protected void placerEnchant(Arme arme) {
         arme.degat++;
     }
 }

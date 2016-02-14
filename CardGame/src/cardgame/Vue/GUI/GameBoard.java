@@ -1,5 +1,20 @@
 package cardgame.Vue.GUI;
 
+import cardgame.API.Jeux;
+import cardgame.CommandeCoup.DeploieCommande;
+import cardgame.CommandeCoup.PigerCommande;
+import cardgame.Controller.Controller;
+import cardgame.JeuxCartes.Carte;
+import cardgame.JeuxCartes.Perso;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.border.Border;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,14 +25,84 @@ package cardgame.Vue.GUI;
  *
  * @author mathieu
  */
-public class GameBoard extends javax.swing.JFrame {
+public class GameBoard extends JFrame {
 
-    /**
-     * Creates new form GameBoard
-     */
-    public GameBoard() {
+    protected Rectangle screenSize;
+    private Controller cont;
+    private final Jeux api;
+    private List<CartesGUI> cartes;
+    private int joueurAct;
+    
+    public GameBoard(Jeux jeu) {
+        api = jeu;
+        cartes = new ArrayList<>();
         initComponents();
+        calculateScreenSize();
+        this.setPreferredSize(new Dimension(screenSize.width * 80/100,screenSize.height * 85/100));
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        pack();
+        this.RefreshBoard();
     }
+    
+    public void setController(Controller c){
+        cont = c;
+    }
+    
+    public void ajouterLog(String logData) {
+        this.logArea.setText(this.logArea.getText() + "\n" + logData);
+    }
+    
+    public void resetChoices() {
+        for (CartesGUI c : this.cartes){
+            c.setSelected(false);
+        }
+    }
+    
+    private void InitBoard() {
+        Collection<Carte> mainJoueur1 = api.getCartesMainJoueur(0);
+        Collection<Carte> mainJoueur2 = api.getCartesMainJoueur(1);
+        Collection<Perso> boardJoueur1 = api.getCartesJeuJoueur(0);
+        Collection<Perso> boardJoueur2 = api.getCartesJeuJoueur(1);
+        
+        for (Carte c : mainJoueur1) {
+            CartesGUI cGUI = new CartesGUI(c, new Dimension(100,100));
+            panelMainJoueur1.add(cGUI);
+            cartes.add(cGUI);
+        }
+        for (Carte c : mainJoueur2) {
+            CartesGUI cGUI = new CartesGUI(c, new Dimension(100,100));
+            panelMainJoueur2.add(cGUI);
+            cartes.add(cGUI);      
+        }
+        for (Carte c : boardJoueur1) {
+            CartesGUI cGUI = new CartesGUI(c, new Dimension(100,100));
+            panelJeuJoueur1.add(cGUI);
+            cartes.add(cGUI);     
+        }
+        for (Carte c : boardJoueur2) {
+            CartesGUI cGUI = new CartesGUI(c, new Dimension(100,100));
+            panelJeuJoueur2.add(cGUI);
+            cartes.add(cGUI);   
+        }
+        lblPioche.setText("Cartes restantes : " + api.getnbCartesDeck(0));
+        lblPioche2.setText("Cartes restantes : " + api.getnbCartesDeck(1));
+        this.invalidate();
+        this.validate();
+        this.repaint();
+    }
+    
+    public void RefreshBoard() {
+       joueurAct = api.aQuiLeTour();
+       this.setTitle("Tour Joueur " + joueurAct);
+       this.ajouterLog("Nouveau Tour : Joueur " + joueurAct);
+       this.panelMainJoueur1.removeAll();
+       this.panelMainJoueur2.removeAll();
+       this.panelJeuJoueur1.removeAll();
+       this.panelJeuJoueur2.removeAll();
+       
+       this.InitBoard();
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,78 +112,392 @@ public class GameBoard extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
+        panelGame = new javax.swing.JPanel();
+        piocheBut = new javax.swing.JButton();
+        deploieBut = new javax.swing.JButton();
+        attBut = new javax.swing.JButton();
+        soinBut = new javax.swing.JButton();
+        enchBut = new javax.swing.JButton();
+        defauBut = new javax.swing.JButton();
+        forfBut = new javax.swing.JButton();
+        slouBut = new javax.swing.JButton();
+        panelMainJoueur1 = new javax.swing.JPanel();
+        panelMainJoueur2 = new javax.swing.JPanel();
+        panelJeuJoueur2 = new javax.swing.JPanel();
+        panelJeuJoueur1 = new javax.swing.JPanel();
+        panelDeckJoueur1 = new javax.swing.JPanel();
+        lblPioche = new javax.swing.JLabel();
+        panelDeckJoueur2 = new javax.swing.JPanel();
+        lblPioche2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        logArea = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 324, Short.MAX_VALUE)
-        );
+        panelGame.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Jeux", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 3, 24))); // NOI18N
+        panelGame.setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        piocheBut.setText("Pioche");
+        piocheBut.setMaximumSize(new java.awt.Dimension(200, 200));
+        piocheBut.setMinimumSize(new java.awt.Dimension(80, 90));
+        piocheBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                piocheButActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 67;
+        gridBagConstraints.ipady = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.13;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 18, 0, 0);
+        panelGame.add(piocheBut, gridBagConstraints);
+
+        deploieBut.setText("Deploie");
+        deploieBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deploieButActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 67;
+        gridBagConstraints.ipady = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.13;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 18, 0, 0);
+        panelGame.add(deploieBut, gridBagConstraints);
+
+        attBut.setText("Attaque");
+        attBut.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                attButKeyPressed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 67;
+        gridBagConstraints.ipady = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.13;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 18, 0, 0);
+        panelGame.add(attBut, gridBagConstraints);
+
+        soinBut.setText("Soins");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 89;
+        gridBagConstraints.ipady = 17;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.13;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 18, 0, 0);
+        panelGame.add(soinBut, gridBagConstraints);
+
+        enchBut.setText("Enchant");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 56;
+        gridBagConstraints.ipady = 17;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.13;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 18, 0, 0);
+        panelGame.add(enchBut, gridBagConstraints);
+
+        defauBut.setText("Défausse");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 47;
+        gridBagConstraints.ipady = 17;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.13;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 18, 0, 0);
+        panelGame.add(defauBut, gridBagConstraints);
+
+        forfBut.setText("Forfait");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 70;
+        gridBagConstraints.ipady = 17;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.13;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 18, 0, 0);
+        panelGame.add(forfBut, gridBagConstraints);
+
+        slouBut.setText("Sloubi?");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 9;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 70;
+        gridBagConstraints.ipady = 17;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.13;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 18, 0, 0);
+        panelGame.add(slouBut, gridBagConstraints);
+
+        panelMainJoueur1.setBorder(javax.swing.BorderFactory.createTitledBorder("Main"));
+        panelMainJoueur1.setMinimumSize(new java.awt.Dimension(100, 200));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 1066;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        panelGame.add(panelMainJoueur1, gridBagConstraints);
+
+        panelMainJoueur2.setBorder(javax.swing.BorderFactory.createTitledBorder("Main Joueur 2"));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 1024;
+        gridBagConstraints.ipady = 136;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        panelGame.add(panelMainJoueur2, gridBagConstraints);
+
+        panelJeuJoueur2.setBorder(javax.swing.BorderFactory.createTitledBorder("Jeu Joueur 2"));
+        panelJeuJoueur2.setMinimumSize(new java.awt.Dimension(100, 100));
+        panelJeuJoueur2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 1241;
+        gridBagConstraints.ipady = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        panelGame.add(panelJeuJoueur2, gridBagConstraints);
+
+        panelJeuJoueur1.setBorder(javax.swing.BorderFactory.createTitledBorder("Jeu"));
+        panelJeuJoueur1.setMinimumSize(new java.awt.Dimension(100, 100));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 1241;
+        gridBagConstraints.ipady = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        panelGame.add(panelJeuJoueur1, gridBagConstraints);
+
+        panelDeckJoueur1.setBorder(javax.swing.BorderFactory.createTitledBorder("Deck"));
+
+        lblPioche.setText("Cartes restantes :");
+
+        javax.swing.GroupLayout panelDeckJoueur1Layout = new javax.swing.GroupLayout(panelDeckJoueur1);
+        panelDeckJoueur1.setLayout(panelDeckJoueur1Layout);
+        panelDeckJoueur1Layout.setHorizontalGroup(
+            panelDeckJoueur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDeckJoueur1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addComponent(lblPioche, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(162, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        panelDeckJoueur1Layout.setVerticalGroup(
+            panelDeckJoueur1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDeckJoueur1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblPioche, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        panelGame.add(panelDeckJoueur1, gridBagConstraints);
+
+        panelDeckJoueur2.setBorder(javax.swing.BorderFactory.createTitledBorder("Deck Joueur 2"));
+
+        lblPioche2.setText("Cartes restantes :");
+
+        javax.swing.GroupLayout panelDeckJoueur2Layout = new javax.swing.GroupLayout(panelDeckJoueur2);
+        panelDeckJoueur2.setLayout(panelDeckJoueur2Layout);
+        panelDeckJoueur2Layout.setHorizontalGroup(
+            panelDeckJoueur2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDeckJoueur2Layout.createSequentialGroup()
+                .addComponent(lblPioche2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 150, Short.MAX_VALUE))
+        );
+        panelDeckJoueur2Layout.setVerticalGroup(
+            panelDeckJoueur2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblPioche2, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipady = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 0.2;
+        panelGame.add(panelDeckJoueur2, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 6.0;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(20, 10, 20, 0);
+        getContentPane().add(panelGame, gridBagConstraints);
+
+        jPanel2.setLayout(new java.awt.BorderLayout(0, 10));
+
+        logArea.setColumns(20);
+        logArea.setLineWrap(true);
+        logArea.setRows(40);
+        logArea.setPreferredSize(new java.awt.Dimension(240, 840));
+        jScrollPane1.setViewportView(logArea);
+
+        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jLabel1.setFont(new java.awt.Font("Cantarell", 3, 36)); // NOI18N
+        jLabel1.setText("Log");
+        jPanel2.add(jLabel1, java.awt.BorderLayout.PAGE_START);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.9;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 10);
+        getContentPane().add(jPanel2, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    private void piocheButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_piocheButActionPerformed
+        PigerCommande cmd = new PigerCommande(api, joueurAct);
+        cont.faireAction(cmd);
+    }//GEN-LAST:event_piocheButActionPerformed
+
+    private void attButKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_attButKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_attButKeyPressed
+
+    private void deploieButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deploieButActionPerformed
+        Carte perso = null;
+        Carte arme = null;
+        List<Carte> enchant = new ArrayList<>();
+        this.ajouterLog("Déployer perso");
+        boolean selectionCorrect = true;
+        for (CartesGUI cg : cartes) {
+            if (cg.isSelected()) {
+            if (cg.estPerso && perso == null){
+                perso = cg.getCarte();
+            } else if (cg.estArme && arme == null) {
+                arme = cg.getCarte();
+            } else if (cg.estMagie) {
+                enchant.add(cg.getCarte());
+            } else {
+                selectionCorrect = false;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
         }
-        //</editor-fold>
+        if (!selectionCorrect) {
+            this.ajouterLog("La sélection prise est incorrecte.");
+            return;
+        }
+        
+        DeploieCommande cmd = new DeploieCommande(api, joueurAct, perso, arme, enchant);
+        cont.faireAction(cmd);
+        
+    }//GEN-LAST:event_deploieButActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameBoard().setVisible(true);
-            }
-        });
+        public final void calculateScreenSize(){
+        GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
+        screenSize = maximumWindowBounds;
+        
+        //Pour les tests de petits écran
+//        this.setPreferredSize(new Dimension(1228, 778));
+//        this.setMaximumSize(new Dimension(1228, 778));
+//        this.setMaximizedBounds(new Rectangle(1228, 778));
+//        screenSize = new Rectangle(1228, 778);
     }
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton attBut;
+    private javax.swing.JButton defauBut;
+    private javax.swing.JButton deploieBut;
+    private javax.swing.JButton enchBut;
+    private javax.swing.JButton forfBut;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPioche;
+    private javax.swing.JLabel lblPioche2;
+    private javax.swing.JTextArea logArea;
+    private javax.swing.JPanel panelDeckJoueur1;
+    private javax.swing.JPanel panelDeckJoueur2;
+    private javax.swing.JPanel panelGame;
+    private javax.swing.JPanel panelJeuJoueur1;
+    private javax.swing.JPanel panelJeuJoueur2;
+    private javax.swing.JPanel panelMainJoueur1;
+    private javax.swing.JPanel panelMainJoueur2;
+    private javax.swing.JButton piocheBut;
+    private javax.swing.JButton slouBut;
+    private javax.swing.JButton soinBut;
     // End of variables declaration//GEN-END:variables
 }

@@ -23,7 +23,7 @@ public class EnchantStase extends Enchant {
      * @param arme arme qui va être mise sous stase.
      */
     @Override
-    public void placerEnchant(Arme arme) {
+    protected void placerEnchant(Arme arme) {
         arme.staserArme();
         arme.reset();
     }

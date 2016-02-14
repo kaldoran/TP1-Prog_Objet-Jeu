@@ -5,8 +5,10 @@
  */
 package cardgame.Controller;
 
+import cardgame.API.Jeux;
 import cardgame.CommandeCoup.Commande;
 import cardgame.ResultUtils.Resultat;
+import cardgame.Vue.GUI.GameBoard;
 import javax.swing.JFrame;
 
 /**
@@ -15,14 +17,23 @@ import javax.swing.JFrame;
  */
 public class GUIController implements Controller {
 
+    private final GameBoard vue;
+    
+    public GUIController(GameBoard board){
+        vue = board;
+    }
+    
     @Override
-    public void faireAction(Commande cmd, JFrame board) {
+    public void faireAction(Commande cmd) {
 
-        
         if (cmd.coupPossible()) {
             Resultat res = cmd.placerCoup();
-            //...
+            vue.ajouterLog(res.getDescription());
+            vue.RefreshBoard();
+        } else {
+            vue.ajouterLog("Coup refusé");
         }
+        vue.resetChoices();
         
     }
 }

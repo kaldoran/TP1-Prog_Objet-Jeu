@@ -25,7 +25,7 @@ public class EnchantNeutre extends Enchant {
      * @param arme arme dont le triangle de dégat va etre retiré
      */
     @Override
-    public void placerEnchant(Arme arme) {
+    protected void placerEnchant(Arme arme) {
         arme.type = TypeArme.Neutre;
     }
 }

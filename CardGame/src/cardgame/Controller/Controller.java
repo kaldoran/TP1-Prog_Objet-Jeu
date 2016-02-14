@@ -14,6 +14,8 @@ import javax.swing.JFrame;
  */
 public interface Controller {
         
-    public abstract void faireAction(Commande cmd, JFrame board);
-
+    public abstract void faireAction(Commande cmd);
+    
+    
+    
 }

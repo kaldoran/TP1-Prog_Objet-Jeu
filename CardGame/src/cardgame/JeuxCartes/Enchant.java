@@ -29,7 +29,8 @@ public abstract class Enchant extends Carte {
         description = desc;
     }
     
-    public boolean peutUtiliserEnchant(Arme arm) {
+    public boolean peutUtiliserEnchant(Arme arm)
+    {
         return arm.peutAjouterEnchantement();
     }
 
@@ -67,5 +68,6 @@ public abstract class Enchant extends Carte {
      *
      * @param arme Arme sur laquel placer enchant
      */
-    public abstract void placerEnchant(Arme arme);
+    protected abstract void placerEnchant(Arme arme);
+
 }

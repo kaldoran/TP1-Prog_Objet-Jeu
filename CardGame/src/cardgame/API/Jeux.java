@@ -5,18 +5,16 @@ import cardgame.JeuxCartes.Attaquant;
 import cardgame.JeuxCartes.Carte;
 import cardgame.JeuxCartes.Cible;
 import cardgame.JeuxCartes.Enchant;
-import cardgame.JeuxCartes.Joueur;
+import cardgame.JeuxCartes.EnchantFacile;
 import cardgame.JeuxCartes.Joueur;
 import cardgame.JeuxCartes.Perso;
 import cardgame.JeuxCartes.Soigneur;
 import cardgame.ResultUtils.Resultat;
 import cardgame.ResultUtils.RefuseResult;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -43,8 +41,17 @@ public class Jeux {
     private int joueurTour;
 
     public Jeux() {
+        joueurList = new ArrayList<>();
+        partieEnMarche = false;
+        joueurTour = -1;
     }
 
+    public int getnbCartesDeck(int idJoueur){
+        assert(idJoueur < joueurList.size()-1);
+        return joueurList.get(idJoueur).getCarteDeck().carteRestantes();
+        
+    }
+    
     /**
      * Permet de passer au joueur suivant
      */
@@ -67,10 +74,10 @@ public class Jeux {
      * @param nbJoueur nombre de joueur voulant jouer
      */
     public void demarrerPartie(int nbJoueur) {
-        Random r = new Random();
-        joueurTour = r.nextInt(nbJoueur);
-
+        assert(nbJoueur >= 2);
         if (!partieEnMarche) {
+            finPartie();
+            joueurTour = 0;
             for (int i = 0; i < nbJoueur; i++) {
                 joueurList.add(new Joueur(i));
             }
@@ -86,11 +93,11 @@ public class Jeux {
      * @return 
      */
     public Resultat declarerForfait(int idJoueur) {
-        if (joueurTour == idJoueur) {
+        if (joueurTour == idJoueur ) {
             return joueurList.get(idJoueur).declarerForfait();
         }
-
-        throw new UnsupportedOperationException("Not implemented");
+        else 
+            return new RefuseResult("Tu peux pas déclarer forfait pour quelqu'un d'autre.");
     }
 
     /**
@@ -296,9 +303,9 @@ public class Jeux {
     public Collection<Carte> getCimetiereJoueur(int idJoueur){
         return joueurList.get(idJoueur).getCimetiere();
     }
-    public Joueur getJoueur(int idJoueur) {
-        return joueurList.get(idJoueur);
-    }
+    //public Joueur getJoueur(int idJoueur) {
+    //    return joueurList.get(idJoueur);
+    //}
 
     /**
      * Permet de placer un personnage
@@ -323,18 +330,20 @@ public class Jeux {
     
     public boolean peutDeployerPerso(int idJoueur, Carte perso, Carte arme, List<Carte> enchants) {
         boolean verif = idJoueur == aQuiLeTour();
+        boolean enchFac = false;
         Joueur j = joueurList.get(idJoueur);
         verif = verif && j.carteDansMain(perso.getCardID()) && j.carteDansMain(arme.getCardID());
         verif = verif && (perso instanceof Perso) && (arme instanceof Arme);
         for (Carte c : enchants) {
             verif = verif && j.carteDansMain(c.getCardID());
             verif = verif && c instanceof Enchant;
+            enchFac = enchFac || c instanceof EnchantFacile;
         }
         if (verif) {
             Perso p = (Perso) perso;
             Arme a = (Arme)arme;
             verif = !a.armeEstDeploye();
-            verif = verif && a.peutUtiliserArme(p);
+            verif = verif && (a.peutUtiliserArme(p) || enchFac);
         }
         
         return verif;
