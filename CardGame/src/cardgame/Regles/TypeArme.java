@@ -1,8 +1,5 @@
 package cardgame.Regles;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Enum, le type de données TypeArme contient chaque type d'armes possibles dans
  * le jeu, ainsi que leurs logiques personnelles, tel que leurs
@@ -55,7 +52,4 @@ public enum TypeArme {
 
         return 0;
     }
-
-
-
 }

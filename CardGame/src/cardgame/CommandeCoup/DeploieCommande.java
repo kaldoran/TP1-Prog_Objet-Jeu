@@ -34,7 +34,6 @@ public class DeploieCommande implements Commande {
             enchants = e;
     }
     
-    
     @Override
     public Boolean coupPossible() {
         return api.peutDeployerPerso(idJoueur, perso, arme, enchants);
@@ -49,5 +48,5 @@ public class DeploieCommande implements Commande {
     public Resultat placerCoup() {
         return api.placerPerso(idJoueur, perso, arme, enchants );
     }
-    
+
 }

@@ -22,7 +22,6 @@ public class PigerCommande implements Commande {
         idJoueur = joueur;
     }
     
-    
     @Override
     public Boolean coupPossible() {
         return partie.peutPiocherCartes(idJoueur);
@@ -36,6 +35,5 @@ public class PigerCommande implements Commande {
     @Override
     public Resultat placerCoup() {
         return partie.piocherCartes(idJoueur);
-    }
-    
+    } 
 }

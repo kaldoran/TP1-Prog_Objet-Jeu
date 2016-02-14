@@ -24,7 +24,6 @@ public class FinDePartieResult implements Resultat {
         description = "Le joueur" + idJoueurGagne + "vient de gagner la partie";
     }
     
-    
     /**
      * @return True si l'action a fonctionné,false sinon.
      */
@@ -60,7 +59,6 @@ public class FinDePartieResult implements Resultat {
     public int getJoueurQuiAGagne() {
         return joueurGagne;
     }
-
 
     /**
      * Setter

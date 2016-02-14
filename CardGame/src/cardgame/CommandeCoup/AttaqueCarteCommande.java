@@ -7,7 +7,6 @@ package cardgame.CommandeCoup;
 
 import cardgame.JeuxCartes.Carte;
 import cardgame.API.Jeux;
-import cardgame.JeuxCartes.Perso;
 import cardgame.ResultUtils.Resultat;
 
 /**
@@ -30,7 +29,6 @@ public class AttaqueCarteCommande implements Commande {
         defense = attaquee;
     }
     
-    
     @Override
     public Boolean coupPossible() {
         return api.attaquePersoValide(idJ, idA, attaque, defense);
@@ -45,5 +43,4 @@ public class AttaqueCarteCommande implements Commande {
     public Resultat placerCoup() {
         return api.attaquePerso(idJ, idA, attaque, defense);
     }
-    
 }

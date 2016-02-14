@@ -1,7 +1,5 @@
 package cardgame.JeuxCartes;
 
-import cardgame.ResultUtils.Resultat;
-import cardgame.ResultUtils.AttaquePlayerResult;
 import cardgame.Regles.TypeArme;
 import cardgame.ResultUtils.AttaquePersoResult;
 import java.util.ArrayList;
@@ -105,7 +103,6 @@ public class Perso extends Carte implements Cible  {
      * Permet d'ajouter un enchantement à l'arme du perso.
      *
      * @param ench Enchantement à appliquer
-     * @return un EnchantResult si l'enchant fonctionne un RefusedResult sinon
      */
     protected void ajouterEnchant(Enchant ench) {
         armePerso.ajouterEnchant(ench);
@@ -127,8 +124,6 @@ public class Perso extends Carte implements Cible  {
         return armeLibre;
     }
 
-
-
     /**
      * Permet au personnage de recevoir le soin (Autrement dit, réinit ses points
      * de vie).
@@ -144,7 +139,6 @@ public class Perso extends Carte implements Cible  {
     protected void utiliserMagie(){
         Math.max(mp--,0);
     }
-    
 
     /**
      * Permet de savoir si le personnage est mort.
@@ -159,7 +153,6 @@ public class Perso extends Carte implements Cible  {
     public List<TypeArme> getArmesUtilisables(){
         return armesUtilisables;
     }
-    
 
     /**
      * Permet d'obtenir le type d'arme utilisée par le perso
@@ -189,7 +182,6 @@ public class Perso extends Carte implements Cible  {
         return obj.build();
     }
     
-
     /**
      * Permet de créer un JSon pour fins de tests.
      *
@@ -227,5 +219,4 @@ public class Perso extends Carte implements Cible  {
         res = new AttaquePersoResult(degat, this.getCardID(),attaqueur.getCardID(), estMort());
         return res;
     }
-
 }

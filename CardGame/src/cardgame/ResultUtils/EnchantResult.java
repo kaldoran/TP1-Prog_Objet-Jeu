@@ -42,8 +42,6 @@ public class EnchantResult implements Resultat {
         description = "Enchantement d'une carte";
     }
 
-
-
     /**
      * Getter
      *
@@ -90,5 +88,4 @@ public class EnchantResult implements Resultat {
     public void setJoueur(int idJoueur) {
         this.joueurId = idJoueur;
     }
-
 }

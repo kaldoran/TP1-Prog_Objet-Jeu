@@ -97,8 +97,6 @@ public class Deck {
         return cartespioches.isEmpty();
     }
 
-    
-    
     /**
      * Pemet d'avoir la représentation en JSon du Deck
      * A noter : Le contenu du deck n'est pas communiqué pour éviter la triche.

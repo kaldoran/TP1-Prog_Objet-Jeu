@@ -25,5 +25,4 @@ public class GUIController implements Controller {
         }
         
     }
-    
 }

@@ -133,48 +133,6 @@ public class Joueur implements Cible {
         return res;
     }
     
-    /** 
-     * Permet à un joueur de recevoir une attaque
-     * @param degat Quantité de dégats pris
-     * @return un AttackResult si tout c'est bien passé
-     *         un RefusedResult sinon
-     */
-    /*public Resultat recoitAttaque(int degat) {
-        Resultat res;
-        
-        if ( degat <= 0 ) { 
-            res = new RefuseResult("Un dégat ne peux être négatif.");
-            return res;
-        }
-        
-        cimetiere.addAll(carteDeck.dommageJoueur(degat));
-        
-        res = new AttaqueResult(degat, true, 0, 0, this.aPerdu());
-        return res;
-    }*/
-    
-    /**
-     * Permet à un joueur d'attaquer une carte à l'aide d'une autre carte
-     * @param attaqueur position de la carte attaquant sur le jeu
-     * @param attaque  position relative de la carte à attaquer sur le terrains
-     * @return un AttackResult si tout c'est bien passé
-     *         un RefusedResult sinon
-     */
-    /*public Resultat attaque(int attaqueur, int attaque) {
-        Resultat res;
-        Perso attaquee = (Perso) carteEnJeu.get(attaque);
-        
-        if ( !carteEnJeu.containsKey(attaquee) || !(attaquee instanceof Perso) ) {
-            res = new RefuseResult("Impossible d'attaquer cette carte, celle ci n'est pas un perso ou sur le terrain.");
-            return res;
-        }
-        
-        int degat = ((Perso) carteEnJeu.get(attaqueur)).forceAttaque(attaquee);
-        res = ((Perso) attaquee).prendreDommage(degat,attaqueur);
-        
-        return res;
-    }*/
-    
     /**
      * Permet à un joueur d'attaquer un joueur à l'aide d'une de ses cartes
      * @param attaqueur position de la carte attaquant sur le jeu
@@ -285,8 +243,7 @@ public class Joueur implements Cible {
         res = new PersoDeploieResult(this.getIdjoueur(), true, personnage.getCardID(), arm.getCardID());
         return res;
     }
-    
-    
+
     public Carte getCarte(int idCarte){
         Carte card;
         card = main.containsKey(idCarte) ? main.get(idCarte) : null;
@@ -359,21 +316,7 @@ public class Joueur implements Cible {
         
         return soins.soigner(soignee);
     }
-    
-    /**
-     * Permet de vérifier que le joueur detient la carte qu'il souhaite jouer
-     * @param idCarte id de la carte à verifier
-     * @return true si le joueur posede la carte ayant le carteID égale à idCarte
-     *         false sinon
-     */
-    /*public boolean detientCarte(int idCarte) {
-        for ( int i = 0; i < main.size(); i++)
-            if ( main.get(i).getCardID() == idCarte ) 
-                return true;
-        
-        return false;
-    }*/
-    
+
     /**
      * Permet d'avoir le JSon associé à un joueur
      * @return le JSon objet représentant le joueur
@@ -428,8 +371,7 @@ public class Joueur implements Cible {
     public JsonObject deckToJSon() {
         return carteDeck.toJSon();
     }
-    
-    
+
     public boolean peutPiocher() {
         return main.size() < Regle.CARTEMAIN && carteDeck.deckEstVide();
     }
@@ -453,5 +395,4 @@ public class Joueur implements Cible {
     public boolean estMort() {
         return carteDeck.deckEstVide() && main.isEmpty() && carteEnJeu.isEmpty();
     }
-    
 }

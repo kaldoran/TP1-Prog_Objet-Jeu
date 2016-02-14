@@ -5,7 +5,6 @@
  */
 package cardgame.JeuxCartes;
 
-import cardgame.ResultUtils.AttaquePlayerResult;
 import cardgame.ResultUtils.Resultat;
 
 /**

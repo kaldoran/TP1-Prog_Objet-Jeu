@@ -94,5 +94,4 @@ public class DefausseResult implements Resultat {
     public void setJoueur(int idJoueur) {
         this.joueurId = idJoueur;
     }
-
 }

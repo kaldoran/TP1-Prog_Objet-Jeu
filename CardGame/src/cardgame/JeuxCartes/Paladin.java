@@ -7,7 +7,6 @@ package cardgame.JeuxCartes;
 
 import cardgame.Regles.Regle;
 import cardgame.Regles.TypeArme;
-import cardgame.ResultUtils.AttaquePlayerResult;
 import cardgame.ResultUtils.Resultat;
 import cardgame.ResultUtils.SoinsResult;
 import java.util.Arrays;
@@ -28,7 +27,7 @@ public class Paladin extends Perso implements Attaquant,Soigneur {
 
     }
     
-        @Override
+    @Override
     public SoinsResult soigner(Perso allie) {
 
         SoinsResult resultat;
@@ -45,5 +44,4 @@ public class Paladin extends Perso implements Attaquant,Soigneur {
     public boolean peutSoigner(Perso p) {
         return this.getMp() > 0 && (this.getCardID() != p.getCardID());
     }
-
 }

@@ -4,7 +4,6 @@ import cardgame.JeuxCartes.Guerrier;
 import cardgame.JeuxCartes.Paladin;
 import cardgame.JeuxCartes.Perso;
 import cardgame.JeuxCartes.Pretre;
-import cardgame.Regles.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,5 +68,4 @@ public class PersoFactory {
 
         return paladins;
     }
-
 }

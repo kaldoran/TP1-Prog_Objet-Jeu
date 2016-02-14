@@ -24,7 +24,6 @@ public class ForfaitResult implements Resultat {
         description = "Le joueur" + idJoueurPerdu + "vient de perdre la partie";
     }
     
-    
     /**
      * @return True si l'action a fonctionné,false sinon.
      */
@@ -60,7 +59,6 @@ public class ForfaitResult implements Resultat {
     public int getJoueurQuiAPerdu() {
         return joueurPerdu;
     }
-
 
     /**
      * Setter

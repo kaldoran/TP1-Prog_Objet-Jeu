@@ -81,7 +81,6 @@ public class Arme extends Carte {
      * Permet d'ajouter un enchantement à l'arme courante
      *
      * @param ench Enchant à appliquer à l'arme
-     * @return un EnchantResult si tout c'est bien passé un Refused Result sinon
      */
     protected void ajouterEnchant(Enchant ench) {
         if (!this.estStase) {
@@ -174,6 +173,4 @@ public class Arme extends Carte {
     public boolean armeEstDeploye() {
         return armeUtilise;
     }
-    
-    
 }

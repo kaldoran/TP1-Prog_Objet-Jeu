@@ -23,5 +23,4 @@ public class SloubiCommande implements Commande {
     public Resultat placerCoup() {
         return new RefuseResult("Nice try.");
     }
-    
 }

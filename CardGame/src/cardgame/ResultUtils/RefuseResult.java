@@ -62,5 +62,4 @@ public class RefuseResult implements Resultat {
     public void setJoueur(int idJoueur) {
         this.joueurId = idJoueur;
     }
-
 }

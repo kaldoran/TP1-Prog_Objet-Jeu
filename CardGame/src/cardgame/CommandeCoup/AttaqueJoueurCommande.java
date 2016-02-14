@@ -15,7 +15,7 @@ import cardgame.ResultUtils.Resultat;
  */
 public class AttaqueJoueurCommande implements Commande {
 
-      private final Jeux api;
+    private final Jeux api;
     private final int idJ;
     private final int idA;
     private final Carte attaque;
@@ -26,7 +26,6 @@ public class AttaqueJoueurCommande implements Commande {
         idA = idAdversaire;
         attaque = attaqueur;
     }
-    
     
     @Override
     public Boolean coupPossible() {
@@ -42,5 +41,4 @@ public class AttaqueJoueurCommande implements Commande {
     public Resultat placerCoup() {
         return api.attaqueJoueur(idJ, idA, attaque);
     }
-    
 }

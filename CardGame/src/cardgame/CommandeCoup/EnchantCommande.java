@@ -29,7 +29,6 @@ public class EnchantCommande implements Commande {
                 
     }
     
-    
     @Override
     public Boolean coupPossible() {
         return partie.peutAjouterEnchantements(joueur,enchantee, enchantements);
@@ -44,5 +43,4 @@ public class EnchantCommande implements Commande {
     public Resultat placerCoup() {
         return partie.ajouterEnchantements(joueur,enchantee,enchantements);
     }
-    
 }

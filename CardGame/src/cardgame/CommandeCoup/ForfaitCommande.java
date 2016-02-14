@@ -21,8 +21,7 @@ public class ForfaitCommande implements Commande {
         partie = jeu;
         joueur = idJoueur;
     }
-    
-    
+
     @Override
     public Boolean coupPossible() {
         return !partie.partieFini();
@@ -37,5 +36,4 @@ public class ForfaitCommande implements Commande {
     public Resultat placerCoup() {
         return partie.declarerForfait(joueur);
     }
-    
 }

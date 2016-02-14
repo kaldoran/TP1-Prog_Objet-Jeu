@@ -7,8 +7,6 @@ package cardgame.JeuxCartes;
 
 import cardgame.Regles.Regle;
 import cardgame.Regles.TypeArme;
-import cardgame.ResultUtils.AttaquePlayerResult;
-import cardgame.ResultUtils.RefuseResult;
 import cardgame.ResultUtils.Resultat;
 import cardgame.ResultUtils.SoinsResult;
 import java.util.Arrays;
@@ -23,7 +21,7 @@ public class Pretre extends Perso implements Attaquant,Soigneur {
         super(Regle.GUERRIERHP, Regle.GUERRIERMP, Arrays.asList(TypeArme.values()));
     }
 
-        @Override
+    @Override
     public Resultat attaque(Cible c) {
         return c.recoitAttaque(this);
 
@@ -53,5 +51,4 @@ public class Pretre extends Perso implements Attaquant,Soigneur {
     public boolean peutSoigner(Perso p) {
         return this.getMp() > 0 && (this.getCardID() != p.getCardID());
     }
-
 }

@@ -7,8 +7,6 @@ package cardgame.JeuxCartes;
 
 import cardgame.Regles.Regle;
 import cardgame.Regles.TypeArme;
-import cardgame.ResultUtils.AttaquePersoResult;
-import cardgame.ResultUtils.AttaquePlayerResult;
 import cardgame.ResultUtils.Resultat;
 import java.util.Arrays;
 
@@ -27,5 +25,4 @@ public class Guerrier extends Perso implements Attaquant {
         return c.recoitAttaque(this);
 
     }
-
 }

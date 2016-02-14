@@ -19,8 +19,7 @@ public class EnchantFacile extends Enchant {
     }
     
     @Override
-    public boolean peutUtiliserEnchant(Arme arm)
-    {
+    public boolean peutUtiliserEnchant(Arme arm) {
         return !arm.armeEstDeploye() && arm.peutAjouterEnchantement();
     }
 

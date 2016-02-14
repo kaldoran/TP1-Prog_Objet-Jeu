@@ -96,9 +96,7 @@ public class AttaquePersoResult implements Resultat {
     public int getPersonneAttaque() {
         return idCarteAttack;
     }
-
     
-
     /**
      * Getter
      * @return True si le perso est mort par cette attaque,false sinon.

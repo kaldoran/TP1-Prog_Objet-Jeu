@@ -188,8 +188,7 @@ public class Jeux {
         
         return res;
     }
-    
-    
+
     public boolean attaquePersoValide(int idJoueur,int idAdversaire,Carte attaqueur,Carte receveur){
         
        boolean coupP = ((this.aQuiLeTour() == idJoueur) && (idJoueur != idAdversaire));
