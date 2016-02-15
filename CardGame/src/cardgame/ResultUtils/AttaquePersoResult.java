@@ -2,7 +2,7 @@ package cardgame.ResultUtils;
 
 /**
  * Implémentation de Resultat pour décrire les conséquences d'une attaque
- * perso-perso ou perso-joueur.
+ * perso-joueur.
  *
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reynaud REYN23119308
@@ -17,7 +17,7 @@ public class AttaquePersoResult implements Resultat {
     private final int idCarte;
     private final int idCarteAttack;
     private final boolean attaqueTuer;
-    private  String desc;
+    private String desc;
 
     public AttaquePersoResult(int dmg, int joueurId, int carteId, int persoCoupId, boolean attaqueTue) {
         dommageRecu = dmg;
@@ -26,18 +26,20 @@ public class AttaquePersoResult implements Resultat {
         attaqueTuer = attaqueTue;
         idCarteAttack = persoCoupId;
         desc = "L'attaque de la carte " + carteId + "sur " + persoCoupId + "a causé " + dmg + "dégats.\n";
-        if (attaqueTue)
+        if (attaqueTue) {
             desc = desc + "Le perso à été tué.";
+        }
     }
 
-     public AttaquePersoResult(int dmg, int carteId, int persoCoupId, boolean attaqueTue) {
+    public AttaquePersoResult(int dmg, int carteId, int persoCoupId, boolean attaqueTue) {
         dommageRecu = dmg;
         idCarte = carteId;
         attaqueTuer = attaqueTue;
         idCarteAttack = persoCoupId;
         desc = "L'attaque de la carte " + carteId + "sur " + persoCoupId + "a causé " + dmg + "dégats.\n";
-        if (attaqueTue)
+        if (attaqueTue) {
             desc = desc + "Le perso à été tué.";
+        }
     }
 
     /**
@@ -96,9 +98,10 @@ public class AttaquePersoResult implements Resultat {
     public int getPersonneAttaque() {
         return idCarteAttack;
     }
-    
+
     /**
      * Getter
+     *
      * @return True si le perso est mort par cette attaque,false sinon.
      */
     public boolean attaqueATuer() {
@@ -107,6 +110,7 @@ public class AttaquePersoResult implements Resultat {
 
     /**
      * Setter
+     *
      * @param joueurId l'identifiant du joueur qui a fait le coup.
      */
     @Override

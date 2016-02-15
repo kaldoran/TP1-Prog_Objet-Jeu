@@ -3,7 +3,7 @@ package cardgame.Regles;
 /**
  * Enum, le type de données TypeArme contient chaque type d'armes possibles dans
  * le jeu, ainsi que leurs logiques personnelles, tel que leurs
- * forces/faiblesses et leur types d'utilisateurs. La classe détient aussi la
+ * forces/faiblesses. La classe détient aussi la
  * fonction de calcul du triangle d'attaque pour fins d'évolutions façiles.
  *
  * @author Mathieu Gravel GRAM02099206

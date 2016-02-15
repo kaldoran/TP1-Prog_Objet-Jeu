@@ -1,15 +1,12 @@
 package cardgame.JeuxCartes;
 
 import cardgame.Regles.Regle;
-import cardgame.JeuxCartes.Carte;
 import cardgame.Init.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import javax.json.*;
 
 /**
  * Classe représentant le paquet de cartes non-pigés d'un joueur. La classe
@@ -20,6 +17,8 @@ import javax.json.JsonObjectBuilder;
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reynaud REYN23119308
  * @version 1.0 08-Fév-2016 : 1.0 - Version initiale.
+ *          1.1 10-Fév-2016 : 1.1 - Modification de InitialiserDeck
+ *                                  pour utiliser PersoFactory.
  */
 public class Deck {
     
@@ -53,6 +52,9 @@ public class Deck {
         Collections.shuffle(cartespioches, new Random(System.nanoTime()));
     }
     
+    /**
+     * Fonction qui permet de vider le deck.
+     */
     public void viderDeck(){
         this.cartespioches.clear();
     }
@@ -96,7 +98,9 @@ public class Deck {
         return cartespioches.size();
     }
     
-    
+    /**
+     * @return True si le deck est vide.
+     */
     public boolean deckEstVide(){
         return cartespioches.isEmpty();
     }

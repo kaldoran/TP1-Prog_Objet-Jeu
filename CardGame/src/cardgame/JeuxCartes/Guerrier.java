@@ -1,21 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cardgame.JeuxCartes;
 
-import cardgame.Regles.Regle;
-import cardgame.Regles.TypeArme;
-import cardgame.ResultUtils.Resultat;
+import cardgame.Regles.*;
 import java.util.Arrays;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import javax.json.*;
 
 /**
+ * Classe représentant la classe Guerrier du jeu. La classe est une extension de
+ * Combattant, ce qui lui permet d'attaquer.
  *
- * @author mathieu
+ * @author Mathieu Gravel GRAM02099206
+ * @author Nicolas Reynaud REYN23119308
+ * @version 1.0
+ * 12-Fév-2016 : 1.0 - Version initiale.
  */
 public class Guerrier extends Combattant {
 
@@ -23,16 +19,12 @@ public class Guerrier extends Combattant {
         super(Regle.GUERRIERHP, Regle.GUERRIERMP, Arrays.asList(TypeArme.values()));
     }
 
-    
-       @Override
+    @Override
     public JsonObject toJSON() {
         JsonObject json = super.toJSON();
         JsonObjectBuilder addition = Json.createObjectBuilder();
         addition.add("Type Personnage", "Guerrier");
         addition.add("General Info", json);
-        
         return addition.build();
     }
-    
-
 }

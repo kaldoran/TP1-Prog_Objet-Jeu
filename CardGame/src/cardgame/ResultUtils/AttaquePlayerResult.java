@@ -2,7 +2,7 @@ package cardgame.ResultUtils;
 
 /**
  * Implémentation de Resultat pour décrire les conséquences d'une attaque
- * perso-perso ou perso-joueur.
+ * perso-joueur.
  *
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reynaud REYN23119308

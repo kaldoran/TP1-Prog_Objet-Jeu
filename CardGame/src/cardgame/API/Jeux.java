@@ -31,11 +31,16 @@ import javax.json.JsonObjectBuilder;
  *
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reynaud REYN23119308
- * @version 1.0 08-Fév-2016 : 1.0 - Version initiale.
+ * @version 1.2
+ * 08-Fév-2016 : 1.0 - Version initiale.
+ * 10-Fév-2016 : 1.1 - Réécriture des fonctions afin de pouvoir retourner
+ * les cartes au controlleur si nécessaire.
+ * 13-Fév-2016 : 1.2 - Ajout de fonctions de validation de coup pour les contrôleurs
+ *                      (Remerciments : L'idée est inspiré du travail de RUBIN Jehan et HAAS Ellen)
  */
 public class Jeux {
 
-    private List<Joueur> joueurList;
+    private final List<Joueur> joueurList;
     private boolean partieEnMarche;
     private int joueurTour;
 
@@ -204,8 +209,8 @@ public class Jeux {
         coupP = coupP && (idAdversaire >= 0) && (joueurList.size() >= idAdversaire);
         coupP = coupP && (attaqueur instanceof Combattant) && (receveur instanceof Cible);
         if (coupP) {
-            coupP = coupP && joueurList.get(idJoueur).carteDansJeu(attaqueur.getCardID());
-            coupP = coupP && joueurList.get(idAdversaire).carteDansJeu(receveur.getCardID());
+            coupP = coupP && joueurList.get(idJoueur).carteDansJeu(attaqueur);
+            coupP = coupP && joueurList.get(idAdversaire).carteDansJeu(receveur);
             coupP = coupP && ((Cible) receveur).peutEtreAttaque();
         }
         return coupP;
@@ -278,10 +283,10 @@ public class Jeux {
         Joueur j = joueurList.get(idJoueur);
         boolean carteDeploye = false;
         for (Carte c : enchants) {
-            verifValide = verifValide && j.carteDansMain(c.getCardID());
+            verifValide = verifValide && j.carteDansMain(c);
         }
         for (Joueur joueurAct : joueurList) {
-            carteDeploye = carteDeploye || joueurAct.carteDansJeu(carteTouche.getCardID());
+            carteDeploye = carteDeploye || joueurAct.carteDansJeu(carteTouche);
         }
         carteDeploye = carteDeploye && carteTouche instanceof Perso;
         if (carteDeploye) {
@@ -332,10 +337,10 @@ public class Jeux {
         boolean verif = idJoueur == aQuiLeTour();
         boolean enchFac = false;
         Joueur j = joueurList.get(idJoueur);
-        verif = verif && j.carteDansMain(perso.getCardID()) && j.carteDansMain(arme.getCardID());
+        verif = verif && j.carteDansMain(perso) && j.carteDansMain(arme);
         verif = verif && (perso instanceof Perso) && (arme instanceof Arme);
         for (Carte c : enchants) {
-            verif = verif && j.carteDansMain(c.getCardID());
+            verif = verif && j.carteDansMain(c);
             verif = verif && c instanceof Enchant;
             enchFac = enchFac || c instanceof EnchantFacile;
         }
@@ -379,7 +384,7 @@ public class Jeux {
         coupValide = coupValide && !defausse.isEmpty();
         Joueur joueurAct = joueurList.get(idJoueur);
         for (Carte c : defausse) {
-            coupValide = coupValide && joueurAct.carteDansMain(c.getCardID());
+            coupValide = coupValide && joueurAct.carteDansMain(c);
             if (!coupValide) {
                 break;
             }
@@ -420,8 +425,8 @@ public class Jeux {
         boolean coupValide = idJoueur == aQuiLeTour();
         coupValide = coupValide && soigneur != soignee;
         Joueur joueurAct = joueurList.get(idJoueur);
-        coupValide = coupValide && joueurAct.carteDansJeu(soigneur.getCardID())
-                && joueurAct.carteDansJeu(soignee.getCardID());
+        coupValide = coupValide && joueurAct.carteDansJeu(soigneur)
+                && joueurAct.carteDansJeu(soignee);
         coupValide = coupValide && soigneur instanceof Soigneur && soignee instanceof Perso;
         if (coupValide) {
             Soigneur s = (Soigneur) soigneur;

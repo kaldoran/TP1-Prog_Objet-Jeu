@@ -1,13 +1,10 @@
 package cardgame.JeuxCartes;
 
-
 import cardgame.Regles.TypeArme;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import javax.json.*;
 
 /**
  * Classe représentant chacunes des cartes d'armes du jeu. Initialisé par
@@ -17,7 +14,13 @@ import javax.json.JsonObjectBuilder;
  *
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reynaud REYN23119308
- * @version 1.0 08-Fév-2016 : 1.0 - Version initiale.
+ * @version 1.2 
+ * 
+ * Historique : 08-Fév-2016 : 1.0 - Version initiale.
+ * 11-Fév-2016 : 1.1 - Découpage de ListUtilisateurs pour le placer
+ *                      dans Perso.
+ *               1.2 - Ajout de fonctions pour vérifier si l'amr
+ *                     est déployé.
  */
 public class Arme extends Carte {
 
@@ -31,6 +34,7 @@ public class Arme extends Carte {
     protected int degat;
     protected List<Enchant> listEnchant;
     protected boolean estFacile;
+    
     /**
      * Liste utilisé pour noter les enchantements qui ont été Stased. Cette
      * liste sert seulement pour fins d'affichages.
@@ -68,7 +72,7 @@ public class Arme extends Carte {
     }
 
     /**
-     * Permet de savoir si un perso peut utiliser ou non une arme
+     * Permet de savoir si un perso peut utiliser ou non une arme.
      *
      * @param p personnage à verifier
      * @return true si le perso peut porter l'arme false sinon
@@ -107,7 +111,7 @@ public class Arme extends Carte {
     @Override
     public JsonObject toJSON() {
         JsonObjectBuilder obj = Json.createObjectBuilder();
-        obj.add("Id", this.cardID);
+        obj.add("Id", this.getCardID());
         obj.add("Type d'arme", type.name());
         obj.add("Degats", degat);
         Iterator<Enchant> it = listEnchant.iterator();
@@ -127,33 +131,12 @@ public class Arme extends Carte {
     }
 
     /**
-     * Permet de créer le JSon pour les tests.
-     *
-     * @return retourne le JSon associé à une arme
+     * Getter
+     * @return Type d'arme
      */
-    @Override
-    public JsonObject toJSONTest() {
-        JsonObjectBuilder obj = Json.createObjectBuilder();
-        obj.add("Type d'arme", type.name());
-        obj.add("Degats", degat);
-        Iterator<Enchant> it = listEnchant.iterator();
-        int enchNum = 1;
-        while (it.hasNext()) {
-            obj.add("Enchantement actif #" + enchNum, it.next().toJSONTest());
-        }
-        enchNum = 1;
-        it = listEnchantStase.iterator();
-        while (it.hasNext()) {
-            obj.add("Enchantement inactif #" + enchNum, it.next().toJSONTest());
-        }
-
-        return obj.build();
-    }
-
     public TypeArme getTypeArme(){
         return type;
     }
-    
     
     /**
      * Permet de staser une Arme
@@ -162,6 +145,9 @@ public class Arme extends Carte {
         this.estStase = true;
     }
     
+    /**
+     * Setter notant que l'arme a été déployé.
+     */
     protected void deployerArme() {
         armeUtilise = true;
     }
@@ -175,6 +161,10 @@ public class Arme extends Carte {
         return !estStase;
     }
 
+    /**
+     * Getter
+     * @return Bool dictant si l'arme est déployé sur un perso. 
+     */
     public boolean armeEstDeploye() {
         return armeUtilise;
     }

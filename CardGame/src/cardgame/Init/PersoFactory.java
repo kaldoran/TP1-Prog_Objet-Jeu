@@ -15,9 +15,11 @@ import java.util.List;
  *
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reynaud REYN23119308
- * @version 1.0
+ * @version 1.1
  *
- * Historique : 8 Fév-2016 : 1.0 Version initiale.
+ * Historique : 8 Fév-2016 : 1.0 Version initiale. 
+ * 13Fév-2016 : 1.1 Modification du code pour marcher avec les
+ * nouvelles classes Guerrier, Pretre et Paladin.
  */
 public class PersoFactory {
 
@@ -25,7 +27,7 @@ public class PersoFactory {
      * Retourne une liste de cartes Guerriers
      *
      * @param nbCopies nombre de copie de cartes guerriers
-     * @return une liste de nbCopie élements contenant les guerriers demandées.
+     * @return liste de nbCopies d'instance de Guerriers.
      */
     public List<Perso> creerSetGuerrier(int nbCopies) {
         List<Perso> guerriers = new ArrayList<>();
@@ -41,7 +43,7 @@ public class PersoFactory {
      * Retourne une liste de cartes Prêtres.
      *
      * @param nbCopies nombre de copie de cartes prêtres.
-     * @return une liste de nbCopie élements contenant les prêtres demandées.
+     * @return liste de nbCopies d'instance de Prêtres.
      */
     public List<Perso> creerSetPretre(int nbCopies) {
         List<Perso> pretres = new ArrayList<>();
@@ -57,7 +59,7 @@ public class PersoFactory {
      * Retourne une liste de cartes Paladins.
      *
      * @param nbCopies nombre de copie de cartes paladins.
-     * @return une liste de nbCopie élements contenant les paladins demandées.
+     * @return liste de nbCopies d'instance de Paladins.
      */
     public List<Perso> creerSetPaladin(int nbCopies) {
         List<Perso> paladins = new ArrayList<>();

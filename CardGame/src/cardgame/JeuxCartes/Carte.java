@@ -18,7 +18,7 @@ public abstract class Carte {
 
     //Int statique utilisé poour s'assurer que chaque carte ait un Id unique.
     static int SSID = 0;
-    protected int cardID;
+    private final int cardID;
 
     /**
      * Description des fonctions représentant le JSon des cartes, non définie
@@ -29,17 +29,7 @@ public abstract class Carte {
     public abstract JsonObject toJSON();
 
     /**
-     * Description des fonctions représentant le JSon des cartes, non définie
-     * ici. toJSONTest est seulement utilisé par les tests JUnit, puisque la
-     * version de Java utilisé pour la conception ne permet pas de mettre en
-     * ordre les tests, ce qui rend les id des cartes imprévisibles.
-     *
-     * @return null, fonction non définie ici
-     */
-    public abstract JsonObject toJSONTest();
-
-    /**
-     * Constructeur par défaut.
+     * Constructeur par défaut. Initialise l'identifiant de la carte.
      */
     public Carte() {
         cardID = SSID;

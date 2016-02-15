@@ -17,11 +17,6 @@ public class EnchantFacile extends Enchant {
     public EnchantFacile() {
         super("Cette carte rend cette arme utilisable par tout le monde.");
     }
-    
-    @Override
-    public boolean peutUtiliserEnchant(Arme arm) {
-        return !arm.armeEstDeploye() && arm.peutAjouterEnchantement();
-    }
 
     /**
      * Applique l'enchantement sur l'arme passé en paramètre.
