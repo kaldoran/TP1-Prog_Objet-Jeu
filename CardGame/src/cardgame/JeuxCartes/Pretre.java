@@ -7,25 +7,22 @@ package cardgame.JeuxCartes;
 
 import cardgame.Regles.Regle;
 import cardgame.Regles.TypeArme;
-import cardgame.ResultUtils.Resultat;
 import cardgame.ResultUtils.SoinsResult;
 import java.util.Arrays;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 /**
  *
  * @author mathieu
  */
-public class Pretre extends Perso implements Attaquant,Soigneur {
+public class Pretre extends Combattant implements Soigneur {
 
     public Pretre() {
-        super(Regle.GUERRIERHP, Regle.GUERRIERMP, Arrays.asList(TypeArme.values()));
+        super(Regle.PRETREHP, Regle.PRETREMP, Arrays.asList(TypeArme.Contondant,TypeArme.Neutre));
     }
 
-    @Override
-    public Resultat attaque(Cible c) {
-        return c.recoitAttaque(this);
-
-    }
     
         /**
      * Permet au perso de soigner un allié.
@@ -50,5 +47,14 @@ public class Pretre extends Perso implements Attaquant,Soigneur {
     @Override
     public boolean peutSoigner(Perso p) {
         return this.getMp() > 0 && (this.getCardID() != p.getCardID());
+    }
+    @Override
+    public JsonObject toJSON() {
+        JsonObject json = super.toJSON();
+        JsonObjectBuilder addition = Json.createObjectBuilder();
+        addition.add("Type Personnage", "Pretre");
+        addition.add("General Info", json);
+        
+        return addition.build();
     }
 }

@@ -1,8 +1,16 @@
 package cardgame.Vue.GUI;
 
 import cardgame.API.Jeux;
+import cardgame.CommandeCoup.AttaqueCarteCommande;
+import cardgame.CommandeCoup.AttaqueJoueurCommande;
+import cardgame.CommandeCoup.Commande;
+import cardgame.CommandeCoup.DefausseCommande;
 import cardgame.CommandeCoup.DeploieCommande;
+import cardgame.CommandeCoup.EnchantCommande;
+import cardgame.CommandeCoup.ForfaitCommande;
 import cardgame.CommandeCoup.PigerCommande;
+import cardgame.CommandeCoup.SloubiCommande;
+import cardgame.CommandeCoup.SoinsCommande;
 import cardgame.Controller.Controller;
 import cardgame.JeuxCartes.Carte;
 import cardgame.JeuxCartes.Perso;
@@ -13,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 
 /*
@@ -20,89 +29,95 @@ import javax.swing.border.Border;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author mathieu
  */
-public class GameBoard extends JFrame {
+public class GameBoard2Joueurs extends JFrame {
 
     protected Rectangle screenSize;
     private Controller cont;
     private final Jeux api;
     private List<CartesGUI> cartes;
     private int joueurAct;
-    
-    public GameBoard(Jeux jeu) {
+
+    public GameBoard2Joueurs(Jeux jeu) {
         api = jeu;
         cartes = new ArrayList<>();
         initComponents();
         calculateScreenSize();
-        this.setPreferredSize(new Dimension(screenSize.width * 80/100,screenSize.height * 85/100));
+        this.setPreferredSize(new Dimension(screenSize.width * 80 / 100, screenSize.height * 85 / 100));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         this.RefreshBoard();
     }
-    
-    public void setController(Controller c){
+
+    public void setController(Controller c) {
         cont = c;
     }
-    
+
     public void ajouterLog(String logData) {
         this.logArea.setText(this.logArea.getText() + "\n" + logData);
     }
-    
+
     public void resetChoices() {
-        for (CartesGUI c : this.cartes){
+        for (CartesGUI c : this.cartes) {
             c.setSelected(false);
         }
     }
-    
+
     private void InitBoard() {
         Collection<Carte> mainJoueur1 = api.getCartesMainJoueur(0);
         Collection<Carte> mainJoueur2 = api.getCartesMainJoueur(1);
         Collection<Perso> boardJoueur1 = api.getCartesJeuJoueur(0);
         Collection<Perso> boardJoueur2 = api.getCartesJeuJoueur(1);
-        
+
         for (Carte c : mainJoueur1) {
-            CartesGUI cGUI = new CartesGUI(c, new Dimension(100,100));
+            CartesGUI cGUI = new CartesGUI(c, 0, new Dimension(100, 100));
             panelMainJoueur1.add(cGUI);
             cartes.add(cGUI);
         }
         for (Carte c : mainJoueur2) {
-            CartesGUI cGUI = new CartesGUI(c, new Dimension(100,100));
+            CartesGUI cGUI = new CartesGUI(c, 1, new Dimension(100, 100));
             panelMainJoueur2.add(cGUI);
-            cartes.add(cGUI);      
+            cartes.add(cGUI);
         }
         for (Carte c : boardJoueur1) {
-            CartesGUI cGUI = new CartesGUI(c, new Dimension(100,100));
+            CartesGUI cGUI = new CartesGUI(c, 0, new Dimension(100, 100));
             panelJeuJoueur1.add(cGUI);
-            cartes.add(cGUI);     
+            cartes.add(cGUI);
         }
         for (Carte c : boardJoueur2) {
-            CartesGUI cGUI = new CartesGUI(c, new Dimension(100,100));
+            CartesGUI cGUI = new CartesGUI(c, 1, new Dimension(100, 100));
             panelJeuJoueur2.add(cGUI);
-            cartes.add(cGUI);   
+            cartes.add(cGUI);
         }
         lblPioche.setText("Cartes restantes : " + api.getnbCartesDeck(0));
         lblPioche2.setText("Cartes restantes : " + api.getnbCartesDeck(1));
         this.invalidate();
         this.validate();
         this.repaint();
+        this.pack();
     }
-    
+
     public void RefreshBoard() {
-       joueurAct = api.aQuiLeTour();
-       this.setTitle("Tour Joueur " + joueurAct);
-       this.ajouterLog("Nouveau Tour : Joueur " + joueurAct);
-       this.panelMainJoueur1.removeAll();
-       this.panelMainJoueur2.removeAll();
-       this.panelJeuJoueur1.removeAll();
-       this.panelJeuJoueur2.removeAll();
-       
-       this.InitBoard();
+        joueurAct = api.aQuiLeTour();
+        this.setTitle("Tour Joueur " + joueurAct);
+        this.ajouterLog("Nouveau Tour : Joueur " + joueurAct);
+        this.panelMainJoueur1.removeAll();
+        this.panelMainJoueur2.removeAll();
+        this.panelJeuJoueur1.removeAll();
+        this.panelJeuJoueur2.removeAll();
+        this.InitBoard();
     }
-    
+
+    public void verifierFinPartie() {
+        if (api.partieFini()) {
+            JOptionPane.showMessageDialog(panelGame, "Le joueur " + api.getJoueurGagnant() + "vient de gagne rla partie.");
+            api.finPartie();
+            System.exit(-1);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -183,6 +198,11 @@ public class GameBoard extends JFrame {
         panelGame.add(deploieBut, gridBagConstraints);
 
         attBut.setText("Attaque");
+        attBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attButActionPerformed(evt);
+            }
+        });
         attBut.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 attButKeyPressed(evt);
@@ -202,6 +222,11 @@ public class GameBoard extends JFrame {
         panelGame.add(attBut, gridBagConstraints);
 
         soinBut.setText("Soins");
+        soinBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                soinButActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 5;
@@ -216,6 +241,11 @@ public class GameBoard extends JFrame {
         panelGame.add(soinBut, gridBagConstraints);
 
         enchBut.setText("Enchant");
+        enchBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enchButActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 5;
@@ -230,6 +260,11 @@ public class GameBoard extends JFrame {
         panelGame.add(enchBut, gridBagConstraints);
 
         defauBut.setText("Défausse");
+        defauBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                defauButActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 5;
@@ -244,6 +279,11 @@ public class GameBoard extends JFrame {
         panelGame.add(defauBut, gridBagConstraints);
 
         forfBut.setText("Forfait");
+        forfBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                forfButActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 5;
@@ -258,6 +298,11 @@ public class GameBoard extends JFrame {
         panelGame.add(forfBut, gridBagConstraints);
 
         slouBut.setText("Sloubi?");
+        slouBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                slouButActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 9;
         gridBagConstraints.gridy = 5;
@@ -285,21 +330,20 @@ public class GameBoard extends JFrame {
         panelGame.add(panelMainJoueur1, gridBagConstraints);
 
         panelMainJoueur2.setBorder(javax.swing.BorderFactory.createTitledBorder("Main Joueur 2"));
+        panelMainJoueur2.setMinimumSize(new java.awt.Dimension(100, 200));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.ipadx = 1024;
-        gridBagConstraints.ipady = 136;
+        gridBagConstraints.ipadx = 1066;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.2;
         gridBagConstraints.weighty = 0.2;
         panelGame.add(panelMainJoueur2, gridBagConstraints);
 
         panelJeuJoueur2.setBorder(javax.swing.BorderFactory.createTitledBorder("Jeu Joueur 2"));
-        panelJeuJoueur2.setMinimumSize(new java.awt.Dimension(100, 100));
-        panelJeuJoueur2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        panelJeuJoueur2.setMinimumSize(new java.awt.Dimension(100, 200));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -313,7 +357,7 @@ public class GameBoard extends JFrame {
         panelGame.add(panelJeuJoueur2, gridBagConstraints);
 
         panelJeuJoueur1.setBorder(javax.swing.BorderFactory.createTitledBorder("Jeu"));
-        panelJeuJoueur1.setMinimumSize(new java.awt.Dimension(100, 100));
+        panelJeuJoueur1.setMinimumSize(new java.awt.Dimension(100, 200));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -397,10 +441,12 @@ public class GameBoard extends JFrame {
 
         jPanel2.setLayout(new java.awt.BorderLayout(0, 10));
 
-        logArea.setColumns(20);
-        logArea.setLineWrap(true);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        logArea.setColumns(1);
         logArea.setRows(40);
-        logArea.setPreferredSize(new java.awt.Dimension(240, 840));
+        logArea.setFocusable(false);
         jScrollPane1.setViewportView(logArea);
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -443,40 +489,147 @@ public class GameBoard extends JFrame {
         boolean selectionCorrect = true;
         for (CartesGUI cg : cartes) {
             if (cg.isSelected()) {
-            if (cg.estPerso && perso == null){
-                perso = cg.getCarte();
-            } else if (cg.estArme && arme == null) {
-                arme = cg.getCarte();
-            } else if (cg.estMagie) {
-                enchant.add(cg.getCarte());
-            } else {
-                selectionCorrect = false;
-            }
+                if (cg.estPerso && perso == null) {
+                    perso = cg.getCarte();
+                } else if (cg.estArme && arme == null) {
+                    arme = cg.getCarte();
+                } else if (cg.estMagie) {
+                    enchant.add(cg.getCarte());
+                } else {
+                    selectionCorrect = false;
+                }
             }
         }
         if (!selectionCorrect) {
             this.ajouterLog("La sélection prise est incorrecte.");
             return;
         }
-        
+
         DeploieCommande cmd = new DeploieCommande(api, joueurAct, perso, arme, enchant);
         cont.faireAction(cmd);
-        
+
     }//GEN-LAST:event_deploieButActionPerformed
 
-        public final void calculateScreenSize(){
-        GraphicsEnvironment graphicsEnvironment=GraphicsEnvironment.getLocalGraphicsEnvironment();
-        Rectangle maximumWindowBounds=graphicsEnvironment.getMaximumWindowBounds();
-        screenSize = maximumWindowBounds;
+    private void defauButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defauButActionPerformed
+        List<Carte> cartesSelected = new ArrayList<>();
+        for (CartesGUI cg : cartes) {
+            if (cg.isSelected()) {
+                cartesSelected.add(cg.getCarte());
+            }
+        }
+        DefausseCommande cmd = new DefausseCommande(api, joueurAct, cartesSelected);
+        cont.faireAction(cmd);
+    }//GEN-LAST:event_defauButActionPerformed
+
+    private void attButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attButActionPerformed
+        Carte attaquant = null;
+        Carte attaquee = null;
+        boolean coupCorrect = true;
+        for (CartesGUI cg : cartes) {
+            if (cg.isSelected()) {
+                if (cg.joueur == joueurAct && cg.estPerso && attaquant == null) {
+                    attaquant = cg.getCarte();
+                } else if (cg.joueur != joueurAct && cg.estPerso && attaquee == null) {
+                    attaquee = cg.getCarte();
+                } else {
+                    coupCorrect = false;
+                }
+            }
+        }
+        if (!coupCorrect || attaquant == null) {
+            this.ajouterLog("Erreur : La sélection donné pour l'attaque est incorrecte.");
+            return;
+        }
+        boolean peutAttaquerJoueur = joueurAct == 0 ? panelJeuJoueur2.getComponentCount() == 0 : panelJeuJoueur1.getComponentCount() == 0;
+        Commande cmd;
+        if (peutAttaquerJoueur && attaquee == null) {
+            cmd = new AttaqueJoueurCommande(api, joueurAct, (joueurAct + 1) % 2, attaquant);
+        } else if (attaquee != null) {
+            cmd = new AttaqueCarteCommande(api, joueurAct, (joueurAct + 1) % 2, attaquant, attaquee);
+        } else {
+            this.ajouterLog("Erreur : Vous ne pouvez pas attaquer le joueur actuellement.");
+            return;
+        }
+        cont.faireAction(cmd);
+
+    }//GEN-LAST:event_attButActionPerformed
+
+    private void forfButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forfButActionPerformed
+        ForfaitCommande cmd = new ForfaitCommande(api, joueurAct);
+        cont.faireAction(cmd);
+    }//GEN-LAST:event_forfButActionPerformed
+
+    private void soinButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soinButActionPerformed
+        Carte soigneur = null;
+        Carte soignee = null;
+        boolean coupCorrect = true;
+        for (CartesGUI cg : cartes) {
+            if (cg.isSelected()) {
+                if (cg.joueur == joueurAct && soigneur == null) {
+                    soigneur = cg.getCarte();
+                } else if (cg.joueur == joueurAct && soignee == null) {
+                    soignee = cg.getCarte();
+                } else {
+                    coupCorrect = false;
+                }
+            }
+        }
+
+        if (!coupCorrect || soigneur == null || soignee == null) {
+            this.ajouterLog("Erreur : Vous ne pouvez pas faire un soin avec cette sélection.");
+            return;
+        }
+
+        if (JOptionPane.showConfirmDialog(panelGame, "Est-ce ceci le healer? :\n" + soigneur.toJSON()) == JOptionPane.NO_OPTION) {
+            Carte temp = soignee;
+            soignee = soigneur;
+            soigneur = temp;
+        }
+
+        SoinsCommande cmd = new SoinsCommande(api, joueurAct, soigneur, soignee);
+        cont.faireAction(cmd);
+
+    }//GEN-LAST:event_soinButActionPerformed
+
+    private void enchButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enchButActionPerformed
+        List<Carte> ench = new ArrayList<>();
+        Carte perso = null;
+        boolean verifCorrect = true;
+        for (CartesGUI cg : cartes) {
+            if (cg.isSelected()) {
+                if (cg.estMagie) {
+                    ench.add(cg.getCarte());
+                } else if (cg.estPerso && perso == null) {
+                    perso = cg.getCarte();
+                } else {
+                    verifCorrect = false;
+                }
+            }
+        }
+        if (!verifCorrect || perso == null || ench.isEmpty()) {
+            this.ajouterLog("Erreur : les cartes choisis sont pas corrected pour enchanter.");
+            return;
+        }
         
-        //Pour les tests de petits écran
-//        this.setPreferredSize(new Dimension(1228, 778));
-//        this.setMaximumSize(new Dimension(1228, 778));
-//        this.setMaximizedBounds(new Rectangle(1228, 778));
-//        screenSize = new Rectangle(1228, 778);
+        
+        EnchantCommande cmd = new EnchantCommande(api, joueurAct, ench, perso);
+        cont.faireAction(cmd);
+        
+    }//GEN-LAST:event_enchButActionPerformed
+
+    private void slouButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_slouButActionPerformed
+        SloubiCommande cmd = new SloubiCommande();
+        cont.faireAction(cmd);
+    }//GEN-LAST:event_slouButActionPerformed
+
+    public final void calculateScreenSize() {
+        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Rectangle maximumWindowBounds = graphicsEnvironment.getMaximumWindowBounds();
+        screenSize = maximumWindowBounds;
+
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton attBut;
     private javax.swing.JButton defauBut;

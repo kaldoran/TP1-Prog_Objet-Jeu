@@ -1,7 +1,7 @@
 package cardgame.API;
 
 import cardgame.JeuxCartes.Arme;
-import cardgame.JeuxCartes.Attaquant;
+import cardgame.JeuxCartes.Combattant;
 import cardgame.JeuxCartes.Carte;
 import cardgame.JeuxCartes.Cible;
 import cardgame.JeuxCartes.Enchant;
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -46,17 +45,18 @@ public class Jeux {
         joueurTour = -1;
     }
 
-    public int getnbCartesDeck(int idJoueur){
-        assert(idJoueur < joueurList.size()-1);
+    public int getnbCartesDeck(int idJoueur) {
+        assert (idJoueur < joueurList.size() - 1);
         return joueurList.get(idJoueur).getCarteDeck().carteRestantes();
-        
+
     }
-    
+
     /**
      * Permet de passer au joueur suivant
      */
-    public void prochainJoueur() {
-        joueurTour = (joueurTour++) % joueurList.size();
+    private void prochainJoueur() {
+        joueurTour++;
+        joueurTour = joueurTour % joueurList.size();
     }
 
     /**
@@ -74,7 +74,7 @@ public class Jeux {
      * @param nbJoueur nombre de joueur voulant jouer
      */
     public void demarrerPartie(int nbJoueur) {
-        assert(nbJoueur >= 2);
+        assert (nbJoueur >= 2);
         if (!partieEnMarche) {
             finPartie();
             joueurTour = 0;
@@ -90,14 +90,15 @@ public class Jeux {
      * Permet au joueur idJoueur de déclarer forfait
      *
      * @param idJoueur id du joueur déclarant forfait
-     * @return 
+     * @return
      */
     public Resultat declarerForfait(int idJoueur) {
-        if (joueurTour == idJoueur ) {
+        if (joueurTour == idJoueur) {
+            this.prochainJoueur();
             return joueurList.get(idJoueur).declarerForfait();
-        }
-        else 
+        } else {
             return new RefuseResult("Tu peux pas déclarer forfait pour quelqu'un d'autre.");
+        }
     }
 
     /**
@@ -146,7 +147,7 @@ public class Jeux {
             }
         }
 
-        return joueursPerdants == joueurList.size() - 1 ? joueurGagnant : -1;
+        return joueursPerdants == joueurList.size() -1? joueurGagnant : -1;
     }
 
     /**
@@ -168,7 +169,7 @@ public class Jeux {
     }
 
     public boolean peutPiocherCartes(int idJoueur) {
-        return idJoueur != aQuiLeTour() &&  joueurList.get(idJoueur).peutPiocher();
+        return idJoueur == joueurTour && joueurList.get(idJoueur).peutPiocher();
     }
 
     /**
@@ -177,37 +178,38 @@ public class Jeux {
      * @param idJoueur id du joueur effectuant l'action
      * @param idAdversaire position relative sur le terrain de jeu de la carte
      * attaquante
-     * @param attaqueur carte attaquant la seconde carte 
-     * @param receveur  carte recevant le coupŝ
+     * @param attaqueur carte attaquant la seconde carte
+     * @param receveur carte recevant le coupŝ
      * @return un AttackResult si tout c'est bien passé un refusedResult sinon
      */
-    public Resultat attaquePerso(int idJoueur,int idAdversaire, Carte attaqueur,Carte receveur) {
+    public Resultat attaquePerso(int idJoueur, int idAdversaire, Carte attaqueur, Carte receveur) {
         Resultat res;
-        
-        if (attaquePersoValide(idJoueur,idAdversaire, attaqueur, receveur)) {
-            Attaquant att = (Attaquant)attaqueur;
-            Cible attaquee = (Cible)receveur;
+
+        if (attaquePersoValide(idJoueur, idAdversaire, attaqueur, receveur)) {
+            Combattant att = (Combattant) attaqueur;
+            Cible attaquee = (Cible) receveur;
             res = joueurList.get(idJoueur).attaque(att, attaquee);
             joueurList.get(idAdversaire).MAJCartesPlancher();
+            this.prochainJoueur();
         } else {
             res = new RefuseResult("L'attaque n'est pas possible");
         }
-        
+
         return res;
     }
 
-    public boolean attaquePersoValide(int idJoueur,int idAdversaire,Carte attaqueur,Carte receveur){
-        
-       boolean coupP = ((this.aQuiLeTour() == idJoueur) && (idJoueur != idAdversaire));
-       coupP = coupP && (idAdversaire >= 0) && (joueurList.size() >= idAdversaire);
-       coupP = coupP && (attaqueur instanceof Perso) && (receveur instanceof Perso);
-       if (coupP){
-           coupP = coupP && joueurList.get(idJoueur).carteDansJeu(attaqueur.getCardID());
-           coupP = coupP && joueurList.get(idAdversaire).carteDansJeu(receveur.getCardID());
-           coupP = coupP && ((Cible)receveur).peutEtreAttaque();
-       }
-       return coupP;        
-        
+    public boolean attaquePersoValide(int idJoueur, int idAdversaire, Carte attaqueur, Carte receveur) {
+
+        boolean coupP = ((this.aQuiLeTour() == idJoueur) && (idJoueur != idAdversaire));
+        coupP = coupP && (idAdversaire >= 0) && (joueurList.size() >= idAdversaire);
+        coupP = coupP && (attaqueur instanceof Combattant) && (receveur instanceof Cible);
+        if (coupP) {
+            coupP = coupP && joueurList.get(idJoueur).carteDansJeu(attaqueur.getCardID());
+            coupP = coupP && joueurList.get(idAdversaire).carteDansJeu(receveur.getCardID());
+            coupP = coupP && ((Cible) receveur).peutEtreAttaque();
+        }
+        return coupP;
+
     }
 
     /**
@@ -219,33 +221,31 @@ public class Jeux {
      * @param attaqueur Carte effectuant l'attaque sur le joueur
      * @return un AttackResult si tout c'est bien passé un refusedResult sinon
      */
-    public Resultat attaqueJoueur(int idJoueur,int idAdversaire, Carte attaqueur) {
+    public Resultat attaqueJoueur(int idJoueur, int idAdversaire, Carte attaqueur) {
         Resultat res;
-        
-        if (attaqueJoueurValide(idJoueur,idAdversaire,attaqueur)) {
-            Attaquant att = (Attaquant)attaqueur;
+
+        if (attaqueJoueurValide(idJoueur, idAdversaire, attaqueur)) {
+            Combattant att = (Combattant) attaqueur;
             res = joueurList.get(idJoueur).attaque(att, joueurList.get(idAdversaire));
+            this.prochainJoueur();
         } else {
             res = new RefuseResult("L'attaque n'est pas possible");
         }
-        
+
         return res;
     }
-    
-    
-    public boolean attaqueJoueurValide(int idJoueur,int idAdversaire,Carte attaqueur){
-        
-        boolean verifValide =  idJoueur == aQuiLeTour() && idAdversaire >=0 && idAdversaire <= joueurList.size() && idJoueur != idAdversaire;
+
+    public boolean attaqueJoueurValide(int idJoueur, int idAdversaire, Carte attaqueur) {
+
+        boolean verifValide = idJoueur == aQuiLeTour() && idAdversaire >= 0 && idAdversaire <= joueurList.size() && idJoueur != idAdversaire;
         if (verifValide) {
             verifValide = joueurList.get(idJoueur).getCarteEnJeu().containsKey(attaqueur.getCardID());
             verifValide = verifValide && joueurList.get(idAdversaire).peutEtreAttaque();
-            verifValide = verifValide && (attaqueur instanceof Attaquant);
+            verifValide = verifValide && (attaqueur instanceof Combattant);
         }
-        
+
         return verifValide;
     }
-    
-    
 
     /**
      * Permet d'ajouter une liste d'enchant sur un joueur
@@ -259,53 +259,51 @@ public class Jeux {
      */
     public Resultat ajouterEnchantements(int idJoueur, Carte carteTouche, List<Carte> enchant) {
         Resultat res;
-        
+
         if (peutAjouterEnchantements(idJoueur, carteTouche, enchant)) {
             List<Enchant> enchs = new ArrayList<>();
             for (Carte c : enchant) {
-                enchs.add((Enchant)c );
+                enchs.add((Enchant) c);
             }
             res = joueurList.get(idJoueur).ajouterEnchants(enchs, carteTouche);
+            this.prochainJoueur();
         } else {
             res = new RefuseResult("Vous ne pouvez pas enchanter cette cartes avec votre sélection.");
         }
         return res;
     }
 
-    public boolean peutAjouterEnchantements(int idJoueur,Carte carteTouche, List<Carte> enchants) {
+    public boolean peutAjouterEnchantements(int idJoueur, Carte carteTouche, List<Carte> enchants) {
         boolean verifValide = idJoueur == aQuiLeTour();
         Joueur j = joueurList.get(idJoueur);
         boolean carteDeploye = false;
-        for (Carte c : enchants){
+        for (Carte c : enchants) {
             verifValide = verifValide && j.carteDansMain(c.getCardID());
         }
-        for (Joueur joueurAct : joueurList){
+        for (Joueur joueurAct : joueurList) {
             carteDeploye = carteDeploye || joueurAct.carteDansJeu(carteTouche.getCardID());
         }
         carteDeploye = carteDeploye && carteTouche instanceof Perso;
-        if (carteDeploye){
-            Perso p = (Perso)carteTouche;
+        if (carteDeploye) {
+            Perso p = (Perso) carteTouche;
             carteDeploye = p.getArme().peutAjouterEnchantement();
         }
-        
+
         return verifValide && carteDeploye;
     }
-    
-    public Collection<Carte> getCartesMainJoueur(int idJoueur){
+
+    public Collection<Carte> getCartesMainJoueur(int idJoueur) {
         return joueurList.get(idJoueur).getMain().values();
     }
-    
-    public Collection<Perso> getCartesJeuJoueur(int idJoueur){
+
+    public Collection<Perso> getCartesJeuJoueur(int idJoueur) {
         Perso p;
         return joueurList.get(idJoueur).getCarteEnJeu().values();
     }
-    
-    public Collection<Carte> getCimetiereJoueur(int idJoueur){
+
+    public Collection<Carte> getCimetiereJoueur(int idJoueur) {
         return joueurList.get(idJoueur).getCimetiere();
     }
-    //public Joueur getJoueur(int idJoueur) {
-    //    return joueurList.get(idJoueur);
-    //}
 
     /**
      * Permet de placer un personnage
@@ -317,17 +315,19 @@ public class Jeux {
      * @return un PersoDeploieResult si tout ce passe bien un refusedResult
      * sinon
      */
-    public Resultat placerPerso(int idJoueur, Carte personnage, Carte arme,List<Carte> enchants) {
+    public Resultat placerPerso(int idJoueur, Carte personnage, Carte arme, List<Carte> enchants) {
         Resultat res;
-        if (this.peutDeployerPerso(idJoueur, arme, arme, enchants)) {
+        if (this.peutDeployerPerso(idJoueur, personnage, arme, enchants)) {
             res = joueurList.get(idJoueur).placerPerso((Perso) personnage, (Arme) arme, enchants);
+            this.prochainJoueur();
+
         } else {
             res = new RefuseResult("Vous n'avez pas le droit d'utiliser une des cartes choisi.");
         }
         return res;
-        
+
     }
-    
+
     public boolean peutDeployerPerso(int idJoueur, Carte perso, Carte arme, List<Carte> enchants) {
         boolean verif = idJoueur == aQuiLeTour();
         boolean enchFac = false;
@@ -341,15 +341,14 @@ public class Jeux {
         }
         if (verif) {
             Perso p = (Perso) perso;
-            Arme a = (Arme)arme;
+            Arme a = (Arme) arme;
             verif = !a.armeEstDeploye();
             verif = verif && (a.peutUtiliserArme(p) || enchFac);
         }
-        
+
         return verif;
-        
+
     }
-    
 
     /**
      * Permet de défausser n Carte à partie de l'api
@@ -364,30 +363,31 @@ public class Jeux {
         Resultat res;
         if (peutDefausserCartes(idJoueur, defausse)) {
             res = joueurList.get(idJoueur).defausserCartes(defausse);
+            this.prochainJoueur();
         } else {
             res = new RefuseResult("La liste est soit vide, soit rempli de cartes pas situés dans la main.");
         }
-        
+
         return res;
-    
+
     }
-    
-    public boolean peutDefausserCartes(int idJoueur,List<Carte> defausse) {
-        
+
+    public boolean peutDefausserCartes(int idJoueur, List<Carte> defausse) {
+
         boolean coupValide = idJoueur == aQuiLeTour();
         coupValide = coupValide && defausse != null;
         coupValide = coupValide && !defausse.isEmpty();
         Joueur joueurAct = joueurList.get(idJoueur);
-        for (Carte c : defausse){
+        for (Carte c : defausse) {
             coupValide = coupValide && joueurAct.carteDansMain(c.getCardID());
-            if (!coupValide) break;
+            if (!coupValide) {
+                break;
+            }
         }
-        
-        
+
         return coupValide;
-        
+
     }
-    
 
     /**
      * Permet de soigner un personnage du jeu
@@ -401,35 +401,35 @@ public class Jeux {
      */
     public Resultat soignerPerso(int idJoueur, Carte soigneur, Carte soignee) {
         Resultat res;
-        
-        if (peutSoignerPerso(idJoueur, soigneur,soignee)){
+
+        if (peutSoignerPerso(idJoueur, soigneur, soignee)) {
             Soigneur s = (Soigneur) soigneur;
             Perso p = (Perso) soignee;
             res = joueurList.get(idJoueur).soignerPerso(s, p);
+            this.prochainJoueur();
+
         } else {
             res = new RefuseResult("Vous n'avez pas le droit de faire ce soin.");
         }
-        
+
         return res;
-        
-        
+
     }
 
     public boolean peutSoignerPerso(int idJoueur, Carte soigneur, Carte soignee) {
         boolean coupValide = idJoueur == aQuiLeTour();
         coupValide = coupValide && soigneur != soignee;
         Joueur joueurAct = joueurList.get(idJoueur);
-        coupValide = coupValide && joueurAct.carteDansJeu(soigneur.getCardID()) &&
-                joueurAct.carteDansJeu(soignee.getCardID());
+        coupValide = coupValide && joueurAct.carteDansJeu(soigneur.getCardID())
+                && joueurAct.carteDansJeu(soignee.getCardID());
         coupValide = coupValide && soigneur instanceof Soigneur && soignee instanceof Perso;
         if (coupValide) {
-            Soigneur s = (Soigneur)soigneur;
-            Perso p = (Perso)soignee;
+            Soigneur s = (Soigneur) soigneur;
+            Perso p = (Perso) soignee;
             coupValide = s.peutSoigner(p);
         }
         return coupValide;
     }
-    
 
     /**
      * Permet de liberer les informations de jeu et reinialisé les valeurs de

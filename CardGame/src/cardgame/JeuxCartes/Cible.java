@@ -15,7 +15,8 @@ public interface Cible {
     
     public abstract boolean peutEtreAttaque();
     
-    public abstract Resultat recoitAttaque(Perso attaqueur);
+    
+    public abstract Resultat recoitAttaque(Combattant attaqueur);
     
     public abstract boolean estMort();
         

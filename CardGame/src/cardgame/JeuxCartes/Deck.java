@@ -44,13 +44,17 @@ public class Deck {
         PersoFactory createurPersos = new PersoFactory();
         
         cartespioches.addAll(createurPersos.creerSetGuerrier(Regle.CARTEGUERRIER));
-        cartespioches.addAll(createurPersos.creerSetGuerrier(Regle.CARTEPRETRE));
-        cartespioches.addAll(createurPersos.creerSetGuerrier(Regle.CARTEPALADIN));        
+        cartespioches.addAll(createurPersos.creerSetPretre(Regle.CARTEPRETRE));
+        cartespioches.addAll(createurPersos.creerSetPaladin(Regle.CARTEPALADIN));        
         cartespioches.addAll(createurArmes.creerSetArmes(Regle.CARTEARMEUN, 1));
         cartespioches.addAll(createurArmes.creerSetArmes(Regle.CARTEARMEDEUX, 2));
         cartespioches.addAll(createurEnchants.creerSetEnchants(Regle.CARTEENCHANTEMENT));
 
         Collections.shuffle(cartespioches, new Random(System.nanoTime()));
+    }
+    
+    public void viderDeck(){
+        this.cartespioches.clear();
     }
     
     /**

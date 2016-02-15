@@ -3,13 +3,8 @@ package cardgame.JeuxCartes;
 import cardgame.ResultUtils.Resultat;
 
 import cardgame.Regles.Regle;
-import cardgame.ResultUtils.AttaquePlayerResult;
-import cardgame.ResultUtils.DefausseResult;
-import cardgame.ResultUtils.EnchantResult;
-import cardgame.ResultUtils.FinDePartieResult;
-import cardgame.ResultUtils.PersoDeploieResult;
-import cardgame.ResultUtils.PiocheResult;
-import cardgame.ResultUtils.RefuseResult;
+import cardgame.Regles.TypeArme;
+import cardgame.ResultUtils.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -93,7 +88,7 @@ public class Joueur implements Cible {
      *         false sinon
      */
     public boolean aPerdu() {
-        return main.size() > 0 && carteEnJeu.size() > 0 && carteDeck.carteRestantes() > 0;
+        return main.size() == 0 && carteEnJeu.size() == 0 && carteDeck.carteRestantes() == 0;
     }
     
     /**
@@ -144,7 +139,7 @@ public class Joueur implements Cible {
      * @return un AttackResult si tout c'est bien passé
      *         un RefusedResult sinon
      */
-    public Resultat attaque(Attaquant attaqueur, Cible attaque) {
+    public Resultat attaque(Combattant attaqueur, Cible attaque) {
         Resultat res;
         if (!attaque.peutEtreAttaque()) {
             res = new RefuseResult("Impossible d'attaquer le joueur, il y a encore des cartes en jeux.");
@@ -155,7 +150,7 @@ public class Joueur implements Cible {
             return res;
         }
         
-        res = attaqueur.attaque(attaque);
+        res = attaqueur.Attaque(attaque);
         
         return res;
     }
@@ -178,13 +173,6 @@ public class Joueur implements Cible {
      */
     public Resultat ajouterEnchants (List<Enchant> enchs, Carte carteTouchee) {
         Resultat res;
-        if ( !carteEnJeu.containsKey(carteTouchee.getCardID()) && !main.containsKey(carteTouchee.getCardID())  ) {
-            res = new RefuseResult("Impossible d'enchanter cette carte.");
-            return res;
-        } else if (!(carteTouchee instanceof Arme) && !(carteTouchee instanceof Perso)) {
-            res = new RefuseResult("Vous ne pouvez pas enchanter cet carte.");
-            return res;
-        }
         Arme arm = null;
         if (carteTouchee instanceof Perso)
             arm = ((Perso)carteTouchee).getArme();
@@ -193,31 +181,14 @@ public class Joueur implements Cible {
             
         for (Enchant ench : enchs) {
             arm.ajouterEnchant(ench);
+            cimetiere.add(ench);
+            main.remove(ench.getCardID());
         }
         res = new EnchantResult(true,carteTouchee,enchs);
         return res;
     }
     
-    /**
-     * Permet au joueur de placer un personnage en jeu
-     * @param personnage position dans la main du personnage à jouer
-     * @param arm        carte arme à appliquer sur le perso
-     * @return un PersoDeploieResult si tout c'est bien passé
-     *         un Refusedresult sinon
-     */
-    public Resultat placerPerso(Perso personnage, Arme arm) {
-        Resultat res;
-       
-        if (personnage.equiperArme(arm) ) {
-            res = new RefuseResult("Impossible d'équiper l'arme");
-            return res;
-        }
-        main.remove(personnage.getCardID());
-        carteEnJeu.put(personnage.getCardID(),personnage);
-        
-        res = new PersoDeploieResult(this.getIdjoueur(), true, personnage.getCardID(), arm.getCardID());
-        return res;
-    }
+   
     
     /**
      * Permet au joueur de placer un personnage en jeu
@@ -230,22 +201,18 @@ public class Joueur implements Cible {
     public Resultat placerPerso(Perso personnage, Arme arm,List<Carte> ench) {
        Resultat res;
 
-        if (arm.armeEstDeploye() || arm.peutAjouterEnchantement() || personnage.getArme() != null || arm.peutUtiliserArme(personnage))
-        {
-            res = new RefuseResult("Impossible de déployer le perso avec cette arme et enchantement.");
-            return res;
-        }
-        
-        personnage.equiperArme(arm);
-        main.remove(personnage.getCardID());
-        carteEnJeu.put(personnage.getCardID(),personnage);
-        
         for (Carte c : ench) {
             Enchant en = (Enchant) c;
             arm.ajouterEnchant(en);
+            cimetiere.add(main.remove(en.getCardID()));
         }
-        
-        res = new PersoDeploieResult(this.getIdjoueur(), true, personnage.getCardID(), arm.getCardID());
+       
+        personnage.equiperArme(arm);
+        main.remove(personnage.getCardID());
+        main.remove(arm.getCardID());
+        carteEnJeu.put(personnage.getCardID(),personnage);
+
+        res = new PersoDeploieResult(this.getIdjoueur(), true, personnage);
         return res;
     }
 
@@ -276,32 +243,12 @@ public class Joueur implements Cible {
      *         FinDePartieResult si le joueur à déclarer forfait
      */
     public Resultat declarerForfait() {
-        Resultat res;
-        int i;
+        Resultat res;        
+        main.clear();
         
-        if ( this.aPerdu() ) {
-            res = new RefuseResult("Vous avez déjà perdu.");
-            return res;
-        }
-        
-        for ( i = 0; i < main.size(); i++) {
-            Carte card = main.remove(i);
-            cimetiere.add(card);
-        }
-        
-        List<Carte> allDeck = new ArrayList<>();
-        while (!carteDeck.deckEstVide())
-            allDeck.addAll(carteDeck.piocherCarte(Regle.CARTEMAIN));
-        
-        for ( i = 0; i < allDeck.size(); i++) {
-            Carte card = allDeck.remove(i);
-            cimetiere.add(card);
-        }
-        
-        for ( i = 0; i < carteEnJeu.size(); i++) {
-            Carte card = carteEnJeu.remove(i);
-            cimetiere.add(card);
-        }
+        carteDeck.viderDeck();
+
+        carteEnJeu.clear();
         
         res = new FinDePartieResult(this.getIdjoueur(), true, -1);
         return res;
@@ -378,17 +325,17 @@ public class Joueur implements Cible {
     }
 
     public boolean peutPiocher() {
-        return main.size() < Regle.CARTEMAIN && carteDeck.deckEstVide();
+        return main.size() < Regle.CARTEMAIN && !carteDeck.deckEstVide();
     }
 
     @Override
     public boolean peutEtreAttaque() {
-        return !carteEnJeu.isEmpty();
+        return carteEnJeu.isEmpty();
     }
 
     @Override
-    public AttaquePlayerResult recoitAttaque(Perso attaqueur) {
-       int degat = attaqueur.forceAttaque();
+    public AttaquePlayerResult recoitAttaque(Combattant attaqueur) {
+       int degat = attaqueur.forceAttaque(TypeArme.Neutre);
        List<Carte> cartePerdus = this.carteDeck.dommageJoueur(degat);
        for (Carte c : cartePerdus)
            cimetiere.add( c);
@@ -400,4 +347,5 @@ public class Joueur implements Cible {
     public boolean estMort() {
         return carteDeck.deckEstVide() && main.isEmpty() && carteEnJeu.isEmpty();
     }
+
 }

@@ -23,10 +23,6 @@ import javax.json.JsonObjectBuilder;
  * 08-Fév-2016 : 1.0 - Version initiale.
  */
 
-enum Testing {
-    bluh;
-}
-
 public class Perso extends Carte implements Cible  {
 
     private int hp;
@@ -46,27 +42,6 @@ public class Perso extends Carte implements Cible  {
         armesUtilisables = armes;
     }
 
-    /**
-     * Permet d'avoir la force d'attaque de l'arme (Sans triangle de
-     * modificateur de dégats)
-     *
-     * @return force de l'arme si présente, 0 Sinon
-     */
-    public int forceAttaque() {
-        return armePerso != null ? armePerso.forceAttaque(TypeArme.Neutre) : 0;
-    }
-
-    /**
-     * Permet d'avoir la force d'attaque de l'arme utilisée en appliquant le
-     * triangle de modification de dégats.
-     *
-     * @param ennemi Perso ennemi contre qui l'arme sera utilisée
-     * @return la force de l'arme en ajoutant le modificateur de degat si le
-     * perso à une arme, 0 sinon
-     */
-    public int forceAttaque(Perso ennemi) {
-        return armePerso != null ? armePerso.forceAttaque(ennemi.getTypeArme()) : 0;
-    }
 
     /**
      * Permet d'appliquer les dégats reçus au perso et d'avertir s'il a survécu.
@@ -212,11 +187,14 @@ public class Perso extends Carte implements Cible  {
     }
 
     @Override
-    public AttaquePersoResult recoitAttaque(Perso attaqueur) {
+    public AttaquePersoResult recoitAttaque(Combattant attaqueur) {
         AttaquePersoResult res;
-        int degat = attaqueur.forceAttaque(this);
+        assert (this.armePerso != null);
+        int degat = attaqueur.forceAttaque(this.armePerso.getTypeArme());
         this.hp -= degat;
         res = new AttaquePersoResult(degat, this.getCardID(),attaqueur.getCardID(), estMort());
         return res;
     }
+
+  
 }

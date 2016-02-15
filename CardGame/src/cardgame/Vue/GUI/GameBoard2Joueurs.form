@@ -18,7 +18,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,4,49,0,0,7,43"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,4,77,0,0,7,43"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
@@ -78,6 +78,7 @@
             <Property name="text" type="java.lang.String" value="Attaque"/>
           </Properties>
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="attButActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="attButKeyPressed"/>
           </Events>
           <Constraints>
@@ -90,6 +91,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Soins"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="soinButActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="5" gridY="5" gridWidth="1" gridHeight="2" fill="1" ipadX="89" ipadY="17" insetsTop="5" insetsLeft="18" insetsBottom="0" insetsRight="0" anchor="18" weightX="0.13" weightY="0.2"/>
@@ -100,6 +104,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Enchant"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enchButActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="6" gridY="5" gridWidth="1" gridHeight="2" fill="1" ipadX="56" ipadY="17" insetsTop="5" insetsLeft="18" insetsBottom="0" insetsRight="0" anchor="18" weightX="0.13" weightY="0.2"/>
@@ -110,6 +117,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="D&#xe9;fausse"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="defauButActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="7" gridY="5" gridWidth="1" gridHeight="2" fill="1" ipadX="47" ipadY="17" insetsTop="5" insetsLeft="18" insetsBottom="0" insetsRight="0" anchor="18" weightX="0.13" weightY="0.2"/>
@@ -120,6 +130,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Forfait"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="forfButActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="8" gridY="5" gridWidth="1" gridHeight="2" fill="1" ipadX="70" ipadY="17" insetsTop="5" insetsLeft="18" insetsBottom="0" insetsRight="0" anchor="18" weightX="0.13" weightY="0.2"/>
@@ -130,6 +143,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Sloubi?"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="slouButActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="9" gridY="5" gridWidth="1" gridHeight="2" fill="1" ipadX="70" ipadY="17" insetsTop="5" insetsLeft="18" insetsBottom="0" insetsRight="0" anchor="18" weightX="0.13" weightY="0.2"/>
@@ -162,10 +178,13 @@
                 <TitledBorder title="Main Joueur 2"/>
               </Border>
             </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[100, 200]"/>
+            </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="1" gridY="0" gridWidth="0" gridHeight="1" fill="3" ipadX="1024" ipadY="136" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="18" weightX="0.2" weightY="0.2"/>
+              <GridBagConstraints gridX="1" gridY="0" gridWidth="0" gridHeight="1" fill="3" ipadX="1066" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="18" weightX="0.2" weightY="0.2"/>
             </Constraint>
           </Constraints>
 
@@ -179,7 +198,7 @@
               </Border>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[100, 100]"/>
+              <Dimension value="[100, 200]"/>
             </Property>
           </Properties>
           <Constraints>
@@ -188,9 +207,7 @@
             </Constraint>
           </Constraints>
 
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
-            <Property name="alignment" type="int" value="0"/>
-          </Layout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
         </Container>
         <Container class="javax.swing.JPanel" name="panelJeuJoueur1">
           <Properties>
@@ -200,7 +217,7 @@
               </Border>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[100, 100]"/>
+              <Dimension value="[100, 200]"/>
             </Property>
           </Properties>
           <Constraints>
@@ -304,6 +321,10 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <Properties>
+            <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
+            <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
@@ -317,12 +338,9 @@
           <SubComponents>
             <Component class="javax.swing.JTextArea" name="logArea">
               <Properties>
-                <Property name="columns" type="int" value="20"/>
-                <Property name="lineWrap" type="boolean" value="true"/>
+                <Property name="columns" type="int" value="1"/>
                 <Property name="rows" type="int" value="40"/>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[240, 840]"/>
-                </Property>
+                <Property name="focusable" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>

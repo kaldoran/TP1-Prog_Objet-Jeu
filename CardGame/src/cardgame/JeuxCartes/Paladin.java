@@ -10,22 +10,21 @@ import cardgame.Regles.TypeArme;
 import cardgame.ResultUtils.Resultat;
 import cardgame.ResultUtils.SoinsResult;
 import java.util.Arrays;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 /**
  *
  * @author mathieu
  */
-public class Paladin extends Perso implements Attaquant,Soigneur {
+public class Paladin extends Combattant implements Soigneur {
 
     public Paladin() {
-        super(Regle.GUERRIERHP, Regle.GUERRIERMP, Arrays.asList(TypeArme.values()));
+        super(Regle.PALADINHP, Regle.PALADINMP, Arrays.asList(TypeArme.values()));
     }
 
-    @Override
-    public Resultat attaque(Cible c) {
-        return c.recoitAttaque(this);
 
-    }
     
     @Override
     public SoinsResult soigner(Perso allie) {
@@ -38,6 +37,17 @@ public class Paladin extends Perso implements Attaquant,Soigneur {
             // return good Result
 
         return resultat;
+    }
+    
+    
+       @Override
+    public JsonObject toJSON() {
+        JsonObject json = super.toJSON();
+        JsonObjectBuilder addition = Json.createObjectBuilder();
+        addition.add("Type Personnage", "Paladin");
+        addition.add("General Info", json);
+        
+        return addition.build();
     }
 
     @Override

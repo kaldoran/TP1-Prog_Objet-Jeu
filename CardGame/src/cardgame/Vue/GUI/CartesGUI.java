@@ -5,18 +5,8 @@
  */
 package cardgame.Vue.GUI;
 
-import cardgame.JeuxCartes.Arme;
-import cardgame.JeuxCartes.Carte;
-import cardgame.JeuxCartes.Enchant;
-import cardgame.JeuxCartes.EnchantDegatMoins;
-import cardgame.JeuxCartes.EnchantDegatPlus;
-import cardgame.JeuxCartes.EnchantFacile;
-import cardgame.JeuxCartes.EnchantNeutre;
-import cardgame.JeuxCartes.EnchantStase;
-import cardgame.JeuxCartes.Guerrier;
-import cardgame.JeuxCartes.Paladin;
-import cardgame.JeuxCartes.Perso;
-import cardgame.JeuxCartes.Pretre;
+
+import cardgame.JeuxCartes.*;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -43,11 +33,13 @@ public class CartesGUI extends JCheckBox implements MouseListener {
     public final boolean  estPerso;
     public final boolean  estArme;
     public final boolean  estMagie;
+    public final int joueur;
     
-    public CartesGUI(Carte cart, Dimension dim) {
+    public CartesGUI(Carte cart, int idJoueur,Dimension dim) {
         super("");
         card = cart;
         size = dim;
+        joueur = idJoueur;
         setSize(dim);
         estPerso = card instanceof Perso;
         estArme = card instanceof Arme;

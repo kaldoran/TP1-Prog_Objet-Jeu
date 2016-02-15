@@ -8,8 +8,7 @@ package cardgame.Controller;
 import cardgame.API.Jeux;
 import cardgame.CommandeCoup.Commande;
 import cardgame.ResultUtils.Resultat;
-import cardgame.Vue.GUI.GameBoard;
-import javax.swing.JFrame;
+import cardgame.Vue.GUI.GameBoard2Joueurs;
 
 /**
  *
@@ -17,11 +16,17 @@ import javax.swing.JFrame;
  */
 public class GUIController implements Controller {
 
-    private final GameBoard vue;
+    private final GameBoard2Joueurs vue;
+    private Jeux api;
     
-    public GUIController(GameBoard board){
+    public GUIController(GameBoard2Joueurs board){
         vue = board;
     }
+    
+    public void setAPI(Jeux jeu){
+        api = jeu;
+    }
+    
     
     @Override
     public void faireAction(Commande cmd) {
@@ -34,6 +39,6 @@ public class GUIController implements Controller {
             vue.ajouterLog("Coup refusé");
         }
         vue.resetChoices();
-        
+        vue.verifierFinPartie();
     }
 }

@@ -94,7 +94,7 @@ public class Arme extends Carte {
      */
     protected void reset() {
         this.listEnchantStase = new ArrayList<>(this.listEnchant);
-        this.listEnchant = null;
+        this.listEnchant = new ArrayList<>();
         this.degat = this.degatOrg;
         this.type = this.typeOrg;
     }
@@ -172,7 +172,7 @@ public class Arme extends Carte {
      * @return true si l'arme est stase false sinon
      */
     public boolean peutAjouterEnchantement() {
-        return estStase;
+        return !estStase;
     }
 
     public boolean armeEstDeploye() {

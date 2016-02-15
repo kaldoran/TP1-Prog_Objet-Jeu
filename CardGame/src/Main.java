@@ -3,7 +3,7 @@ import cardgame.API.Jeux;
 import cardgame.Controller.Controller;
 import cardgame.Controller.GUIController;
 import cardgame.Vue.GUI.DialogNouvelPartie;
-import cardgame.Vue.GUI.GameBoard;
+import cardgame.Vue.GUI.GameBoard2Joueurs;
 import java.io.File;
 
 /*
@@ -27,7 +27,7 @@ public class Main {
         int nbPlayers = diag.nbPlayers;
         Jeux api = new Jeux();
         api.demarrerPartie(nbPlayers);
-        GameBoard board = new GameBoard(api);
+        GameBoard2Joueurs board = new GameBoard2Joueurs(api);
         Controller cont = new GUIController(board);
         board.setController(cont);
         board.setVisible(true);
