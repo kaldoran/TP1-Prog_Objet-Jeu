@@ -1,7 +1,5 @@
 package cardgame.ResultUtils;
 
-import cardgame.API.Resultat;
-
 /**
  * Implémentation de Resultat pour décrire la fin d'une partie.
  *
@@ -25,7 +23,6 @@ public class FinDePartieResult implements Resultat {
         joueurGagne = idJoueurGagne;
         description = "Le joueur" + idJoueurGagne + "vient de gagner la partie";
     }
-    
     
     /**
      * @return True si l'action a fonctionné,false sinon.
@@ -62,7 +59,6 @@ public class FinDePartieResult implements Resultat {
     public int getJoueurQuiAGagne() {
         return joueurGagne;
     }
-
 
     /**
      * Setter

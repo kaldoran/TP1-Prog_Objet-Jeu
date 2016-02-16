@@ -1,6 +1,6 @@
 package cardgame.ResultUtils;
 
-import cardgame.API.Resultat;
+import cardgame.JeuxCartes.Carte;
 
 /**
  * Implémentation de Resultat pour décrire la conséquence d'un déploiment d'un
@@ -18,31 +18,11 @@ public class PersoDeploieResult implements Resultat {
     private final String description;
     private int joueurId;
     private final boolean coupAFonctionne;
-    private final int persoId;
-    private final int armeId;
 
-    public PersoDeploieResult(int jId, boolean coupCorrect, int pId, int aId) {
+    public PersoDeploieResult(int jId, boolean coupCorrect, Carte perso) {
         joueurId = jId;
         coupAFonctionne = coupCorrect;
-        persoId = pId;
-        armeId = aId;
-        description = "Le joueur " + jId + "vient de déployer les cartes " + pId + " + " + aId;
-    }
-
-    /**
-     * Getter
-     * @return l'identifiant du perso déployé. 
-     */
-    public int getPersoId() {
-        return persoId;
-    }
-
-    /**
-     * Getter
-     * @return l'identifiant de l'arme déployé. 
-     */
-    public int getArmeId() {
-        return armeId;
+        description = "Le joueur " + jId + "vient de déployer sur le jeu : " + perso.toJSON();
     }
 
     /**

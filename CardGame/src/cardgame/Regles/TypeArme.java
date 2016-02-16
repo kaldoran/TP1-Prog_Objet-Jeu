@@ -1,12 +1,9 @@
 package cardgame.Regles;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Enum, le type de données TypeArme contient chaque type d'armes possibles dans
  * le jeu, ainsi que leurs logiques personnelles, tel que leurs
- * forces/faiblesses et leur types d'utilisateurs. La classe détient aussi la
+ * forces/faiblesses. La classe détient aussi la
  * fonction de calcul du triangle d'attaque pour fins d'évolutions façiles.
  *
  * @author Mathieu Gravel GRAM02099206
@@ -24,21 +21,19 @@ public enum TypeArme {
      * en même temps leur forces,faiblesses et leurs utilisables possibles. Les
      * forces/faiblesses sont décrits en String pour fins de visibilité humaine.
      */
-    Contondant("Contondant", "Perforant", "Tranchant", TypePerso.values()),
-    Perforant("Perforant", "Tranchant", "Contondant", TypePerso.Guerrier, TypePerso.Paladin),
-    Tranchant("Tranchant", "Contondant", "Perforant", TypePerso.Guerrier, TypePerso.Paladin),
-    Neutre("Neutre", "", "", TypePerso.values());
+    Contondant("Contondant", "Perforant", "Tranchant"),
+    Perforant("Perforant", "Tranchant", "Contondant"),
+    Tranchant("Tranchant", "Contondant", "Perforant"),
+    Neutre("Neutre", "", "");
 
     private final String nom;
     private final String force;
     private final String faiblesse;
-    private final List<TypePerso> users;
 
-    TypeArme(String nom, String force, String faiblesse, TypePerso... t) {
+    TypeArme(String nom, String force, String faiblesse) {
         this.nom = nom;
         this.force = force;
         this.faiblesse = faiblesse;
-        users = Arrays.asList(t);
     }
 
     /**
@@ -57,14 +52,4 @@ public enum TypeArme {
 
         return 0;
     }
-
-    /**
-     * Liste des Perso pouvant utiliser cette arme.
-     *
-     * @return
-     */
-    public List<TypePerso> getUtilisateurs() {
-        return users;
-    }
-
 }

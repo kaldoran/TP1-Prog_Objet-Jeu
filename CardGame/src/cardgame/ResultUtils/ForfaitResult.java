@@ -1,7 +1,5 @@
 package cardgame.ResultUtils;
 
-import cardgame.API.Resultat;
-
 /**
  * Implémentation de Resultat pour décrire la conséquence d'un forfait.
  *
@@ -25,7 +23,6 @@ public class ForfaitResult implements Resultat {
         joueurPerdu = idJoueurPerdu;
         description = "Le joueur" + idJoueurPerdu + "vient de perdre la partie";
     }
-    
     
     /**
      * @return True si l'action a fonctionné,false sinon.
@@ -62,7 +59,6 @@ public class ForfaitResult implements Resultat {
     public int getJoueurQuiAPerdu() {
         return joueurPerdu;
     }
-
 
     /**
      * Setter

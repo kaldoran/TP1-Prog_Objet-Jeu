@@ -1,7 +1,5 @@
 package cardgame.ResultUtils;
 
-import cardgame.API.Resultat;
-
 /**
  * Implémentation de Resultat pour décrire la conséquence d'un sortilège de
  * soins.
@@ -22,7 +20,7 @@ public class SoinsResult implements Resultat {
     private final int persoSoigneeId;
 
     public SoinsResult(int jId, boolean coupCorrect, int hId, int cId) {
-        description = "Coup de soins";
+        description = "Le personnage " + hId + " vient de soigner " + cId + ".";
         joueurId = jId;
         coupAFonctionne = coupCorrect;
         healerId = hId;
@@ -30,7 +28,7 @@ public class SoinsResult implements Resultat {
     }
 
     public SoinsResult(boolean coupCorrect, int hId, int cId) {
-        description = "Coup de soins";
+        description = "Le personnage " + hId + " vient de soigner " + cId + ".";
         coupAFonctionne = coupCorrect;
         healerId = hId;
         persoSoigneeId = cId;

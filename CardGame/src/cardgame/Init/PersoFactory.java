@@ -1,7 +1,9 @@
 package cardgame.Init;
 
-import cardgame.Cartes.Perso;
-import cardgame.Regles.*;
+import cardgame.JeuxCartes.Guerrier;
+import cardgame.JeuxCartes.Paladin;
+import cardgame.JeuxCartes.Perso;
+import cardgame.JeuxCartes.Pretre;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +15,11 @@ import java.util.List;
  *
  * @author Mathieu Gravel GRAM02099206
  * @author Nicolas Reynaud REYN23119308
- * @version 1.0
+ * @version 1.1
  *
- * Historique : 8 Fév-2016 : 1.0 Version initiale.
+ * Historique : 8 Fév-2016 : 1.0 Version initiale. 
+ * 13Fév-2016 : 1.1 Modification du code pour marcher avec les
+ * nouvelles classes Guerrier, Pretre et Paladin.
  */
 public class PersoFactory {
 
@@ -23,13 +27,13 @@ public class PersoFactory {
      * Retourne une liste de cartes Guerriers
      *
      * @param nbCopies nombre de copie de cartes guerriers
-     * @return une liste de nbCopie élements contenant les guerriers demandées.
+     * @return liste de nbCopies d'instance de Guerriers.
      */
     public List<Perso> creerSetGuerrier(int nbCopies) {
         List<Perso> guerriers = new ArrayList<>();
 
         for (int copieAct = 0; copieAct < nbCopies; copieAct++) {
-            guerriers.add(new Perso(Regle.GUERRIERHP, Regle.GUERRIERMP, TypePerso.Guerrier));
+            guerriers.add(new Guerrier());
         }
 
         return guerriers;
@@ -39,13 +43,13 @@ public class PersoFactory {
      * Retourne une liste de cartes Prêtres.
      *
      * @param nbCopies nombre de copie de cartes prêtres.
-     * @return une liste de nbCopie élements contenant les prêtres demandées.
+     * @return liste de nbCopies d'instance de Prêtres.
      */
     public List<Perso> creerSetPretre(int nbCopies) {
         List<Perso> pretres = new ArrayList<>();
 
         for (int copieAct = 0; copieAct < nbCopies; copieAct++) {
-            pretres.add(new Perso(Regle.PRETREHP, Regle.PRETREHP, TypePerso.Mage));
+            pretres.add(new Pretre());
         }
 
         return pretres;
@@ -55,16 +59,15 @@ public class PersoFactory {
      * Retourne une liste de cartes Paladins.
      *
      * @param nbCopies nombre de copie de cartes paladins.
-     * @return une liste de nbCopie élements contenant les paladins demandées.
+     * @return liste de nbCopies d'instance de Paladins.
      */
     public List<Perso> creerSetPaladin(int nbCopies) {
         List<Perso> paladins = new ArrayList<>();
 
         for (int copieAct = 0; copieAct < nbCopies; copieAct++) {
-            paladins.add(new Perso(Regle.PALADINHP, Regle.PALADINMP, TypePerso.Paladin));
+            paladins.add(new Paladin());
         }
 
         return paladins;
     }
-
 }

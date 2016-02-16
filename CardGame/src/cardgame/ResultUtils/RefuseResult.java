@@ -1,7 +1,5 @@
 package cardgame.ResultUtils;
 
-import cardgame.API.Resultat;
-
 /**
  * Implémentation de Resultat pour décrire la conséquence d'un coup refusé
  * puisqu'il était impossible.
@@ -64,5 +62,4 @@ public class RefuseResult implements Resultat {
     public void setJoueur(int idJoueur) {
         this.joueurId = idJoueur;
     }
-
 }

@@ -14,8 +14,7 @@ package cardgame.Regles;
  */
 public class Regle {
 
-    private Regle() {
-    }
+    private Regle() { }
 
     /**
      * Liste de toutes les règles de jeu.
