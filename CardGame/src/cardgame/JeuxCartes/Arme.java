@@ -29,7 +29,7 @@ public class Arme extends Carte {
      * Boolean notant explicitement si l'arme est stased pour fins
      * d'éfficiences.
      */
-    private boolean estStase;
+    protected boolean estStase;
     private boolean armeUtilise;
     protected int degat;
     protected List<Enchant> listEnchant;
@@ -136,13 +136,6 @@ public class Arme extends Carte {
      */
     public TypeArme getTypeArme(){
         return type;
-    }
-    
-    /**
-     * Permet de staser une Arme
-     */
-    protected void staserArme() {
-        this.estStase = true;
     }
     
     /**
