@@ -19,7 +19,7 @@ import javax.json.*;
  * code pour marcher avec Cible. Guerrier,Pretre et Paladin. 14-Fév-2016 : 1.2 -
  * Modification du code pour marcher avec Combattant.
  */
-public class Perso extends Carte implements Cible {
+public abstract class Perso extends Carte implements Cible {
 
     private int hp;
     private final int maxHp;

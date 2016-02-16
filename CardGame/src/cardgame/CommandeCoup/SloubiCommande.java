@@ -3,6 +3,7 @@ package cardgame.CommandeCoup;
 import cardgame.ResultUtils.RefuseResult;
 import cardgame.ResultUtils.Resultat;
 import cardgame.Vue.GUI.InfoDialog;
+import cardgame.Vue.GUI.InfoDialogSloubi;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,7 +69,7 @@ public class SloubiCommande implements Commande {
 
     @Override
     public Resultat placerCoup() {
-        InfoDialog inf = new InfoDialog(null, true, messageImportant);
+        InfoDialogSloubi inf = new InfoDialogSloubi(null, true, messageImportant);
         if (as != null) {
             AudioPlayer.player.start(as);            
         }

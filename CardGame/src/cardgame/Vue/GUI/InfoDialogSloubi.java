@@ -5,22 +5,39 @@
  */
 package cardgame.Vue.GUI;
 
+import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
 /**
  *
  * @author mathieu
  */
-public class InfoDialog extends javax.swing.JDialog {
+public class InfoDialogSloubi extends javax.swing.JDialog {
 
     /**
      * Creates new form InfoDialog
      */
     private final String info;
     
-    public InfoDialog(java.awt.Frame parent, boolean modal,String content) {
+    public InfoDialogSloubi(java.awt.Frame parent, boolean modal,String content) {
         super(parent, modal);
         initComponents();
         info = content;
         txtInfo.setText(info);
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        Dimension mySize = new Dimension(800,600);
+        Dimension maxSize = new Dimension(500,500);
+        for (int i  = 0; i < gs.length ; i++ ) {
+            DisplayMode dm = gs[i].getDisplayMode();
+            if (dm.getWidth() > maxSize.getWidth() && dm.getHeight() > maxSize.getHeight()) {
+            maxSize.setSize(dm.getWidth(),dm.getHeight());
+        }
+            this.setPreferredSize(maxSize);
+            this.pack();
+        }
     }
 
     /**
@@ -37,12 +54,11 @@ public class InfoDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 400));
-        setPreferredSize(new java.awt.Dimension(1200, 600));
         setResizable(false);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
         txtInfo.setColumns(10);
-        txtInfo.setFont(new java.awt.Font("Monospaced", 3, 12)); // NOI18N
+        txtInfo.setFont(new java.awt.Font("Monospaced", 3, 8)); // NOI18N
         txtInfo.setLineWrap(true);
         txtInfo.setRows(5);
         jScrollPane1.setViewportView(txtInfo);
