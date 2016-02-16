@@ -6,7 +6,7 @@
 package cardgame.Controller;
 
 import cardgame.API.Jeux;
-import cardgame.CommandeCoup.Commande;
+import cardgame.Controller.CommandeCoup.Commande;
 import cardgame.ResultUtils.Resultat;
 import cardgame.Vue.GUI.GameBoard2Joueurs;
 

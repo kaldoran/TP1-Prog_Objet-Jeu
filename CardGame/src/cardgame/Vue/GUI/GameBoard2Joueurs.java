@@ -1,16 +1,16 @@
 package cardgame.Vue.GUI;
 
 import cardgame.API.Jeux;
-import cardgame.CommandeCoup.AttaqueCarteCommande;
-import cardgame.CommandeCoup.AttaqueJoueurCommande;
-import cardgame.CommandeCoup.Commande;
-import cardgame.CommandeCoup.DefausseCommande;
-import cardgame.CommandeCoup.DeploieCommande;
-import cardgame.CommandeCoup.EnchantCommande;
-import cardgame.CommandeCoup.ForfaitCommande;
-import cardgame.CommandeCoup.PigerCommande;
-import cardgame.CommandeCoup.SloubiCommande;
-import cardgame.CommandeCoup.SoinsCommande;
+import cardgame.Controller.CommandeCoup.AttaqueCarteCommande;
+import cardgame.Controller.CommandeCoup.AttaqueJoueurCommande;
+import cardgame.Controller.CommandeCoup.Commande;
+import cardgame.Controller.CommandeCoup.DefausseCommande;
+import cardgame.Controller.CommandeCoup.DeploieCommande;
+import cardgame.Controller.CommandeCoup.EnchantCommande;
+import cardgame.Controller.CommandeCoup.ForfaitCommande;
+import cardgame.Controller.CommandeCoup.PigerCommande;
+import cardgame.Controller.CommandeCoup.SloubiCommande;
+import cardgame.Controller.CommandeCoup.SoinsCommande;
 import cardgame.Controller.Controller;
 import cardgame.JeuxCartes.Carte;
 import cardgame.JeuxCartes.Perso;

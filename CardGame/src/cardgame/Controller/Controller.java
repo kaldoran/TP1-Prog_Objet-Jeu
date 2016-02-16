@@ -5,7 +5,7 @@
  */
 package cardgame.Controller;
 
-import cardgame.CommandeCoup.Commande;
+import cardgame.Controller.CommandeCoup.Commande;
 import javax.swing.JFrame;
 
 /**

@@ -3,32 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame.CommandeCoup;
+package cardgame.Controller.CommandeCoup;
 
-import cardgame.API.Jeux;
 import cardgame.JeuxCartes.Carte;
+import cardgame.API.Jeux;
 import cardgame.ResultUtils.Resultat;
-import java.util.List;
 
 /**
  *
  * @author mathieu
  */
-public class DefausseCommande implements Commande {
+public class AttaqueCarteCommande implements Commande {
 
     private final Jeux api;
     private final int idJ;
-    private final List<Carte> defausse;
+    private final int idA;
+    private final Carte attaque;
+    private final Carte defense;
     
-    public DefausseCommande(Jeux jeu, int idJoueur,List<Carte> debarras){
+    public AttaqueCarteCommande(Jeux jeu, int idJoueur,int idAdversaire,Carte attaqueur,Carte attaquee){
         api = jeu;
         idJ = idJoueur;
-        defausse = debarras;
+        idA = idAdversaire;
+        attaque = attaqueur;
+        defense = attaquee;
     }
     
     @Override
     public Boolean coupPossible() {
-        return api.peutDefausserCartes(idJ, defausse);
+        return api.attaquePersoValide(idJ, idA, attaque, defense);
     }
 
     @Override
@@ -38,6 +41,6 @@ public class DefausseCommande implements Commande {
 
     @Override
     public Resultat placerCoup() {
-        return api.defausserCartes(idJ, defausse);
+        return api.attaquePerso(idJ, idA, attaque, defense);
     }
 }

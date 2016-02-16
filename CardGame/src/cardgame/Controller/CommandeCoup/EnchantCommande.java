@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame.CommandeCoup;
+package cardgame.Controller.CommandeCoup;
 
 import cardgame.JeuxCartes.Carte;
 import cardgame.API.Jeux;

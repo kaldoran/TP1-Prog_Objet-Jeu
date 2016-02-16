@@ -1,4 +1,4 @@
-package cardgame.CommandeCoup;
+package cardgame.Controller.CommandeCoup;
 
 import cardgame.ResultUtils.RefuseResult;
 import cardgame.ResultUtils.Resultat;
