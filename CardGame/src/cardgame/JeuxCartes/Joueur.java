@@ -229,13 +229,6 @@ public class Joueur implements Cible {
     }
 
     /**
-     * @return True si le joueur a un deck vide
-     */
-    public boolean destVide() {
-        return carteDeck.deckEstVide();
-    }
-
-    /**
      * Permet au joueur de declarerForfait Autrement dit, de passer toutes ces
      * cartes dans le cimetiere.
      *
